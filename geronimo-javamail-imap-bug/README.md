@@ -25,5 +25,4 @@ Show the error to the geronimo guys.
 State
 -----
 On running the sandbox.imapbug.Connector with the geronimo dependency and connecting via imap to e.g outlook.com an NPE
-is thrown.
-Changing the dependency to javax.mail and doing the same will result in a successful connection.
+is thrown. Changing the dependency to javax.mail and doing the same will result in a successful connection.
