@@ -110,7 +110,7 @@ public class OpenEjbEmbeddedTest {
         }
 
         public void printProcessList() throws SQLException {
-            Connection connection = ds.getConnection("root", "test"); // need another user for that.
+            Connection connection = ds.getConnection(BookPu.USER2, BookPu.PASS2); // need another user for that.
             ResultSet result = connection.createStatement().executeQuery("SHOW PROCESSLIST");
             System.out.println("SHOW PROCESSLIST");
             String line = "+----------+--------------+----------------------+--------+----------+-------+----------+----------------------+%n";

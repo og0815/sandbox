@@ -20,6 +20,9 @@ public class BookPu {
 
     public final static String PASS = "testuser";
 
+    public final static String USER2 = "root";
+    public final static String PASS2 = "test";
+
     public final static Map<String, String> CMT_IN_MEMORY;
 
     public final static Map<String, String> CMT_PRODUCTIVE;
