@@ -52,24 +52,6 @@
             <version>4.7.0</version>
             <type>pom</type>
             <scope>test</scope>
-            <!--                    <exclusions>
-                <exclusion>
-                    <artifactId>xml-apis</artifactId>
-                    <groupId>xml-apis</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>slf4j-jdk14</artifactId>
-                    <groupId>org.slf4j</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>openjpa-asm-shaded</artifactId>
-                    <groupId>org.apache.openejb.patch</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>commons-logging</artifactId>
-                    <groupId>commons-logging</groupId>
-                </exclusion>
-            </exclusions>-->
         </dependency>
 
     </dependencies>
@@ -86,5 +68,8 @@
             </plugin>
         </plugins>
     </build>
-
+    <properties>
+        <maven.compiler.source>1.7</maven.compiler.source>
+        <maven.compiler.target>1.7</maven.compiler.target>
+    </properties>
 </project>

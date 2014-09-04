@@ -41,7 +41,7 @@ public class BookPu {
         CMT_IN_MEMORY = o;
 
         o = new HashMap<>();
-        o.put(persistenceUnit + ".hibernate.jdbc.batch_size", "0");
+//        o.put(persistenceUnit + ".hibernate.jdbc.batch_size", "0");
         o.put(persistenceUnit + ".hibernate.hbm2ddl.auto", "validate");
         o.put(dataSourceManaged, "new://Resource?type=DataSource");
         o.put(dataSourceManaged + ".XaDataSource", "repairXa");
@@ -52,6 +52,13 @@ public class BookPu {
         o.put("repairXa.password", PASS);
         o.put("repairXa.url", URL);
 
+        // Uncoment for openejb 4.6.0
+//        o.put(dataSourceManaged, "new://Resource?type=DataSource");
+//        o.put(dataSourceManaged + ".UserName", USER);
+//        o.put(dataSourceManaged + ".Password", PASS);
+//        o.put(dataSourceManaged + ".JdbcDriver", "com.mysql.jdbc.jdbc2.optional.MysqlXADataSource");
+//        o.put(dataSourceManaged + ".JdbcUrl", URL);
+//        o.put(dataSourceManaged + ".JtaManaged", "true");
         o.put(dataSourceUnmanaged, "new://Resource?type=DataSource");
         o.put(dataSourceUnmanaged + ".UserName", USER);
         o.put(dataSourceUnmanaged + ".Password", PASS);
