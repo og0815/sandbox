@@ -24,6 +24,20 @@ public class StartWithSwing {
                 .onOk(v -> System.out.println(v));
 
         // Now lets think about some Backroungrunning solution.
+        Ui.popupOkCancel(() -> new DocumentAdressUpdateView(1, adress, true)) // Needs to be in the UI Thread, should block all
+                .showAndWait() // Halve halv
+                .onOkAsync(v -> {
+                    for (int i = 0; i < 20; i++) {
+                        try {
+                            Thread.sleep(500);
+                        } catch (InterruptedException ex) {
+                            //Ignore
+                        }
+                        System.out.println("im Hintergrung" + i);
+                    }
+                });
+        System.out.println("Here bin ich schon.");
+
     }
 
 }
