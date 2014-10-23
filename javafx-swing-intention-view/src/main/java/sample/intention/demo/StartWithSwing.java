@@ -22,6 +22,8 @@ public class StartWithSwing {
         Ui.popupOkCancel(() -> new RevenueReportSelectorPane())
                 .showAndWait() // Halve halv
                 .onOk(v -> System.out.println(v));
+
+        // Now lets think about some Backroungrunning solution.
     }
 
 }
