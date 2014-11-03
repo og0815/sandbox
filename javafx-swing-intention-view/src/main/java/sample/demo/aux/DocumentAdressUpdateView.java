@@ -1,8 +1,10 @@
-package sample.intention.demo;
+package sample.demo.aux;
 
+import sample.old.OkCancelDialog;
+import sample.old.CloseType;
+import sample.old.IPreClose;
 import javax.swing.JOptionPane;
 import org.apache.commons.lang3.StringUtils;
-import sample.intention.old.*;
 
 /**
  *
@@ -10,9 +12,9 @@ import sample.intention.old.*;
  */
 public class DocumentAdressUpdateView extends javax.swing.JPanel implements IPreClose {
 
-    private String originalAddress;
+    private final String originalAddress;
 
-    private long customerId;
+    private final long customerId;
 
     private final boolean invoice;
 

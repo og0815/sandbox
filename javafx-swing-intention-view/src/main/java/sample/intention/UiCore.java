@@ -1,9 +1,10 @@
 package sample.intention;
 
-import java.awt.EventQueue;
-import java.lang.reflect.InvocationTargetException;
 import javafx.application.Platform;
 import javax.swing.JFrame;
+
+import java.awt.EventQueue;
+import java.lang.reflect.InvocationTargetException;
 
 /**
  *
@@ -12,7 +13,7 @@ import javax.swing.JFrame;
 // TODO: Title handler
 public class UiCore {
 
-    static JFrame mainPanel = null;
+    public static JFrame mainPanel = null;
 
     /**
      * Starts the Core in Swing mode, may only be called once.
@@ -20,7 +21,9 @@ public class UiCore {
      * @param builder
      */
     public static void startSwing(final JPanelBuilder builder) {
-        if (mainPanel != null) throw new RuntimeException("Ui already initialized and running in Swing mode");
+        if (mainPanel != null) {
+            throw new RuntimeException("Ui already initialized and running in Swing mode");
+        }
         if (EventQueue.isDispatchThread()) {
             runSwing(builder);
         } else {
@@ -44,6 +47,10 @@ public class UiCore {
 
     public static void startJavaFx() {
 
+    }
+
+    public static void handleException(Exception e) {
+        e.printStackTrace();
     }
 
 }

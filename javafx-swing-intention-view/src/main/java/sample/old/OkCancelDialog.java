@@ -1,10 +1,12 @@
-package sample.intention.old;
+package sample.old;
 
 import java.awt.*;
 import java.awt.event.*;
+
 import javax.swing.*;
-import static sample.intention.old.CloseType.CANCEL;
-import static sample.intention.old.CloseType.OK;
+
+import static sample.old.CloseType.CANCEL;
+import static sample.old.CloseType.OK;
 
 /**
  *

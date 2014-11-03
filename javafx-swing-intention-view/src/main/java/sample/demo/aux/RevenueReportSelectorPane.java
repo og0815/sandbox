@@ -1,4 +1,4 @@
-package sample.intention.demo;
+package sample.demo.aux;
 
 import javafx.application.Platform;
 import javafx.beans.property.*;
@@ -6,9 +6,9 @@ import javafx.embed.swing.JFXPanel;
 import javafx.geometry.*;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
-import sample.intention.demo.aux.Category;
-import sample.intention.demo.aux.Step;
-import sample.intention.old.OkCancelStage;
+import sample.demo.aux.Category;
+import sample.demo.aux.Step;
+import sample.old.OkCancelStage;
 
 import java.time.*;
 import java.util.*;

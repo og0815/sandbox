@@ -1,14 +1,16 @@
 package sample.intention;
 
 import static java.awt.Dialog.ModalityType.APPLICATION_MODAL;
+
 import java.awt.EventQueue;
 import java.lang.reflect.InvocationTargetException;
 import java.util.concurrent.CountDownLatch;
+
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
-import sample.intention.old.OkCancelDialog;
+import sample.old.OkCancelDialog;
 
 /**
  *

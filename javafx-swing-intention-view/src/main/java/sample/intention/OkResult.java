@@ -1,5 +1,6 @@
 package sample.intention;
 
+import java.awt.EventQueue;
 import java.util.concurrent.*;
 
 /**
@@ -14,14 +15,21 @@ public class OkResult<T> {
 
     // Not run in the Ui Thread.... Good or Bad?
     public void onOk(Listener<T> listener) {
-        if (!ok) return;
+        if (!ok) {
+            return;
+        }
         listener.listen(payload);
     }
 
-    public void onOkAsync(Listener<T> listener) {
-        if (!ok) return;
+    public void onOkRun(RunIt<T> run) {
+        if (!ok) {
+            return;
+        }
         final ExecutorService es = Executors.newFixedThreadPool(2);
-        final Future<?> future = es.submit(() -> listener.listen(payload));
+        final Future<?> future = es.submit(() -> {
+            run.run(payload);
+            return null;
+        });
         // Catch Embedded Exceptions
         es.execute(() -> {
             try {
@@ -34,8 +42,28 @@ public class OkResult<T> {
         });
     }
 
-//    public <X> void onOkAsync(Callback<T, X> callback) {
-//        callback.call(payload);
-//        // Make sure we get all the exceptions.
-//    }
+    public <V> Done<V> onOkCall(CallIt<T, V> callIt) {
+        final Done<V> done = new Done<V>();
+        if (!ok) {
+            return done;
+        }
+        final ExecutorService es = Executors.newFixedThreadPool(2);
+        final Future<V> future = es.submit(() -> {
+            return callIt.call(payload);
+        });
+
+        // Catch Embedded Exceptions
+        es.execute(() -> {
+            try {
+                final V result = future.get(); // Waits and might throw exception.
+                EventQueue.invokeLater(() -> done.executeDone(result));
+            } catch (InterruptedException | ExecutionException e) {
+                e.printStackTrace(); // Todo Use ui Util
+            } finally {
+                es.shutdown();
+            }
+        });
+        return done;
+    }
+
 }

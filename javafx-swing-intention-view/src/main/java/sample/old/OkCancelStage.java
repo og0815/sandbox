@@ -1,4 +1,4 @@
-package sample.intention.old;
+package sample.old;
 
 import org.apache.commons.lang3.StringUtils;
 

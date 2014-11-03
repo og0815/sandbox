@@ -1,4 +1,4 @@
-package sample.intention.demo.aux;
+package sample.demo.aux;
 
 /**
  *

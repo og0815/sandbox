@@ -1,8 +1,10 @@
 package sample.intention;
 
-import java.util.Objects;
-import javafx.scene.layout.Pane;
 import javax.swing.JPanel;
+import sample.intention.structure.PopupBlenderOneArgSwing;
+import sample.intention.swing.*;
+
+import java.util.concurrent.Callable;
 
 /**
  * The main entry point.
@@ -11,19 +13,27 @@ import javax.swing.JPanel;
  */
 public class Ui {
 
-    public static <T extends JPanel> JPanelRunner<T> popupOkCancel(JPanelBuilder<T> builder) {
-        verifyCore();
-        // the Swing way
-        return new JPanelRunner<>(builder);
+    public static <T> SwingPopupOneArg<T> call(Callable<T> callable) {
+        return new SwingPopupOneArg<>(callable);
     }
 
-    public static <T extends Pane> PaneRunner<T> popupOkCancel(PaneBuilder<T> builder) {
-        verifyCore();
-        return new PaneRunner<>(builder);
+    public static <T, R extends JPanel> SwingOk<R> popupOkCancel(PopupBlenderOneArgSwing<T, R> builder) {
+        return new SwingPopupOneArg().popupOkCancel(builder);
     }
 
-    private static void verifyCore() {
-        Objects.requireNonNull(UiCore.mainPanel);
-        // verify that the core is running.
+    public static <V> void exec(Callable<V> ie) {
+        // See CompletableFuture(), might be cooler.
+        // Return of Futur might
+        new Thread() {
+            @Override
+            public void run() {
+                try {
+                    ie.call();
+                } catch (Exception e) {
+                    UiCore.handleException(e);
+                }
+            }
+        }.start();
     }
+
 }

@@ -1,4 +1,4 @@
-package sample.intention.old;
+package sample.old;
 
 /**
  * Simple Interface to allow sub components to disallow some opperations.
