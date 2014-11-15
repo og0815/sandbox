@@ -1,7 +1,7 @@
 package sample.intention;
 
 import javax.swing.JPanel;
-import sample.intention.structure.PopupBlenderOneArgSwing;
+import sample.intention.structure.CallableA1;
 import sample.intention.swing.*;
 
 import java.util.concurrent.Callable;
@@ -13,12 +13,12 @@ import java.util.concurrent.Callable;
  */
 public class Ui {
 
-    public static <T> SwingPopupOneArg<T> call(Callable<T> callable) {
-        return new SwingPopupOneArg<>(callable);
+    public static <T> UiCreator<T> call(Callable<T> callable) {
+        return new UiCreator<>(callable);
     }
 
-    public static <T, R extends JPanel> SwingOk<R> popupOkCancel(PopupBlenderOneArgSwing<T, R> builder) {
-        return new SwingPopupOneArg().popupOkCancel(builder);
+    public static <T, R extends JPanel> SwingOk<R> popupOkCancel(CallableA1<T, R> callableA1) {
+        return new UiCreator().popupOkCancel(callableA1);
     }
 
     public static <V> void exec(Callable<V> ie) {

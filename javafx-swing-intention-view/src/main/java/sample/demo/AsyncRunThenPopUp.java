@@ -2,7 +2,7 @@ package sample.demo;
 
 import sample.demo.aux.DocumentAdressUpdateView;
 import sample.intention.*;
-import sample.intention.structure.PopupBlenderOneArgSwing;
+import sample.intention.structure.CallableA1;
 
 import java.util.concurrent.Callable;
 
@@ -13,55 +13,31 @@ import java.util.concurrent.Callable;
  */
 public class AsyncRunThenPopUp {
 
-    public static void main(String[] args) {
-        Global.init();
-        String adress = "Hans Mustermann\nMusterstrasse 22\n12345 Musterhausen";
-        // Backround as fist option.
-//        Ui
-//                .<String, DocumentAdressUpdateView>call(() -> { // I'm lazy, I'm not implementing some Run with Exception solution
-//                    int c = 0;
-//                    for (int i = 0; i < 20; i++) {
-//                        Thread.sleep(500);
-//                        System.out.println("In Background (" + i + ")");
-//                        c = i;
-//                    }
-//                    return adress + " " + c;
-//                })
-//                .popupOkCancel(new PopupBlenderOneArgSwing<String, DocumentAdressUpdateView>() {
-//
-//                    @Override
-//                    public DocumentAdressUpdateView build(String parameter) {
-//                        return new DocumentAdressUpdateView(1, parameter, true);
-//                    }
-//                })
-//                .onOk(new Listener<DocumentAdressUpdateView>() {
-//
-//                    @Override
-//                    public void listen(DocumentAdressUpdateView t) {
-//                        System.out.println(t);
-//                    }
-//                });
+    private static class HardWorker {
 
-        Ui.exec(
-                Ui
-                .call(() -> {
-                    System.out.print("Doing 2 sec pre work ... ");
-                    Thread.sleep(2000);
-                    System.out.println("done");
-                    return "Hallo";
-                })
-                .popupOkCancel(p -> new DocumentAdressUpdateView(1, p, true))
-                .onOk((t) -> {
-                    System.out.print("Doing 2 sec post work ... ");
-                    Thread.sleep(2000);
-                    System.out.println("done");
-                    return t.getAddress().length();
-                })
-        );
+        public static <T> T work2s(String worktype, T t) throws InterruptedException {
+            System.out.print("Doing 2 sec " + worktype + " work ... ");
+            Thread.sleep(2000);
+            System.out.println("done");
+            return t;
+        }
 
     }
 
+    public static void main(String[] args) {
+        Global.init();
+        Ui.exec(
+                Ui
+                .call(() -> HardWorker.work2s("per", "Eine leere Adresse"))
+                .popupOkCancel(p -> new DocumentAdressUpdateView(1, p, true))
+                .onOk((t) -> HardWorker.work2s("middle", t.getAddress()))
+                .popupOkCancel(p -> new DocumentAdressUpdateView(1, p, true))
+                .onOk((t) -> HardWorker.work2s("post", t.getAddress()))
+        );
+    }
+
     public static void longer() {
+        // A JAva 7 View.
         Ui.exec(
                 Ui.call(new Callable<String>() {
 
@@ -71,14 +47,14 @@ public class AsyncRunThenPopUp {
                     }
 
                 })
-                .popupOkCancel(new PopupBlenderOneArgSwing<String, DocumentAdressUpdateView>() {
+                .popupOkCancel(new CallableA1<String, DocumentAdressUpdateView>() {
 
                     @Override
-                    public DocumentAdressUpdateView build(String parameter) {
+                    public DocumentAdressUpdateView call(String parameter) {
                         return new DocumentAdressUpdateView(1, parameter, true);
                     }
                 })
-                .onOk(new CallIt<DocumentAdressUpdateView, Integer>() {
+                .onOk(new CallableA1<DocumentAdressUpdateView, Integer>() {
 
                     @Override
                     public Integer call(DocumentAdressUpdateView t) throws Exception {

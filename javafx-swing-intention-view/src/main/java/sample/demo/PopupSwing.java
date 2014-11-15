@@ -1,7 +1,7 @@
 package sample.demo;
 
-import sample.intention.Ui2;
 import sample.demo.aux.DocumentAdressUpdateView;
+import sample.intention.Ui;
 
 /**
  * Opens a Swing Panel as Popup Dialog blocking the hole application.
@@ -15,8 +15,12 @@ public class PopupSwing {
 
         String adress = "Hans Mustermann\nMusterstrasse 22\n12345 Musterhausen";
         // Swing Panel in Swing Dialog
-        Ui2.popupOkCancel(() -> new DocumentAdressUpdateView(1, adress, true)) // Needs to be in the UI Thread, should block all
-                .showAndWait() // Halve halv
-                .onOk(v -> System.out.println(v.getAddress()));
+        Ui.exec(
+                Ui.popupOkCancel((t) -> new DocumentAdressUpdateView(1, adress, true)) // Needs to be in the UI Thread, should block all
+                .onOk(v -> {
+                    System.out.println(v.getAddress());
+                    return null;
+                }) // Hint: in the implementations, most of the time, we have some result. That the short form is possible.
+        );
     }
 }
