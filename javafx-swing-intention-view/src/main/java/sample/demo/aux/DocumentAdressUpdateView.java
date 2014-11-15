@@ -1,16 +1,15 @@
 package sample.demo.aux;
 
-import sample.old.OkCancelDialog;
-import sample.old.CloseType;
-import sample.old.IPreClose;
 import javax.swing.JOptionPane;
 import org.apache.commons.lang3.StringUtils;
+import sample.intention.swing.OnOk;
+import sample.old.*;
 
 /**
  *
  * @author pascal.perau
  */
-public class DocumentAdressUpdateView extends javax.swing.JPanel implements IPreClose {
+public class DocumentAdressUpdateView extends javax.swing.JPanel implements OnOk {
 
     private final String originalAddress;
 
@@ -31,9 +30,10 @@ public class DocumentAdressUpdateView extends javax.swing.JPanel implements IPre
     }
 
     @Override
-    public boolean pre(CloseType type) {
-        if (type == CloseType.OK && StringUtils.isBlank(adressArea.getText())) {
+    public boolean onOk() {
+        if (StringUtils.isBlank(adressArea.getText())) {
             JOptionPane.showMessageDialog(this, "Addressfeld ist leer...");
+            return false;
         }
         return true;
     }

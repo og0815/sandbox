@@ -1,9 +1,6 @@
 package sample.old;
 
-import org.apache.commons.lang3.StringUtils;
-
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -11,6 +8,8 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
+import org.apache.commons.lang3.StringUtils;
+import sample.intention.swing.OnOk;
 
 /**
  *
@@ -24,6 +23,7 @@ public class OkCancelStage<T extends Node> extends Stage {
     private T payload;
 
     public OkCancelStage(String title, T payload) {
+
         this.payload = payload;
         BorderPane pane = new BorderPane();
         pane.setCenter(payload);
@@ -38,23 +38,20 @@ public class OkCancelStage<T extends Node> extends Stage {
         bottom.setPadding(new Insets(10));
         bottom.getChildren().addAll(okButton, cancelButton);
         pane.setBottom(bottom);
-        if ( !StringUtils.isBlank(title) ) setTitle(title);
+        if (!StringUtils.isBlank(title)) setTitle(title);
         setScene(new Scene(pane));
 
-        okButton.setOnAction(new EventHandler<ActionEvent>() {
-
-            @Override
-            public void handle(ActionEvent t) {
-                OkCancelStage.this.ok = true;
-                close();
+        okButton.setOnAction((ActionEvent t) -> {
+            boolean close = true;
+            if (payload instanceof OnOk) {
+                close = ((OnOk) payload).onOk();
             }
+            if (!close) return;
+            OkCancelStage.this.ok = true;
+            close();
         });
-        cancelButton.setOnAction(new EventHandler<ActionEvent>() {
-
-            @Override
-            public void handle(ActionEvent t) {
-                close();
-            }
+        cancelButton.setOnAction((ActionEvent t) -> {
+            close();
         });
     }
 

@@ -45,8 +45,7 @@ public class UiCreator<T> implements Callable<T> {
             if (beforeResult instanceof File) {
                 Desktop.getDesktop().open((File) beforeResult);
             } else {
-                System.err.println("No Os support for Object Type: " + beforeResult.getClass());
-                // TODO: Add Alert.
+                throw new IllegalArgumentException("No Os support for Object Type: " + beforeResult.getClass());
             }
             return null;
         };

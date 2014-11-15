@@ -6,8 +6,6 @@ import javafx.embed.swing.JFXPanel;
 import javafx.geometry.*;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
-import sample.demo.aux.Category;
-import sample.demo.aux.Step;
 import sample.old.OkCancelStage;
 
 import java.time.*;

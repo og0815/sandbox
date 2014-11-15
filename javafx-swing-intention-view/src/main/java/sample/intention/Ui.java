@@ -46,16 +46,18 @@ public class Ui {
     public static <V> void exec(Callable<V> ie) {
         // See CompletableFuture(), might be cooler.
         // Return of Futur might
-        new Thread() {
+        Thread t = new Thread() {
             @Override
             public void run() {
                 try {
                     ie.call();
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    UiCore.catchException(e);
                 }
             }
-        }.start();
+        };
+        t.setDaemon(true); // Shut down on application shutdown.
+        t.start();
     }
 
 }

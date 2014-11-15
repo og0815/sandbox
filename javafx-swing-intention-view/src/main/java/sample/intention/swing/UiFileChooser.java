@@ -20,14 +20,13 @@ public class UiFileChooser {
 
     public UiOk<File> open(String title) {
         return new UiOk<>(() -> {
-            // First the UI chooser
             FxSaft.ensurePlatformIsRunning();
-            // TODO: Reuse the Stage in JavaFx environment.
 
             FutureTask<File> fileChosserTask = new FutureTask<>(() -> {
                 FileChooser fileChooser = new FileChooser();
                 if (title == null) fileChooser.setTitle("Open File");
                 else fileChooser.setTitle(title);
+                // TODO: Reuse a Stage in JavaFx environment.
                 return fileChooser.showOpenDialog(new Stage());
             });
 
