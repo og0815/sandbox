@@ -1,5 +1,9 @@
 package sample.demo;
 
+import javafx.application.Platform;
+import sample.demo.aux.RevenueReportSelectorPane;
+import sample.intention.Ui;
+
 /**
  * Opening a JavaFX Pane as popup Dialog, blocking the hole application.
  *
@@ -11,10 +15,15 @@ public class PopupJavaFx {
         Global.init();
 
         // JavaFX Pane in Swing Dialog.
-        // Later
-//        Ui2.popupOkCancel(() -> new RevenueReportSelectorPane())
-//                .showAndWait() // Halve halv
-//                .onOk(v -> System.out.println(v));
+        Ui.exec(
+                Ui.popupOkCancelFx((x) -> new RevenueReportSelectorPane())
+                .onOk(v -> {
+                    System.out.println(v);
+                    Platform.exit();
+                    return null;
+                })
+        );
+
     }
 
 }

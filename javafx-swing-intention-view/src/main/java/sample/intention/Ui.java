@@ -1,5 +1,6 @@
 package sample.intention;
 
+import javafx.scene.layout.Pane;
 import javax.swing.JPanel;
 import sample.intention.structure.CallableA1;
 import sample.intention.swing.*;
@@ -15,6 +16,10 @@ public class Ui {
 
     public static <T> UiCreator<T> call(Callable<T> callable) {
         return new UiCreator<>(callable);
+    }
+
+    public static <T, R extends Pane> SwingOk<R> popupOkCancelFx(CallableA1<T, R> callableA1) {
+        return new UiCreator().popupOkCancelFx(callableA1);
     }
 
     public static <T, R extends JPanel> SwingOk<R> popupOkCancel(CallableA1<T, R> callableA1) {

@@ -3,8 +3,10 @@ package sample.intention;
 import javafx.application.Platform;
 import javax.swing.JFrame;
 
+import java.awt.Component;
 import java.awt.EventQueue;
 import java.lang.reflect.InvocationTargetException;
+import java.util.concurrent.Callable;
 
 /**
  *
@@ -18,9 +20,10 @@ public class UiCore {
     /**
      * Starts the Core in Swing mode, may only be called once.
      *
+     * @param <T>
      * @param builder
      */
-    public static void startSwing(final JPanelBuilder builder) {
+    public static <T extends Component> void startSwing(final Callable<T> builder) {
         if (mainPanel != null) {
             throw new RuntimeException("Ui already initialized and running in Swing mode");
         }
@@ -36,13 +39,18 @@ public class UiCore {
         Platform.setImplicitExit(false);
     }
 
-    private static void runSwing(JPanelBuilder builder) {
-        mainPanel = new JFrame();
-        mainPanel.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        mainPanel.getContentPane().add(builder.build());
-        mainPanel.pack();
-        mainPanel.setLocationByPlatform(true);
-        mainPanel.setVisible(true);
+    private static <T extends Component> void runSwing(Callable<T> builder) {
+        try {
+            mainPanel = new JFrame();
+            mainPanel.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            mainPanel.getContentPane().add(builder.call());
+            mainPanel.pack();
+            mainPanel.setLocationByPlatform(true);
+            mainPanel.setVisible(true);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            // TODO: Our Exception handler
+        }
     }
 
     public static void startJavaFx() {

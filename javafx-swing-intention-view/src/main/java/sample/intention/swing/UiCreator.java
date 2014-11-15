@@ -1,13 +1,13 @@
 package sample.intention.swing;
 
+import javafx.embed.swing.JFXPanel;
+import javafx.scene.layout.Pane;
 import javax.swing.JPanel;
 import sample.intention.UiCore;
 import sample.intention.structure.*;
 import sample.old.OkCancelDialog;
 
-import java.awt.EventQueue;
-import java.util.concurrent.Callable;
-import java.util.concurrent.FutureTask;
+import java.util.concurrent.*;
 
 import static java.awt.Dialog.ModalityType.APPLICATION_MODAL;
 
@@ -26,8 +26,27 @@ public class UiCreator<T> implements Callable<T> {
     public UiCreator() {
     }
 
-    public <R extends JPanel> void popup(CallableA1<T, R> builder) {
+    public <R extends Pane> SwingOk<R> popupOkCancelFx(CallableA1<T, R> builder) {
+        return new SwingOk<>(new Callable<OkCancelResult<R>>() {
 
+            @Override
+            public OkCancelResult<R> call() throws Exception {
+                final T parameter = (callable == null ? null : callable.call());
+                FxSaft.ensurePlatformIsRunning();
+
+                final R pane = builder.call(parameter);
+
+                JFXPanel p = FxSaft.wrap(pane);
+
+                return SwingSaft.dispatch(() -> {
+                    OkCancelDialog<JFXPanel> dialog = new OkCancelDialog<>(UiCore.mainPanel, APPLICATION_MODAL, "TODO", p);
+                    dialog.pack();
+                    dialog.setLocationRelativeTo(UiCore.mainPanel);
+                    dialog.setVisible(true);
+                    return new OkCancelResult<>(pane, dialog.isOk());
+                });
+            }
+        });
     }
 
     public <R extends JPanel> SwingOk<R> popupOkCancel(CallableA1<T, R> builder) {
@@ -36,19 +55,14 @@ public class UiCreator<T> implements Callable<T> {
             @Override
             public OkCancelResult<R> call() throws Exception {
                 final T parameter = (callable == null ? null : callable.call());
-                //  if (EventQueue.isDispatchThread()) Throw some error ?!
-                FutureTask<OkCancelResult<R>> futureTask = new FutureTask<>(() -> {
+
+                return SwingSaft.dispatch(() -> {
                     OkCancelDialog<R> dialog = new OkCancelDialog<>(UiCore.mainPanel, APPLICATION_MODAL, "TODO", builder.call(parameter));
                     dialog.pack();
                     dialog.setLocationRelativeTo(UiCore.mainPanel);
                     dialog.setVisible(true);
                     return new OkCancelResult<>(dialog.getSubContainer(), dialog.isOk());
                 });
-
-                if (EventQueue.isDispatchThread()) futureTask.run();
-                else EventQueue.invokeAndWait(futureTask);
-
-                return futureTask.get();
             }
         });
     }
