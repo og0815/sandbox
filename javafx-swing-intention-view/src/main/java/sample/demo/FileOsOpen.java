@@ -9,17 +9,15 @@ import sample.intention.UiCore;
  *
  * @author oliver.guenther
  */
-public class FileHandling {
+public class FileOsOpen {
 
     public static void main(String[] args) {
         UiCore.startSwing(() -> new MainPanel());
 
         Ui.exec(
-                Ui.openFileChosser()
-                .onOk(f -> {
-                    System.out.println("Ok pressed, File: " + f.getAbsolutePath());
-                    return null;
-                })
+                Ui.openFileChosser("Bitte Datei auswählen, die das Betriebsystem öffnen kann")
+                .onOk(f -> f) // Push value though.
+                .osOpen()
         );
 
     }

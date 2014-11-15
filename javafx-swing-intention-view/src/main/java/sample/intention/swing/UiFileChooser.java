@@ -15,6 +15,10 @@ import java.util.concurrent.*;
 public class UiFileChooser {
 
     public UiOk<File> open() {
+        return open(null);
+    }
+
+    public UiOk<File> open(String title) {
         return new UiOk<>(() -> {
             // First the UI chooser
             FxSaft.ensurePlatformIsRunning();
@@ -22,7 +26,8 @@ public class UiFileChooser {
 
             FutureTask<File> fileChosserTask = new FutureTask<>(() -> {
                 FileChooser fileChooser = new FileChooser();
-                fileChooser.setTitle("Open Resource File");
+                if (title == null) fileChooser.setTitle("Open File");
+                else fileChooser.setTitle(title);
                 return fileChooser.showOpenDialog(new Stage());
             });
 

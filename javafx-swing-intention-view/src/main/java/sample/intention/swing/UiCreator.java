@@ -7,6 +7,8 @@ import sample.intention.UiCore;
 import sample.intention.structure.*;
 import sample.old.OkCancelDialog;
 
+import java.awt.Desktop;
+import java.io.File;
 import java.util.concurrent.*;
 
 import static java.awt.Dialog.ModalityType.APPLICATION_MODAL;
@@ -14,60 +16,71 @@ import static java.awt.Dialog.ModalityType.APPLICATION_MODAL;
 /**
  *
  * @author oliver.guenther
+ * @param <T>
  */
 public class UiCreator<T> implements Callable<T> {
 
-    private Callable<T> callable;
+    private final OnceCaller<T> before;
 
-    public UiCreator(Callable<T> callable) {
-        this.callable = callable;
+    public UiCreator(Callable<T> before) {
+        this.before = new OnceCaller<>(before);
     }
 
     public UiCreator() {
+        this(null);
     }
 
-    public <T> UiCreator<T> call(Callable<T> callable) {
-        return new UiCreator<>(callable);
+    public <D> UiCreator<D> call(Callable<D> callable) {
+        return new UiCreator<>(() -> {
+            if (before.ifPresentIsNull()) return null; // Chainbreaker
+            return callable.call();
+        });
+    }
+
+    public Callable<Void> osOpen() {
+        return () -> {
+            if (before.ifPresentIsNull()) return null; // Chainbreaker
+            T beforeResult = before.get();
+            if (beforeResult == null) return null; // Null result is also useless here.
+            if (beforeResult instanceof File) {
+                Desktop.getDesktop().open((File) beforeResult);
+            } else {
+                System.err.println("No Os support for Object Type: " + beforeResult.getClass());
+                // TODO: Add Alert.
+            }
+            return null;
+        };
     }
 
     public <R extends Pane> UiOk<R> popupOkCancelFx(CallableA1<T, R> builder) {
-        return new UiOk<>(new Callable<OkCancelResult<R>>() {
-
-            @Override
-            public OkCancelResult<R> call() throws Exception {
-                final T parameter = (callable == null ? null : callable.call());
-                FxSaft.ensurePlatformIsRunning();
-
-                final R pane = builder.call(parameter);
-
-                JFXPanel p = FxSaft.wrap(pane);
-
-                return SwingSaft.dispatch(() -> {
-                    OkCancelDialog<JFXPanel> dialog = new OkCancelDialog<>(UiCore.mainPanel, APPLICATION_MODAL, "TODO", p);
-                    dialog.pack();
-                    dialog.setLocationRelativeTo(UiCore.mainPanel);
-                    dialog.setVisible(true);
-                    return new OkCancelResult<>(pane, dialog.isOk());
-                });
-            }
+        return new UiOk<>(() -> {
+            if (before.ifPresentIsNull()) return null; // Chainbreaker
+            final T parameter = before.get();
+            FxSaft.ensurePlatformIsRunning();
+            final R pane = builder.call(parameter); // Call outside all ui threads assumed
+            JFXPanel p = FxSaft.wrap(pane);
+            return SwingSaft.dispatch(() -> {
+                OkCancelDialog<JFXPanel> dialog = new OkCancelDialog<>(UiCore.mainPanel, APPLICATION_MODAL, "TODO", p);
+                dialog.pack();
+                dialog.setLocationRelativeTo(UiCore.mainPanel);
+                dialog.setVisible(true);
+                return new OkCancelResult<>(pane, dialog.isOk());
+            });
         });
     }
 
     public <R extends JPanel> UiOk<R> popupOkCancel(CallableA1<T, R> builder) {
-        return new UiOk<>(new Callable<OkCancelResult<R>>() {
+        return new UiOk<>(() -> {
+            if (before.ifPresentIsNull()) return null; // Chainbreaker
+            final T parameter = before.get(); // Call outside all ui threads assumed
 
-            @Override
-            public OkCancelResult<R> call() throws Exception {
-                final T parameter = (callable == null ? null : callable.call());
-
-                return SwingSaft.dispatch(() -> {
-                    OkCancelDialog<R> dialog = new OkCancelDialog<>(UiCore.mainPanel, APPLICATION_MODAL, "TODO", builder.call(parameter));
-                    dialog.pack();
-                    dialog.setLocationRelativeTo(UiCore.mainPanel);
-                    dialog.setVisible(true);
-                    return new OkCancelResult<>(dialog.getSubContainer(), dialog.isOk());
-                });
-            }
+            return SwingSaft.dispatch(() -> {
+                OkCancelDialog<R> dialog = new OkCancelDialog<>(UiCore.mainPanel, APPLICATION_MODAL, "TODO", builder.call(parameter));
+                dialog.pack();
+                dialog.setLocationRelativeTo(UiCore.mainPanel);
+                dialog.setVisible(true);
+                return new OkCancelResult<>(dialog.getSubContainer(), dialog.isOk());
+            });
         });
     }
 
@@ -79,7 +92,7 @@ public class UiCreator<T> implements Callable<T> {
      */
     @Override
     public T call() throws Exception {
-        return (callable == null ? null : callable.call());
+        return before.get();
     }
 
 }

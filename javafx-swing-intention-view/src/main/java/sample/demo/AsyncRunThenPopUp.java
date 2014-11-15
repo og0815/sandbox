@@ -1,6 +1,7 @@
 package sample.demo;
 
 import sample.demo.aux.DocumentAdressUpdateView;
+import sample.demo.aux.MainPanel;
 import sample.intention.*;
 import sample.intention.structure.CallableA1;
 
@@ -25,7 +26,7 @@ public class AsyncRunThenPopUp {
     }
 
     public static void main(String[] args) {
-        Global.init();
+        UiCore.startSwing(() -> new MainPanel());
         Ui.exec(
                 Ui
                 .call(() -> HardWorker.work2s("per", "Eine leere Adresse"))

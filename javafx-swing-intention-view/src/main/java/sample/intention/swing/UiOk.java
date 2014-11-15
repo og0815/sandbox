@@ -7,28 +7,28 @@ import java.util.concurrent.Callable;
 /**
  *
  * @author oliver.guenther
+ * @param <V>
  */
 public class UiOk<V> implements Callable<OkCancelResult<V>> {
 
-    private final Callable<OkCancelResult<V>> before;
+    private final OnceCaller<OkCancelResult<V>> before;
 
     public UiOk(Callable<OkCancelResult<V>> before) {
-        this.before = before;
+        this.before = new OnceCaller<>(before);
     }
 
     public <R> UiCreator<R> onOk(CallableA1<V, R> function) {
         return new UiCreator<>(() -> {
-            OkCancelResult<V> result = before.call();
-            if (result.ok) {
-                return function.call(result.value);
-            }
-            return null;
+            if (before.ifPresentIsNull()) return null; // Chainbreaker
+            OkCancelResult<V> result = before.get();
+            if (!result.ok) return null;  // Break Chain on demand
+            return function.call(result.value);
         });
     }
 
     @Override
     public OkCancelResult<V> call() throws Exception {
-        return (before == null ? null : before.call());
+        return before.get();
     }
 
 }

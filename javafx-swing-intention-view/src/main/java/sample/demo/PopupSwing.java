@@ -1,7 +1,9 @@
 package sample.demo;
 
 import sample.demo.aux.DocumentAdressUpdateView;
+import sample.demo.aux.MainPanel;
 import sample.intention.Ui;
+import sample.intention.UiCore;
 
 /**
  * Opens a Swing Panel as Popup Dialog blocking the hole application.
@@ -11,7 +13,7 @@ import sample.intention.Ui;
 public class PopupSwing {
 
     public static void main(String[] args) {
-        Global.init();
+        UiCore.startSwing(() -> new MainPanel());
 
         String adress = "Hans Mustermann\nMusterstrasse 22\n12345 Musterhausen";
         // Swing Panel in Swing Dialog
@@ -20,7 +22,7 @@ public class PopupSwing {
                 .onOk(v -> {
                     System.out.println(v.getAddress());
                     return null;
-                }) // Hint: in the implementations, most of the time, we have some result. That the short form is possible.
+                }) // Hint: in the implementations, most of the time, we have some result. Than the short form is possible.
         );
     }
 }

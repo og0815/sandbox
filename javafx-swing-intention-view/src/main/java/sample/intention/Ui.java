@@ -11,11 +11,19 @@ import java.util.concurrent.*;
 /**
  * The main entry point.
  *
+ * Some rules which I invented on the way:
+ * <ul>
+ * <li>Result of null is indicator to break the chain</li>
+ * <li></li>
+ * <li></li>
+ * <li></li>
+ * </ul>
+ *
  * @author oliver.guenther
  */
 public class Ui {
 
-    public static <T> UiCreator<T> call(Callable<T> callable) {
+    public static <R> UiCreator<R> call(Callable<R> callable) {
         return new UiCreator<>(callable);
     }
 
@@ -25,6 +33,10 @@ public class Ui {
 
     public static <T, R extends JPanel> UiOk<R> popupOkCancel(CallableA1<T, R> callableA1) {
         return new UiCreator().popupOkCancel(callableA1);
+    }
+
+    public static UiOk<File> openFileChosser(String title) {
+        return new UiFileChooser().open(title);
     }
 
     public static UiOk<File> openFileChosser() {
@@ -40,7 +52,7 @@ public class Ui {
                 try {
                     ie.call();
                 } catch (Exception e) {
-                    UiCore.handleException(e);
+                    e.printStackTrace();
                 }
             }
         }.start();

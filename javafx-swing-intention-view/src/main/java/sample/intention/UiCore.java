@@ -2,11 +2,13 @@ package sample.intention;
 
 import javafx.application.Platform;
 import javax.swing.JFrame;
+import sample.intention.swing.SwingSaft;
 
 import java.awt.Component;
-import java.awt.EventQueue;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.lang.reflect.InvocationTargetException;
-import java.util.concurrent.Callable;
+import java.util.concurrent.*;
 
 /**
  *
@@ -27,38 +29,34 @@ public class UiCore {
         if (mainPanel != null) {
             throw new RuntimeException("Ui already initialized and running in Swing mode");
         }
-        if (EventQueue.isDispatchThread()) {
-            runSwing(builder);
-        } else {
-            try {
-                EventQueue.invokeAndWait(() -> runSwing(builder));
-            } catch (InterruptedException | InvocationTargetException ex) {
-                // TODO: Handlw
-            }
-        }
-        Platform.setImplicitExit(false);
-    }
 
-    private static <T extends Component> void runSwing(Callable<T> builder) {
+        Platform.setImplicitExit(false);
+
         try {
-            mainPanel = new JFrame();
-            mainPanel.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-            mainPanel.getContentPane().add(builder.call());
-            mainPanel.pack();
-            mainPanel.setLocationByPlatform(true);
-            mainPanel.setVisible(true);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            // TODO: Our Exception handler
+            SwingSaft.dispatch(() -> {
+                mainPanel = new JFrame();
+                mainPanel.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                mainPanel.getContentPane().add(builder.call());
+                mainPanel.pack();
+                mainPanel.setLocationByPlatform(true);
+                mainPanel.setVisible(true);
+                mainPanel.addWindowListener(new WindowAdapter() {
+
+                    @Override
+                    public void windowClosed(WindowEvent e) {
+                        Platform.exit();
+                    }
+
+                });
+                return mainPanel;
+            });
+        } catch (InterruptedException | InvocationTargetException | ExecutionException ex) {
+            // TODO: Handlw
         }
     }
 
     public static void startJavaFx() {
 
-    }
-
-    public static void handleException(Exception e) {
-        e.printStackTrace();
     }
 
 }
