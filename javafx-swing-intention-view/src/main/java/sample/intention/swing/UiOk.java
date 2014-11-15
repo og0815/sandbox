@@ -8,11 +8,11 @@ import java.util.concurrent.Callable;
  *
  * @author oliver.guenther
  */
-public class SwingOk<V> implements Callable<OkCancelResult<V>> {
+public class UiOk<V> implements Callable<OkCancelResult<V>> {
 
     private final Callable<OkCancelResult<V>> before;
 
-    public SwingOk(Callable<OkCancelResult<V>> before) {
+    public UiOk(Callable<OkCancelResult<V>> before) {
         this.before = before;
     }
 

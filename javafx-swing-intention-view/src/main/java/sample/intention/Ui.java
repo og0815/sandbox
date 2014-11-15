@@ -5,7 +5,8 @@ import javax.swing.JPanel;
 import sample.intention.structure.CallableA1;
 import sample.intention.swing.*;
 
-import java.util.concurrent.Callable;
+import java.io.File;
+import java.util.concurrent.*;
 
 /**
  * The main entry point.
@@ -18,12 +19,16 @@ public class Ui {
         return new UiCreator<>(callable);
     }
 
-    public static <T, R extends Pane> SwingOk<R> popupOkCancelFx(CallableA1<T, R> callableA1) {
+    public static <T, R extends Pane> UiOk<R> popupOkCancelFx(CallableA1<T, R> callableA1) {
         return new UiCreator().popupOkCancelFx(callableA1);
     }
 
-    public static <T, R extends JPanel> SwingOk<R> popupOkCancel(CallableA1<T, R> callableA1) {
+    public static <T, R extends JPanel> UiOk<R> popupOkCancel(CallableA1<T, R> callableA1) {
         return new UiCreator().popupOkCancel(callableA1);
+    }
+
+    public static UiOk<File> openFileChosser() {
+        return new UiFileChooser().open();
     }
 
     public static <V> void exec(Callable<V> ie) {

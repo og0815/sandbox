@@ -26,8 +26,12 @@ public class UiCreator<T> implements Callable<T> {
     public UiCreator() {
     }
 
-    public <R extends Pane> SwingOk<R> popupOkCancelFx(CallableA1<T, R> builder) {
-        return new SwingOk<>(new Callable<OkCancelResult<R>>() {
+    public <T> UiCreator<T> call(Callable<T> callable) {
+        return new UiCreator<>(callable);
+    }
+
+    public <R extends Pane> UiOk<R> popupOkCancelFx(CallableA1<T, R> builder) {
+        return new UiOk<>(new Callable<OkCancelResult<R>>() {
 
             @Override
             public OkCancelResult<R> call() throws Exception {
@@ -49,8 +53,8 @@ public class UiCreator<T> implements Callable<T> {
         });
     }
 
-    public <R extends JPanel> SwingOk<R> popupOkCancel(CallableA1<T, R> builder) {
-        return new SwingOk<>(new Callable<OkCancelResult<R>>() {
+    public <R extends JPanel> UiOk<R> popupOkCancel(CallableA1<T, R> builder) {
+        return new UiOk<>(new Callable<OkCancelResult<R>>() {
 
             @Override
             public OkCancelResult<R> call() throws Exception {
