@@ -2,7 +2,7 @@ package sample.demo.aux;
 
 import javax.swing.JOptionPane;
 import org.apache.commons.lang3.StringUtils;
-import sample.intention.swing.OnOk;
+import eu.ggnet.saft.core.aux.OnOk;
 import sample.old.*;
 
 /**

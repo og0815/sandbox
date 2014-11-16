@@ -1,4 +1,4 @@
-package sample.intention.swing;
+package eu.ggnet.saft.core.swingfx;
 
 import java.awt.EventQueue;
 import java.lang.reflect.InvocationTargetException;

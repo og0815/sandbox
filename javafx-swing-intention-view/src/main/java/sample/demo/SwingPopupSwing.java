@@ -2,8 +2,8 @@ package sample.demo;
 
 import sample.demo.aux.DocumentAdressUpdateView;
 import sample.demo.aux.MainPanel;
-import sample.intention.Ui;
-import sample.intention.UiCore;
+import eu.ggnet.saft.core.Ui;
+import eu.ggnet.saft.core.UiCore;
 
 /**
  * Opens a Swing Panel as Popup Dialog blocking the hole application.
@@ -18,7 +18,7 @@ import sample.intention.UiCore;
  *
  * @author oliver.guenther
  */
-public class PopupSwing {
+public class SwingPopupSwing {
 
     public static void main(String[] args) {
         UiCore.startSwing(() -> new MainPanel());

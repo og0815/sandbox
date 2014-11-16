@@ -1,4 +1,4 @@
-package sample.intention.swing;
+package eu.ggnet.saft.core.aux;
 
 /**
  * If implemented by a Pane or JPanel, the onOk is called if ok is pressed.

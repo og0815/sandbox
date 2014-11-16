@@ -1,6 +1,6 @@
 package sample.demo;
 
-import sample.intention.Ui;
+import eu.ggnet.saft.core.Ui;
 
 /**
  * Shows a chain,that is broken through a null result.

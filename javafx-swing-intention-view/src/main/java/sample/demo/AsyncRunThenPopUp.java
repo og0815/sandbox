@@ -1,9 +1,10 @@
 package sample.demo;
 
+import eu.ggnet.saft.core.UiCore;
+import eu.ggnet.saft.core.Ui;
 import sample.demo.aux.DocumentAdressUpdateView;
 import sample.demo.aux.MainPanel;
-import sample.intention.*;
-import sample.intention.structure.CallableA1;
+import eu.ggnet.saft.core.aux.CallableA1;
 
 import java.util.concurrent.Callable;
 

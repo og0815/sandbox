@@ -6,6 +6,7 @@ import javafx.embed.swing.JFXPanel;
 import javafx.geometry.*;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
+import eu.ggnet.saft.core.aux.Title;
 import sample.old.OkCancelStage;
 
 import java.time.*;
@@ -17,6 +18,7 @@ import java.util.concurrent.CountDownLatch;
  * <p>
  * @author oliver.guenther
  */
+@Title("Umsatzreport Parameter")
 public class RevenueReportSelectorPane extends GridPane {
 
     private final ObjectProperty<Step> step = new SimpleObjectProperty<>();

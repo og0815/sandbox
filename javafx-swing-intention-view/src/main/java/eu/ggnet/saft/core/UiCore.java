@@ -1,10 +1,13 @@
-package sample.intention;
+package eu.ggnet.saft.core;
 
+import eu.ggnet.saft.core.exception.ExceptionUtil;
+import eu.ggnet.saft.core.exception.SwingExceptionDialog;
+import eu.ggnet.saft.core.swingfx.FxSaft;
+import eu.ggnet.saft.core.swingfx.SwingSaft;
 import javafx.application.Platform;
+import javafx.scene.*;
+import javafx.stage.Stage;
 import javax.swing.JFrame;
-import sample.intention.swing.SwingSaft;
-import sample.intention.swing.exception.ExceptionUtil;
-import sample.intention.swing.exception.SwingExceptionDialog;
 
 import java.awt.Component;
 import java.awt.EventQueue;
@@ -20,10 +23,11 @@ import java.util.function.Consumer;
  *
  * @author oliver.guenther
  */
-// TODO: Title handler
 public class UiCore {
 
     public static JFrame mainPanel = null;
+
+    public static Stage mainStage = null;
 
     // We need the raw type here as we cannot get different typs of cosumers in and out.
     @SuppressWarnings("unchecked")
@@ -47,17 +51,34 @@ public class UiCore {
     };
 
     /**
+     * interim Mode, Saft connects to a running environment.
+     *
+     * @param mainView
+     */
+    public static void continueSwing(JFrame mainView) {
+        if (isRunning()) throw new IllegalStateException("UiCore is already initialised and running");
+        Platform.setImplicitExit(false); // Need this, as we asume many javafx elements opening and closing.
+        mainPanel = mainView;
+        mainPanel.addWindowListener(new WindowAdapter() {
+
+            @Override
+            public void windowClosed(WindowEvent e) {
+                Platform.exit();
+            }
+
+        });
+    }
+
+    /**
      * Starts the Core in Swing mode, may only be called once.
      *
      * @param <T>
      * @param builder
      */
     public static <T extends Component> void startSwing(final Callable<T> builder) {
-        if (mainPanel != null) {
-            throw new RuntimeException("Ui already initialized and running in Swing mode");
-        }
+        if (isRunning()) throw new IllegalStateException("UiCore is already initialised and running");
 
-        Platform.setImplicitExit(false);
+        Platform.setImplicitExit(false); // Need this, as we asume many javafx elements opening and closing.
 
         try {
             SwingSaft.dispatch(() -> {
@@ -82,8 +103,35 @@ public class UiCore {
         }
     }
 
-    public static void startJavaFx() {
-
+    /**
+     * Starts the Ui in JavaFx variant.
+     *
+     * This also assumes two things:
+     * <ul>
+     * <li>The JavaFX Platfrom is already running (as a Stage already exists), most likely created through default
+     * lifecycle of javaFx</li>
+     * <li>This Stage will always be open or the final to be closed, so implicitExit is ok</li>
+     * </ul>
+     *
+     * @param <T> type restriction.
+     * @param primaryStage the primaryStage for the application, not yet visible.
+     * @param builder the build for the main ui.
+     */
+    public static <T extends Parent> void startJavaFx(Stage primaryStage, final Callable<T> builder) {
+        if (isRunning()) throw new IllegalStateException("UiCore is already initialised and running");
+        mainStage = primaryStage;
+        try {
+            FxSaft.dispatch(() -> {
+                T node = builder.call();
+                mainStage.setScene(new Scene(node));
+                mainStage.centerOnScreen();
+                mainStage.sizeToScene();
+                mainStage.show();
+                return null;
+            });
+        } catch (ExecutionException | InterruptedException e) {
+            catchException(e);
+        }
     }
 
     /**
@@ -117,6 +165,18 @@ public class UiCore {
             }
         }
         finalConsumer.accept(b);
+    }
+
+    public static boolean isRunning() {
+        return mainPanel != null || mainStage != null;
+    }
+
+    public static boolean isFx() {
+        return (mainStage != null);
+    }
+
+    public static boolean isSwing() {
+        return (mainPanel != null);
     }
 
 }

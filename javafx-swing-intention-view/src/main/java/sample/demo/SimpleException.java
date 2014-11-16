@@ -1,8 +1,8 @@
 package sample.demo;
 
 import sample.demo.aux.MainPanel;
-import sample.intention.Ui;
-import sample.intention.UiCore;
+import eu.ggnet.saft.core.Ui;
+import eu.ggnet.saft.core.UiCore;
 
 /**
  * A Simple Exception handling Example.

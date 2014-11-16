@@ -1,11 +1,11 @@
-package sample.intention.swing;
+package eu.ggnet.saft.core.swingfx;
 
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 
-import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.*;
 
 /**
  *
@@ -38,6 +38,31 @@ public class FxSaft {
         }
         cdl.await();
         return fxp;
+    }
+
+    /**
+     * Dispatches the Callable to the Platform Ui Thread.
+     *
+     * @param <T> Return type of callable
+     * @param callable the callable to dispatch
+     * @return the result of the callable
+     * @throws InterruptedException see {@link CountDownLatch#await() }
+     * @throws ExecutionException see {@link FutureTask#get() }
+     */
+    public static <T> T dispatch(Callable<T> callable) throws InterruptedException, ExecutionException {
+        FutureTask<T> futureTask = new FutureTask<>(callable);
+        final CountDownLatch cdl = new CountDownLatch(1);
+        if (Platform.isFxApplicationThread()) {
+            futureTask.run();
+            cdl.countDown();
+        } else {
+            Platform.runLater(() -> {
+                futureTask.run();
+                cdl.countDown();
+            });
+        }
+        cdl.await();
+        return futureTask.get();
     }
 
     private static JFXPanel jfxPanel() {

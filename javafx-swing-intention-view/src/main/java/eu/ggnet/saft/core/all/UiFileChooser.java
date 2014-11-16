@@ -1,4 +1,4 @@
-package sample.intention.swing;
+package eu.ggnet.saft.core.all;
 
 import javafx.application.Platform;
 import javafx.stage.FileChooser;
@@ -7,19 +7,22 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.util.concurrent.*;
 
+import eu.ggnet.saft.core.swingfx.FxSaft;
+import eu.ggnet.saft.core.swingfx.SwingOk;
+
 /**
- * A FileChooser.
+ * A FileChooser, even if it's FX based, it is totally exceptalbe in a Swing environment.
  *
  * @author oliver.guenther
  */
 public class UiFileChooser {
 
-    public UiOk<File> open() {
+    public SwingOk<File> open() {
         return open(null);
     }
 
-    public UiOk<File> open(String title) {
-        return new UiOk<>(() -> {
+    public SwingOk<File> open(String title) {
+        return new SwingOk<>(() -> {
             FxSaft.ensurePlatformIsRunning();
 
             FutureTask<File> fileChosserTask = new FutureTask<>(() -> {

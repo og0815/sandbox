@@ -1,4 +1,4 @@
-package sample.intention.swing;
+package eu.ggnet.saft.core.all;
 
 import java.util.concurrent.Callable;
 

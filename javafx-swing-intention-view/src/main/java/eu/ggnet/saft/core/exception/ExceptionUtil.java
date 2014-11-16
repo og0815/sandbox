@@ -1,4 +1,4 @@
-package sample.intention.swing.exception;
+package eu.ggnet.saft.core.exception;
 
 import org.apache.commons.lang3.SystemUtils;
 

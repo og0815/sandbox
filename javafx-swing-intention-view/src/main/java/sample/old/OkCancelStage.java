@@ -9,7 +9,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import org.apache.commons.lang3.StringUtils;
-import sample.intention.swing.OnOk;
+import eu.ggnet.saft.core.aux.OnOk;
 
 /**
  *

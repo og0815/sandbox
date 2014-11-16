@@ -1,4 +1,4 @@
-package sample.intention.structure;
+package eu.ggnet.saft.core.aux;
 
 /**
  * Like {@link java.util.concurrent.Callable } , but with a parameter.

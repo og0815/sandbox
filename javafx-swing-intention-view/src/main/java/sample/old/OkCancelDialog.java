@@ -1,10 +1,8 @@
 package sample.old;
 
-import javax.swing.*;
-import sample.intention.swing.OnOk;
+import eu.ggnet.saft.core.aux.OnOk;
 
 import java.awt.*;
-import java.awt.event.*;
 
 /**
  *
@@ -18,17 +16,9 @@ public class OkCancelDialog<T extends Component> extends javax.swing.JDialog {
 
     boolean ok = false;
 
-    public OkCancelDialog(java.awt.Window parent, ModalityType modalityType, String title, T container) {
+    public OkCancelDialog(java.awt.Window parent, String title, T container) {
         super(parent);
         initComponents();
-        if (modalityType == null) {
-            setModalityType(ModalityType.APPLICATION_MODAL);
-        } else {
-            setModalityType(modalityType);
-        }
-        if (container instanceof IView) {
-            ((IView) container).setParent(this);
-        }
         subContainer = container;
         Dimension d = new Dimension(container.getPreferredSize());
         templatePanel.add(container, BorderLayout.CENTER);
@@ -45,11 +35,7 @@ public class OkCancelDialog<T extends Component> extends javax.swing.JDialog {
     }
 
     public OkCancelDialog(String title, T container) {
-        this(null, null, title, container);
-    }
-
-    public OkCancelDialog(java.awt.Window parent, String title, T container) {
-        this(parent, null, title, container);
+        this(null, title, container);
     }
 
     public T getSubContainer() {
@@ -148,35 +134,6 @@ public class OkCancelDialog<T extends Component> extends javax.swing.JDialog {
         closeWithOk(false);
     }//GEN-LAST:event_cancelButtonActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        final JFrame f1 = new JFrame("Blub");
-        f1.setSize(100, 100);
-        f1.getContentPane().setLayout(new BorderLayout());
-        JButton b = new JButton("Open");
-        f1.getContentPane().add(b, BorderLayout.CENTER);
-        f1.setVisible(true);
-        f1.addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosed(WindowEvent e) {
-                System.exit(0);
-            }
-        });
-
-        b.addActionListener((e) -> {
-            JLabel text = new JLabel("Ein toller Text");
-            text.setPreferredSize(new Dimension(200, 30));
-            OkCancelDialog dialog = new OkCancelDialog(f1, "Test Dialog", text);
-            dialog.setVisible(true);
-            if (dialog.isOk()) {
-                System.out.println("Ok was pressed");
-            } else {
-                System.out.println("Cancel was pressed");
-            }
-        });
-    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel buttonPanel;
     private javax.swing.JButton cancelButton;

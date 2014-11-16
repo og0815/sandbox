@@ -1,9 +1,10 @@
-package sample.intention;
+package eu.ggnet.saft.core;
 
+import eu.ggnet.saft.core.all.UiFileChooser;
+import eu.ggnet.saft.core.aux.CallableA1;
+import eu.ggnet.saft.core.swingfx.*;
 import javafx.scene.layout.Pane;
 import javax.swing.JPanel;
-import sample.intention.structure.CallableA1;
-import sample.intention.swing.*;
 
 import java.io.File;
 import java.util.concurrent.*;
@@ -22,24 +23,31 @@ import java.util.concurrent.*;
  * @author oliver.guenther
  */
 public class Ui {
+// TODO: If doof, open FileChooser only swing.
 
     public static <R> UiCreator<R> call(Callable<R> callable) {
-        return new UiCreator<>(callable);
+        if (UiCore.isRunning() && UiCore.isFx()) return new FxCreator<>(callable);
+        if (UiCore.isRunning() && UiCore.isSwing()) return new SwingCreator<>(callable);
+        throw new IllegalStateException("UiCore not initalized");
     }
 
     public static <T, R extends Pane> UiOk<R> popupOkCancelFx(CallableA1<T, R> callableA1) {
-        return new UiCreator().popupOkCancelFx(callableA1);
+        if (UiCore.isRunning() && UiCore.isFx()) return new FxCreator().popupOkCancelFx(callableA1);
+        if (UiCore.isRunning() && UiCore.isSwing()) return new SwingCreator().popupOkCancelFx(callableA1);
+        throw new IllegalStateException("UiCore not initalized");
     }
 
     public static <T, R extends JPanel> UiOk<R> popupOkCancel(CallableA1<T, R> callableA1) {
-        return new UiCreator().popupOkCancel(callableA1);
+        if (UiCore.isRunning() && UiCore.isFx()) return new FxCreator().popupOkCancel(callableA1);
+        if (UiCore.isRunning() && UiCore.isSwing()) return new SwingCreator().popupOkCancel(callableA1);
+        throw new IllegalStateException("UiCore not initalized");
     }
 
-    public static UiOk<File> openFileChosser(String title) {
+    public static SwingOk<File> openFileChosser(String title) {
         return new UiFileChooser().open(title);
     }
 
-    public static UiOk<File> openFileChosser() {
+    public static SwingOk<File> openFileChosser() {
         return new UiFileChooser().open();
     }
 
