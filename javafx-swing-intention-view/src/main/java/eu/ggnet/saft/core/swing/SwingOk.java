@@ -1,9 +1,10 @@
 package eu.ggnet.saft.core.swing;
 
-import eu.ggnet.saft.core.all.UiOk;
 import eu.ggnet.saft.core.all.*;
 import eu.ggnet.saft.core.aux.CallableA1;
+import javafx.stage.Modality;
 
+import java.awt.Window;
 import java.util.concurrent.Callable;
 
 /**
@@ -15,13 +16,19 @@ public class SwingOk<V> implements UiOk<V> {
 
     private final OnceCaller<OkCancelResult<V>> before;
 
-    public SwingOk(Callable<OkCancelResult<V>> before) {
+    private final Window parent;
+
+    private final Modality modality;
+
+    public SwingOk(Callable<OkCancelResult<V>> before, Window parent, Modality modality) {
         this.before = new OnceCaller<>(before);
+        this.parent = parent;
+        this.modality = modality;
     }
 
     @Override
     public <R> SwingCreator<R> onOk(CallableA1<V, R> function) {
-        return new SwingCreator<>(UiUtil.onOk(function, before));
+        return new SwingCreator<>(UiUtil.onOk(function, before), parent, modality);
     }
 
     @Override

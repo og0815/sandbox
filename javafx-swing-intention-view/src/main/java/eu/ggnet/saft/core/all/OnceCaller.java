@@ -5,10 +5,11 @@ import java.util.concurrent.Callable;
 /**
  *
  * @author oliver.guenther
+ * @param <T>
  */
 public class OnceCaller<T> {
 
-    private Callable<T> callable;
+    private final Callable<T> callable;
 
     private T onceResult = null;
 
@@ -36,6 +37,10 @@ public class OnceCaller<T> {
 
     private void evalOnce() throws Exception {
         if (onceResult == null && callable != null) onceResult = callable.call();
+    }
+
+    public Callable<T> getCallable() {
+        return callable;
     }
 
 }

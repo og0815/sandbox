@@ -4,6 +4,7 @@ import eu.ggnet.saft.core.aux.CallableA1;
 import javafx.scene.layout.Pane;
 import javax.swing.JPanel;
 
+import java.io.File;
 import java.util.concurrent.Callable;
 
 /**
@@ -21,4 +22,7 @@ public interface UiCreator<T> extends Callable<T> {
 
     public Callable<Void> osOpen();
 
+    public UiOk<File> open();
+
+    public UiOk<File> open(String title);
 }

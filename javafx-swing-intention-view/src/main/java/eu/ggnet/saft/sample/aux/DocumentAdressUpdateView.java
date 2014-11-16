@@ -1,9 +1,9 @@
 package eu.ggnet.saft.sample.aux;
 
+import eu.ggnet.saft.core.aux.OnOk;
 import eu.ggnet.saft.core.swing.OkCancelDialog;
 import javax.swing.JOptionPane;
 import org.apache.commons.lang3.StringUtils;
-import eu.ggnet.saft.core.aux.OnOk;
 
 /**
  *
@@ -114,7 +114,7 @@ public class DocumentAdressUpdateView extends javax.swing.JPanel implements OnOk
         String adress = "Hans Mustermann\nMusterstrasse 22\n12345 Musterhausen";
 
         DocumentAdressUpdateView view = new DocumentAdressUpdateView(1, adress, true);
-        OkCancelDialog<DocumentAdressUpdateView> dialog = new OkCancelDialog<>("TOLLER TITEL", view);
+        OkCancelDialog<DocumentAdressUpdateView> dialog = new OkCancelDialog<>(null, view);
         dialog.setVisible(true);
         if (dialog.isOk()) {
             System.out.println("OK pressed");

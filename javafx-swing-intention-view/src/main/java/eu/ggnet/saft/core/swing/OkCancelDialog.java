@@ -16,7 +16,7 @@ public class OkCancelDialog<T extends Component> extends javax.swing.JDialog {
 
     boolean ok = false;
 
-    public OkCancelDialog(java.awt.Window parent, String title, T container) {
+    public OkCancelDialog(Window parent, T container) {
         super(parent);
         initComponents();
         subContainer = container;
@@ -27,15 +27,7 @@ public class OkCancelDialog<T extends Component> extends javax.swing.JDialog {
         Dimension d2 = new Dimension(container.getMinimumSize());
         d2.setSize(d2.getWidth(), d2.getHeight() + 70);
         this.setMinimumSize(d2);
-        this.setTitle(title);
         this.pack();
-        if (parent != null) {
-            setLocationRelativeTo(parent);
-        }
-    }
-
-    public OkCancelDialog(String title, T container) {
-        this(null, title, container);
     }
 
     public T getSubContainer() {

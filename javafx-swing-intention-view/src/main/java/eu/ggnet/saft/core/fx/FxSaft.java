@@ -2,8 +2,10 @@ package eu.ggnet.saft.core.fx;
 
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
+import javafx.stage.Window;
 
 import java.util.concurrent.*;
 
@@ -63,6 +65,11 @@ public class FxSaft {
         }
         cdl.await();
         return futureTask.get();
+    }
+
+    public static Window windowAncestor(Node c) {
+        if (c == null) return null;
+        return c.getScene().getWindow();
     }
 
     private static JFXPanel jfxPanel() {

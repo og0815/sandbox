@@ -1,7 +1,5 @@
 package eu.ggnet.saft.core.all;
 
-import eu.ggnet.saft.core.swing.SwingCreator;
-
 import java.util.concurrent.Callable;
 
 /**
@@ -15,14 +13,6 @@ public abstract class AbstractCreator<T> implements UiCreator<T> {
 
     public AbstractCreator(Callable<T> callable) {
         before = new OnceCaller<>(callable);
-    }
-
-    @Override
-    public <D> SwingCreator<D> call(Callable<D> callable) {
-        return new SwingCreator<>(() -> {
-            if (before.ifPresentIsNull()) return null; // Chainbreaker
-            return callable.call();
-        });
     }
 
     @Override
