@@ -1,12 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package eu.ggnet.saft.core.all;
 
-import eu.ggnet.saft.core.all.OnceCaller;
-import eu.ggnet.saft.core.all.UiUtil;
 import eu.ggnet.saft.core.swing.SwingCreator;
 
 import java.util.concurrent.Callable;
