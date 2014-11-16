@@ -1,8 +1,12 @@
 package eu.ggnet.saft.core;
 
+import eu.ggnet.saft.core.all.UiCreator;
+import eu.ggnet.saft.core.all.UiOk;
+import eu.ggnet.saft.core.fx.FxCreator;
+import eu.ggnet.saft.core.swing.SwingCreator;
+import eu.ggnet.saft.core.swing.SwingOk;
 import eu.ggnet.saft.core.all.UiFileChooser;
 import eu.ggnet.saft.core.aux.CallableA1;
-import eu.ggnet.saft.core.swingfx.*;
 import javafx.scene.layout.Pane;
 import javax.swing.JPanel;
 

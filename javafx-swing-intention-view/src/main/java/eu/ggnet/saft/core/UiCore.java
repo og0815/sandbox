@@ -2,8 +2,8 @@ package eu.ggnet.saft.core;
 
 import eu.ggnet.saft.core.exception.ExceptionUtil;
 import eu.ggnet.saft.core.exception.SwingExceptionDialog;
-import eu.ggnet.saft.core.swingfx.FxSaft;
-import eu.ggnet.saft.core.swingfx.SwingSaft;
+import eu.ggnet.saft.core.fx.FxSaft;
+import eu.ggnet.saft.core.swing.SwingSaft;
 import javafx.application.Platform;
 import javafx.scene.*;
 import javafx.stage.Stage;

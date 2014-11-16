@@ -7,8 +7,8 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.util.concurrent.*;
 
-import eu.ggnet.saft.core.swingfx.FxSaft;
-import eu.ggnet.saft.core.swingfx.SwingOk;
+import eu.ggnet.saft.core.fx.FxSaft;
+import eu.ggnet.saft.core.swing.SwingOk;
 
 /**
  * A FileChooser, even if it's FX based, it is totally exceptalbe in a Swing environment.
