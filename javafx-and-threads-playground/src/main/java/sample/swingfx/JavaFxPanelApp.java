@@ -3,16 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mycompany.javafx.maven;
+package sample.swingfx;
 
 import javafx.application.Platform;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.embed.swing.JFXPanel;
+import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.ListView;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
@@ -20,7 +19,7 @@ import javax.swing.SwingUtilities;
  *
  * @author oliver.guenther
  */
-public class JavaFxListApp {
+public class JavaFxPanelApp {
 
     private static void initAndShowGUI() {
         // This method is invoked on the EDT thread
@@ -46,15 +45,16 @@ public class JavaFxListApp {
     }
 
     private static Scene createScene() {
-        BorderPane pane = new BorderPane();
-        Scene scene = new Scene(pane, Color.ALICEBLUE);
+        Group root = new Group();
+        Scene scene = new Scene(root, Color.ALICEBLUE);
+        Text text = new Text();
 
-        ListView<String> list = new ListView<>();
-        ObservableList<String> items = FXCollections.observableArrayList(
-                "Single", "Double", "Suite", "Family App");
-        list.setItems(items);
+        text.setX(0);
+        text.setY(25);
+        text.setFont(new Font(25));
+        text.setText("Welcome JavaFX!");
 
-        pane.setCenter(list);
+        root.getChildren().add(text);
 
         return (scene);
     }

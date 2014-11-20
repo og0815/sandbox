@@ -4,20 +4,24 @@
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import org.tbee.javafx.scene.layout.fxml.MigPane?>
-<?import layouttests.migfxml.sample1.*?>
+<?import sample.javafx.*?>
 
-<MigPane id="rootPane" fx:controller="com.mycompany.javafx.maven.HelloController"
-        styleClass="main-panel"
-        layout="insets 20"
-        cols="[label, pref!][grow, 50::]"
-        rows=""
-        xmlns:fx="http://javafx.com/fxml">
+<MigPane id="rootPane" fx:controller="sample.javafx.HelloController"
+         styleClass="main-panel"
+         layout="insets 20"
+         cols="[label, pref!][grow, 50::]"
+         rows=""
+         xmlns:fx="http://javafx.com/fxml">
 
-    <Label text="First Name:" /> <TextField fx:id="firstNameField" prefColumnCount="30" MigPane.cc="growx, wrap" />
-    <Label text="Last Name:" />	<TextField fx:id="lastNameField" prefColumnCount="30" MigPane.cc="growx, wrap" />
+    <Label text="First Name:" />
+    <TextField fx:id="firstNameField" prefColumnCount="30" MigPane.cc="growx, wrap" />
+    <Label text="Last Name:" />
+    <TextField fx:id="lastNameField" prefColumnCount="30" MigPane.cc="growx, wrap" />
 
     <Button text="Say Hello" onAction="#sayHello" MigPane.cc="skip, gap :push, gaptop 15, wrap" />
 
-    <Label fx:id="messageLabel" styleClass="hello-message" MigPane.cc="span, growx, gaptop 15" />
+    <Button text="Do ComputableFuture" onAction="#doComputable" MigPane.cc="skip, gap :push, gaptop 5, wrap" />
+
+    <Label fx:id="messageLabel" styleClass="hello-message" MigPane.cc="span, growx, gaptop 10" />
 
 </MigPane >

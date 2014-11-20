@@ -1,3 +1,9 @@
-com/mycompany/javafx/maven/MainApp.class
-com/mycompany/javafx/maven/OtherApp.class
-com/mycompany/javafx/maven/HelloController.class
+sample/javafx/MainApp.class
+sample/swingfx/JavaFxListApp$1.class
+sample/swingfx/JavaFxListApp$2.class
+sample/swingfx/JavaFxPanelApp.class
+sample/javafx/HelloPojo.class
+sample/javafx/HelloController.class
+sample/swingfx/JavaFxListApp.class
+sample/swingfx/JavaFxPanelApp$2.class
+sample/swingfx/JavaFxPanelApp$1.class
