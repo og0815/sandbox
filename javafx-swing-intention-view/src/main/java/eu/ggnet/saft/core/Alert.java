@@ -41,5 +41,5 @@ public class Alert {
         new UiAlert().title(title).message(message).parent(parent).show(type);
     }
 
-    // TODO: Create more short
+    // TODO: Create more shortcuts
 }

@@ -1,5 +1,6 @@
 package eu.ggnet.saft.core.fx;
 
+import eu.ggnet.saft.core.UiCore;
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.Node;
@@ -31,10 +32,12 @@ public class FxSaft {
         final CountDownLatch cdl = new CountDownLatch(1);
         if (Platform.isFxApplicationThread()) {
             fxp.setScene(new Scene(p));
+            UiCore.swingParentHelper.put(fxp.getScene(), fxp);
             cdl.countDown();
         } else {
             Platform.runLater(() -> {
                 fxp.setScene(new Scene(p));
+                UiCore.swingParentHelper.put(fxp.getScene(), fxp);
                 cdl.countDown();
             });
         }

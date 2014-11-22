@@ -5,6 +5,9 @@ import eu.ggnet.saft.core.exception.SwingExceptionDialog;
 import eu.ggnet.saft.core.fx.FxSaft;
 import eu.ggnet.saft.core.swing.SwingSaft;
 import javafx.application.Platform;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.embed.swing.JFXPanel;
 import javafx.scene.*;
 import javafx.stage.Stage;
 import javax.swing.JFrame;
@@ -14,8 +17,7 @@ import java.awt.EventQueue;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.lang.reflect.InvocationTargetException;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.*;
 import java.util.function.Consumer;
 
@@ -29,7 +31,14 @@ public class UiCore {
 
     public static Stage mainStage = null;
 
-    // We need the raw type here as we cannot get different typs of cosumers in and out.
+    /**
+     * Holds a mapping of all Scenes in JFXPanels.
+     */
+    public static Map<Scene, JFXPanel> swingParentHelper = new WeakHashMap<>();
+
+    private final static BooleanProperty backgroundActivity = new SimpleBooleanProperty();
+
+    // We need the raw type here. Otherwise we cannot get different typs of cosumers in and out.
     @SuppressWarnings("unchecked")
     private static final Map<Class, Consumer> exceptionConsumer = new HashMap<>();
 
@@ -49,6 +58,10 @@ public class UiCore {
         }
 
     };
+
+    public static BooleanProperty backgroundActivityProperty() {
+        return backgroundActivity;
+    }
 
     /**
      * interim Mode, Saft connects to a running environment.

@@ -1,11 +1,12 @@
 package eu.ggnet.saft.sample;
 
-import eu.ggnet.saft.core.UiCore;
 import eu.ggnet.saft.core.Ui;
+import eu.ggnet.saft.core.UiCore;
+import eu.ggnet.saft.core.aux.CallableA1;
 import eu.ggnet.saft.sample.aux.DocumentAdressUpdateView;
 import eu.ggnet.saft.sample.aux.MainPanel;
-import eu.ggnet.saft.core.aux.CallableA1;
 
+import java.awt.EventQueue;
 import java.util.concurrent.Callable;
 
 /**
@@ -27,7 +28,14 @@ public class AsyncRunThenPopUp {
     }
 
     public static void main(String[] args) {
-        UiCore.startSwing(() -> new MainPanel());
+        final MainPanel panel = new MainPanel();
+        UiCore.startSwing(() -> panel);
+        UiCore.backgroundActivityProperty().addListener((o, ov, nv) -> {
+            EventQueue.invokeLater(() -> {
+                panel.getProgressBar().setIndeterminate(nv);
+            });
+        });
+
         Ui.exec(
                 Ui
                 .call(() -> HardWorker.work2s("per", "Eine leere Adresse"))

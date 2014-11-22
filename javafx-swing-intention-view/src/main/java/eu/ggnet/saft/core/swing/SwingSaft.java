@@ -1,11 +1,14 @@
 package eu.ggnet.saft.core.swing;
 
+import eu.ggnet.saft.core.UiCore;
 import javafx.embed.swing.SwingNode;
+import javafx.scene.*;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 import java.awt.*;
 import java.lang.reflect.InvocationTargetException;
+import java.util.Optional;
 import java.util.concurrent.*;
 
 /**
@@ -34,11 +37,23 @@ public class SwingSaft {
      * supplied parameter is of type Window and if true returns it.
      *
      * @param c the component
-     * @return null or a window.
+     * @return a window.
      */
-    public static Window windowAncestor(Component c) {
-        if (c instanceof Window) return (Window) c;
-        return SwingUtilities.getWindowAncestor(c);
+    public static Optional<Window> windowAncestor(Component c) {
+        if (c == null) return Optional.empty();
+        if (c instanceof Window) return Optional.of((Window) c);
+        return Optional.ofNullable(SwingUtilities.getWindowAncestor(c));
+    }
+
+    /**
+     * Returns the Swing Window in Swing Mode from a wrapped JavaFx Node.
+     *
+     * @param p the node
+     * @return a window
+     */
+    public static Optional<Window> windowAncestor(Node p) {
+        if (p == null) return Optional.empty();
+        return windowAncestor(UiCore.swingParentHelper.get(p.getScene()));
     }
 
 }

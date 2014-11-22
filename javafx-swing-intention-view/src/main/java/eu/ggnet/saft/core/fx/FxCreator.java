@@ -8,6 +8,8 @@ import javafx.embed.swing.SwingNode;
 import javafx.scene.layout.Pane;
 import javafx.stage.*;
 import javax.swing.JPanel;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.util.concurrent.*;
@@ -23,6 +25,8 @@ public class FxCreator<T> extends AbstractCreator<T> {
 
     private final Modality modality;
 
+    private final Logger L = LoggerFactory.getLogger(FxCreator.class);
+
     public FxCreator(Callable<T> before, Window parent, Modality modality) {
         super(before);
         this.parent = parent;
@@ -37,7 +41,10 @@ public class FxCreator<T> extends AbstractCreator<T> {
     public <D> FxCreator<D> call(Callable<D> callable) {
         return new FxCreator<>(() -> {
             if (before.ifPresentIsNull()) return null; // Chainbreaker
-            return callable.call();
+            UiCore.backgroundActivityProperty().set(true);
+            D r = callable.call();
+            UiCore.backgroundActivityProperty().set(false);
+            return r;
         }, parent, modality);
     }
 
@@ -50,8 +57,8 @@ public class FxCreator<T> extends AbstractCreator<T> {
 
             return FxSaft.dispatch(() -> {
                 OkCancelStage<R> s = new OkCancelStage(UiUtil.extractTitle(pane).orElse("Auswahldialog"), pane);
-                s.initModality(Modality.NONE);
                 s.initOwner(parent);
+                L.warn("setLocationRelativeTo in JavaFx Mode not yet implemented");
                 s.showAndWait();
                 return new OkCancelResult<>(pane, s.isOk());
             });
@@ -69,6 +76,7 @@ public class FxCreator<T> extends AbstractCreator<T> {
             return FxSaft.dispatch(() -> {
                 OkCancelStage<SwingNode> s = new OkCancelStage(UiUtil.extractTitle(pannel).orElse("Auswahldialog"), node);
                 s.initOwner(parent);
+                L.warn("setLocationRelativeTo in JavaFx Mode not yet implemented");
                 s.showAndWait();
                 return new OkCancelResult<>(pannel, s.isOk());
             });

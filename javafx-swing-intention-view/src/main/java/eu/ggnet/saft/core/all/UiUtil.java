@@ -1,5 +1,6 @@
 package eu.ggnet.saft.core.all;
 
+import eu.ggnet.saft.core.UiCore;
 import eu.ggnet.saft.core.aux.CallableA1;
 import eu.ggnet.saft.core.aux.Title;
 
@@ -20,7 +21,10 @@ public class UiUtil {
             if (before.ifPresentIsNull()) return null; // Chainbreaker
             OkCancelResult<V> result = before.get();
             if (!result.ok) return null;  // Break Chain on demand
-            return function.call(result.value);
+            UiCore.backgroundActivityProperty().set(true);
+            R r = function.call(result.value);
+            UiCore.backgroundActivityProperty().set(false);
+            return r;
         };
     }
 

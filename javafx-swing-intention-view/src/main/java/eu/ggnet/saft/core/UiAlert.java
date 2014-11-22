@@ -4,6 +4,8 @@ import eu.ggnet.saft.core.swing.SwingSaft;
 import javafx.scene.Parent;
 import javax.swing.*;
 import lombok.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.awt.Component;
 import java.lang.reflect.InvocationTargetException;
@@ -17,6 +19,8 @@ import java.util.concurrent.ExecutionException;
 @ToString
 @EqualsAndHashCode
 public class UiAlert {
+
+    private final static Logger L = LoggerFactory.getLogger(UiAlert.class);
 
     @AllArgsConstructor
     public enum Type {
@@ -84,7 +88,6 @@ public class UiAlert {
     public void show(Type type) {
         try {
             // TODO: At the moment, I only have a Swing implementation.
-            // TODO: We also have ensured that SwingUtils works as expected any deep recovery for the Parent.
             SwingSaft.dispatch(() -> {
                 JOptionPane.showMessageDialog(discoverRoot(), message, title, type.getOptionPaneType());
                 return null;
@@ -95,8 +98,14 @@ public class UiAlert {
     }
 
     private Component discoverRoot() {
-        if (swingParent == null && UiCore.mainPanel == null) return null;
-        if (swingParent == null) return UiCore.mainPanel;
-        return SwingUtilities.getRoot(swingParent);
+        if (!UiCore.isRunning()) L.warn("UiCore not running, Alert still usable, but not great");
+        if (UiCore.isFx()) {
+            L.warn("Root discovery in FxMode not yet implemented");
+            return null;
+        }
+        // In Swing mode.
+        if (swingParent != null) return SwingSaft.windowAncestor(swingParent).orElse(UiCore.mainPanel);
+        if (javafxParent != null) return SwingSaft.windowAncestor(javafxParent).orElse(UiCore.mainPanel);
+        return UiCore.mainPanel;
     }
 }

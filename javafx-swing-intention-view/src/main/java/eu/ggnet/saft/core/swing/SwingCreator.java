@@ -1,5 +1,6 @@
 package eu.ggnet.saft.core.swing;
 
+import eu.ggnet.saft.core.UiCore;
 import eu.ggnet.saft.core.all.*;
 import eu.ggnet.saft.core.aux.CallableA1;
 import eu.ggnet.saft.core.fx.FxSaft;
@@ -38,7 +39,10 @@ public class SwingCreator<T> extends AbstractCreator<T> {
     public <D> SwingCreator<D> call(Callable<D> callable) {
         return new SwingCreator<>(() -> {
             if (before.ifPresentIsNull()) return null; // Chainbreaker
-            return callable.call();
+            UiCore.backgroundActivityProperty().set(true);
+            D r = callable.call();
+            UiCore.backgroundActivityProperty().set(false);
+            return r;
         }, parent, modality);
     }
 

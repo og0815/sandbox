@@ -9,6 +9,8 @@ import eu.ggnet.saft.core.swing.SwingSaft;
 import javafx.scene.Parent;
 import javafx.scene.layout.Pane;
 import javax.swing.JPanel;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.awt.*;
 import java.io.File;
@@ -31,24 +33,29 @@ import static javafx.stage.Modality.APPLICATION_MODAL;
  */
 public class Ui {
 
+    private final static Logger L = LoggerFactory.getLogger(Ui.class);
+
     public static <R> UiCreator<R> parent(Component parent) {
-        if (UiCore.isRunning() && UiCore.isFx())
+        if (UiCore.isRunning() && UiCore.isFx()) {
+            L.warn("Using a swing component as parent in JavaFx Mode is not yet implemented");
             return new FxCreator<>(null, UiCore.mainStage, APPLICATION_MODAL); // TODO: Find a way to get a Stage from a Swing embedded component.
+        }
         if (UiCore.isRunning() && UiCore.isSwing())
-            return new SwingCreator<>(null, SwingSaft.windowAncestor(parent), APPLICATION_MODAL);
+            return new SwingCreator<>(null, SwingSaft.windowAncestor(parent).orElse(UiCore.mainPanel), APPLICATION_MODAL);
         throw new IllegalStateException("UiCore not initalized");
     }
 
     public static <R> UiCreator<R> parent(Parent parent) {
         if (UiCore.isRunning() && UiCore.isFx())
-            return new FxCreator<>(null, FxSaft.windowAncestor(parent), APPLICATION_MODAL); // TODO: Find a way to get a Stage from a parent
-        if (UiCore.isRunning() && UiCore.isSwing()) // TODO: Find a way to get a swing window from a embedded javafx componet.
-            return new SwingCreator<>(null, UiCore.mainPanel, APPLICATION_MODAL);
+            return new FxCreator<>(null, FxSaft.windowAncestor(parent), APPLICATION_MODAL);
+        if (UiCore.isRunning() && UiCore.isSwing())
+            return new SwingCreator<>(null, SwingSaft.windowAncestor(parent).orElse(UiCore.mainPanel), APPLICATION_MODAL);
         throw new IllegalStateException("UiCore not initalized");
     }
 
     private static <R> UiCreator<R> creator() {
-        if (UiCore.isRunning() && UiCore.isFx()) return new FxCreator<>(null, UiCore.mainStage, APPLICATION_MODAL);
+        if (UiCore.isRunning() && UiCore.isFx())
+            return new FxCreator<>(null, UiCore.mainStage, APPLICATION_MODAL);
         if (UiCore.isRunning() && UiCore.isSwing())
             return new SwingCreator<>(null, UiCore.mainPanel, APPLICATION_MODAL);
         throw new IllegalStateException("UiCore not initalized");
