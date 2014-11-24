@@ -84,12 +84,12 @@ public class FxCreator<T> extends AbstractCreator<T> {
     }
 
     @Override
-    public FxOk<File> open() {
-        return open(null);
+    public FxOk<File> openFileChooser() {
+        return openFileChooser(null);
     }
 
     @Override
-    public FxOk<File> open(String title) {
+    public FxOk<File> openFileChooser(String title) {
         return new FxOk<>(() -> {
             File file = FxSaft.dispatch(() -> {
                 FileChooser fileChooser = new FileChooser();

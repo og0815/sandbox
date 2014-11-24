@@ -4,8 +4,7 @@ import eu.ggnet.saft.core.all.*;
 import eu.ggnet.saft.core.aux.CallableA1;
 import eu.ggnet.saft.core.fx.FxCreator;
 import eu.ggnet.saft.core.fx.FxSaft;
-import eu.ggnet.saft.core.swing.SwingCreator;
-import eu.ggnet.saft.core.swing.SwingSaft;
+import eu.ggnet.saft.core.swing.*;
 import javafx.scene.Parent;
 import javafx.scene.layout.Pane;
 import javax.swing.JPanel;
@@ -74,12 +73,16 @@ public class Ui {
     }
 
     public static UiOk<File> openFileChosser(String title) {
-        return Ui.<File>creator().open(title);
+        return Ui.<File>creator().openFileChooser(title);
 
     }
 
     public static UiOk<File> openFileChosser() {
-        return Ui.<File>creator().open();
+        return Ui.<File>creator().openFileChooser();
+    }
+
+    public static <T extends JPanel> SwingOpen<T> open(Class<T> t) {
+
     }
 
     public static <V> void exec(Callable<V> ie) {

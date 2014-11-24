@@ -85,13 +85,17 @@ public class SwingCreator<T> extends AbstractCreator<T> {
         }, parent, modality);
     }
 
-    @Override
-    public SwingOk<File> open() {
-        return open(null);
+    public <R extends JPanel> SwingOpen<R> open(Class<R> t) {
+
     }
 
     @Override
-    public SwingOk<File> open(String title) {
+    public SwingOk<File> openFileChooser() {
+        return openFileChooser(null);
+    }
+
+    @Override
+    public SwingOk<File> openFileChooser(String title) {
         return new SwingOk<>(() -> {
             FxSaft.ensurePlatformIsRunning();
             File file = FxSaft.dispatch(() -> {

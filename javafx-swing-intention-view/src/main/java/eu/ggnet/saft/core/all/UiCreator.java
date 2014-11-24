@@ -22,7 +22,7 @@ public interface UiCreator<T> extends Callable<T> {
 
     public Callable<Void> osOpen();
 
-    public UiOk<File> open();
+    public UiOk<File> openFileChooser();
 
-    public UiOk<File> open(String title);
+    public UiOk<File> openFileChooser(String title);
 }
