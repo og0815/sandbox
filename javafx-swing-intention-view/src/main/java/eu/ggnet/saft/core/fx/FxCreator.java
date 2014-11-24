@@ -3,8 +3,7 @@ package eu.ggnet.saft.core.fx;
 import eu.ggnet.saft.core.UiCore;
 import eu.ggnet.saft.core.all.*;
 import eu.ggnet.saft.core.aux.CallableA1;
-import eu.ggnet.saft.core.swing.SwingOpenPanel;
-import eu.ggnet.saft.core.swing.SwingSaft;
+import eu.ggnet.saft.core.swing.*;
 import java.io.File;
 import java.util.concurrent.*;
 import javafx.embed.swing.SwingNode;
@@ -107,13 +106,12 @@ public class FxCreator<T> extends AbstractCreator<T> {
     }
 
     @Override
-    public <R extends JPanel> SwingOpenPanel<T> open(Class<R> clazz) {
+    public <R extends JPanel> SwingOpenPanel<T, R> openJ(String key, CallableA1<T, R> builder) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public <R extends JPanel> SwingOpenPanel<T> open(Class<R> clazz, Object id) {
+    public <R extends Pane> SwingOpenPane<T, R> open(String key, CallableA1<T, R> builder) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
 }

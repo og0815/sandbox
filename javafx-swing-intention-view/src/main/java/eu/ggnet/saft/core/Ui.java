@@ -1,7 +1,7 @@
 package eu.ggnet.saft.core;
 
 import eu.ggnet.saft.core.all.*;
-import eu.ggnet.saft.core.aux.CallableA1;
+import eu.ggnet.saft.core.aux.*;
 import eu.ggnet.saft.core.fx.FxCreator;
 import eu.ggnet.saft.core.fx.FxSaft;
 import eu.ggnet.saft.core.swing.*;
@@ -78,12 +78,12 @@ public class Ui {
         return Ui.<File>creator().openFileChooser();
     }
 
-    public static <T, R extends JPanel> SwingOpenPanel<T> open(Class<R> clazz) {
-        return new SwingCreator<T>(null, UiCore.mainPanel, null).open(clazz);
+    public static <T, R extends JPanel> SwingOpenPanel<T, R> openJ(String key, CallableA1<T, R> callableA1) {
+        return new SwingCreator<T>(null, UiCore.mainPanel, null).openJ(key, callableA1);
     }
 
-    public static <T, R extends JPanel> SwingOpenPanel<T> open(Class<R> clazz, Object id) {
-        return new SwingCreator<T>(null, UiCore.mainPanel, null).open(clazz, id);
+    public static <T, R extends Pane> SwingOpenPane<T, R> open(String key, CallableA1<T, R> callableA1) {
+        return new SwingCreator<T>(null, UiCore.mainPanel, null).open(key, callableA1);
     }
 
     public static <V> void exec(Callable<V> ie) {

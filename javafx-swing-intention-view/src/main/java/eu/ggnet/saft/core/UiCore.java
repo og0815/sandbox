@@ -18,7 +18,6 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.*;
 import javafx.stage.Stage;
-import javafx.util.Pair;
 import javax.swing.JFrame;
 
 /**
@@ -31,7 +30,7 @@ public class UiCore {
 
     public static Stage mainStage = null;
 
-    public static Map<Pair<Class<?>, Object>, WeakReference<Window>> swingActiveWindows = new HashMap<>();
+    public static Map<String, WeakReference<Window>> swingActiveWindows = new HashMap<>();
 
     /**
      * Holds a mapping of all Scenes in JFXPanels.

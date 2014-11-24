@@ -17,7 +17,12 @@ public class UnitViewer extends javax.swing.JPanel implements Consumer<String> {
      * Creates new form UnitViewer
      */
     public UnitViewer() {
+        this("");
+    }
+
+    public UnitViewer(String text) {
         initComponents();
+        textArea.setText(text);
     }
 
     @Override

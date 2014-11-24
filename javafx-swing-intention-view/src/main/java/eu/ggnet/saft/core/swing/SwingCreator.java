@@ -2,7 +2,7 @@ package eu.ggnet.saft.core.swing;
 
 import eu.ggnet.saft.core.UiCore;
 import eu.ggnet.saft.core.all.*;
-import eu.ggnet.saft.core.aux.CallableA1;
+import eu.ggnet.saft.core.aux.*;
 import eu.ggnet.saft.core.fx.FxSaft;
 import java.awt.Dialog.ModalityType;
 import java.awt.Window;
@@ -85,13 +85,12 @@ public class SwingCreator<T> extends AbstractCreator<T> {
     }
 
     @Override
-    public <R extends JPanel> SwingOpenPanel<T> open(Class<R> clazz) {
-        return new SwingOpenPanel<>(before.getCallable(), clazz, null, parent, modality);
+    public <R extends JPanel> SwingOpenPanel<T, R> openJ(String key, CallableA1<T, R> builder) {
+        return new SwingOpenPanel<>(before.getCallable(), parent, modality, key, builder);
     }
 
-    @Override
-    public <R extends JPanel> SwingOpenPanel<T> open(Class<R> clazz, Object id) {
-        return new SwingOpenPanel<>(before.getCallable(), clazz, id, parent, modality);
+    public <R extends Pane> SwingOpenPane<T, R> open(String key, CallableA1<T, R> builder) {
+        return new SwingOpenPane<>(before.getCallable(), parent, modality, key, builder);
     }
 
     @Override

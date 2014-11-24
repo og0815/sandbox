@@ -1,21 +1,19 @@
 package eu.ggnet.saft.sample.aux;
 
-import javafx.scene.Parent;
+import java.util.concurrent.Callable;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
-
-import java.util.concurrent.Callable;
-
+import javafx.scene.layout.Pane;
 import static javafx.scene.text.Font.font;
 
 /**
  *
  * @author oliver.guenther
  */
-public class MainPaneBuilder implements Callable<Parent> {
+public class MainPaneBuilder implements Callable<Pane> {
 
     @Override
-    public Parent call() throws Exception {
+    public Pane call() throws Exception {
         Label l = new Label("Die JavaFx Main Application");
         l.setFont(font(50));
         BorderPane p = new BorderPane(l);
