@@ -4,22 +4,22 @@ import eu.ggnet.saft.core.exception.ExceptionUtil;
 import eu.ggnet.saft.core.exception.SwingExceptionDialog;
 import eu.ggnet.saft.core.fx.FxSaft;
 import eu.ggnet.saft.core.swing.SwingSaft;
+import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.lang.ref.WeakReference;
+import java.lang.reflect.InvocationTargetException;
+import java.util.*;
+import java.util.concurrent.*;
+import java.util.function.Consumer;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.*;
 import javafx.stage.Stage;
+import javafx.util.Pair;
 import javax.swing.JFrame;
-
-import java.awt.Component;
-import java.awt.EventQueue;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.lang.reflect.InvocationTargetException;
-import java.util.*;
-import java.util.concurrent.*;
-import java.util.function.Consumer;
 
 /**
  *
@@ -30,6 +30,8 @@ public class UiCore {
     public static JFrame mainPanel = null;
 
     public static Stage mainStage = null;
+
+    public static Map<Pair<Class<?>, Object>, WeakReference<Window>> swingActiveWindows = new HashMap<>();
 
     /**
      * Holds a mapping of all Scenes in JFXPanels.
@@ -121,8 +123,7 @@ public class UiCore {
      *
      * This also assumes two things:
      * <ul>
-     * <li>The JavaFX Platfrom is already running (as a Stage already exists), most likely created through default
-     * lifecycle of javaFx</li>
+     * <li>The JavaFX Platfrom is already running (as a Stage already exists), most likely created through default lifecycle of javaFx</li>
      * <li>This Stage will always be open or the final to be closed, so implicitExit is ok</li>
      * </ul>
      *
@@ -148,9 +149,8 @@ public class UiCore {
     }
 
     /**
-     * Registers an extra renderer for an Exception in any stacktrace. HINT: There is no order or hierachy in the
-     * engine. So if you register duplicates or have more than one match in a StackTrace, no one knows what might
-     * happen.
+     * Registers an extra renderer for an Exception in any stacktrace. HINT: There is no order or hierachy in the engine. So if you register duplicates or have
+     * more than one match in a StackTrace, no one knows what might happen.
      *
      * @param <T> type of the Exception
      * @param clazz the class of the Exception

@@ -1,25 +1,30 @@
 package eu.ggnet.saft.core.all;
 
 import java.util.concurrent.Callable;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 /**
  *
  * @author oliver.guenther
  * @param <T>
  */
+@EqualsAndHashCode
+@ToString
 public class OnceCaller<T> {
 
     private final Callable<T> callable;
 
     private T onceResult = null;
 
+    private boolean evaluated;
+
     public OnceCaller(Callable<T> before) {
         this.callable = before;
     }
 
     /**
-     * Returns true if and only if the supplied callable in constructor was not null, but the result of call is null.
-     * Implies the evaluation of callable.call().
+     * Returns true if and only if the supplied callable in constructor was not null, but the result of call is null. Implies the evaluation of callable.call().
      *
      * @return true if and only if the supplied callable in constructor was not null, but the result of call is null.
      * @throws Exception
@@ -36,7 +41,9 @@ public class OnceCaller<T> {
     }
 
     private void evalOnce() throws Exception {
-        if (onceResult == null && callable != null) onceResult = callable.call();
+        if (evaluated) return;
+        evaluated = true;
+        if (callable != null) onceResult = callable.call();
     }
 
     public Callable<T> getCallable() {

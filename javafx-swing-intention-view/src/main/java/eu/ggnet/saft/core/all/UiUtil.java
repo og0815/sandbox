@@ -3,11 +3,12 @@ package eu.ggnet.saft.core.all;
 import eu.ggnet.saft.core.UiCore;
 import eu.ggnet.saft.core.aux.CallableA1;
 import eu.ggnet.saft.core.aux.Title;
-
 import java.awt.Desktop;
+import java.awt.Dialog;
 import java.io.File;
 import java.util.Optional;
 import java.util.concurrent.Callable;
+import javafx.stage.Modality;
 
 /**
  * Util is
@@ -52,6 +53,19 @@ public class UiUtil {
         Title annotation = o.getClass().getAnnotation(Title.class);
         if (annotation == null) return Optional.empty();
         return Optional.ofNullable(annotation.value());
+    }
+
+    public static Optional<Dialog.ModalityType> toSwing(Modality m) {
+        if (m == null) return Optional.empty();
+        switch (m) {
+            case APPLICATION_MODAL:
+                return Optional.of(Dialog.ModalityType.APPLICATION_MODAL);
+            case WINDOW_MODAL:
+                return Optional.of(Dialog.ModalityType.DOCUMENT_MODAL);
+            case NONE:
+                return Optional.of(Dialog.ModalityType.MODELESS);
+        }
+        return Optional.empty();
     }
 
 }

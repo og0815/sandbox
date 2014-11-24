@@ -1,13 +1,14 @@
 package eu.ggnet.saft.core.all;
 
 import eu.ggnet.saft.core.aux.CallableA1;
+import eu.ggnet.saft.core.swing.SwingOpenPanel;
+import java.io.File;
+import java.util.concurrent.Callable;
 import javafx.scene.layout.Pane;
 import javax.swing.JPanel;
 
-import java.io.File;
-import java.util.concurrent.Callable;
-
 /**
+ * Interface to all Ui's.
  *
  * @author oliver.guenther
  * @param <T>
@@ -21,6 +22,10 @@ public interface UiCreator<T> extends Callable<T> {
     public <D> UiCreator<D> call(Callable<D> callable);
 
     public Callable<Void> osOpen();
+
+    public <R extends JPanel> SwingOpenPanel<T> open(Class<R> clazz);
+
+    public <R extends JPanel> SwingOpenPanel<T> open(Class<R> clazz, Object id);
 
     public UiOk<File> openFileChooser();
 

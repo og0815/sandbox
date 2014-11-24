@@ -3,16 +3,17 @@ package eu.ggnet.saft.core.fx;
 import eu.ggnet.saft.core.UiCore;
 import eu.ggnet.saft.core.all.*;
 import eu.ggnet.saft.core.aux.CallableA1;
+import eu.ggnet.saft.core.swing.SwingOpenPanel;
 import eu.ggnet.saft.core.swing.SwingSaft;
+import java.io.File;
+import java.util.concurrent.*;
 import javafx.embed.swing.SwingNode;
 import javafx.scene.layout.Pane;
 import javafx.stage.*;
+import static javafx.stage.Modality.APPLICATION_MODAL;
 import javax.swing.JPanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.io.File;
-import java.util.concurrent.*;
 
 /**
  *
@@ -58,6 +59,8 @@ public class FxCreator<T> extends AbstractCreator<T> {
             return FxSaft.dispatch(() -> {
                 OkCancelStage<R> s = new OkCancelStage(UiUtil.extractTitle(pane).orElse("Auswahldialog"), pane);
                 s.initOwner(parent);
+                if (modality == null) s.initModality(APPLICATION_MODAL);
+                else s.initModality(modality);
                 L.warn("setLocationRelativeTo in JavaFx Mode not yet implemented");
                 s.showAndWait();
                 return new OkCancelResult<>(pane, s.isOk());
@@ -76,6 +79,8 @@ public class FxCreator<T> extends AbstractCreator<T> {
             return FxSaft.dispatch(() -> {
                 OkCancelStage<SwingNode> s = new OkCancelStage(UiUtil.extractTitle(pannel).orElse("Auswahldialog"), node);
                 s.initOwner(parent);
+                if (modality == null) s.initModality(APPLICATION_MODAL);
+                else s.initModality(modality);
                 L.warn("setLocationRelativeTo in JavaFx Mode not yet implemented");
                 s.showAndWait();
                 return new OkCancelResult<>(pannel, s.isOk());
@@ -99,6 +104,16 @@ public class FxCreator<T> extends AbstractCreator<T> {
             });
             return new OkCancelResult<>(file, file != null);
         }, parent, modality);
+    }
+
+    @Override
+    public <R extends JPanel> SwingOpenPanel<T> open(Class<R> clazz) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public <R extends JPanel> SwingOpenPanel<T> open(Class<R> clazz, Object id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

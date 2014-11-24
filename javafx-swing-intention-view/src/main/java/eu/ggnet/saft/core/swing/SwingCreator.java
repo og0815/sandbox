@@ -4,15 +4,14 @@ import eu.ggnet.saft.core.UiCore;
 import eu.ggnet.saft.core.all.*;
 import eu.ggnet.saft.core.aux.CallableA1;
 import eu.ggnet.saft.core.fx.FxSaft;
+import java.awt.Dialog.ModalityType;
+import java.awt.Window;
+import java.io.File;
+import java.util.concurrent.*;
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.layout.Pane;
 import javafx.stage.*;
 import javax.swing.JPanel;
-
-import java.awt.Dialog;
-import java.awt.Window;
-import java.io.File;
-import java.util.concurrent.*;
 
 /**
  *
@@ -57,7 +56,7 @@ public class SwingCreator<T> extends AbstractCreator<T> {
             return SwingSaft.dispatch(() -> {
                 OkCancelDialog<JFXPanel> dialog = new OkCancelDialog<>(parent, p);
                 dialog.setTitle(UiUtil.extractTitle(pane).orElse("Auswahldialog"));
-                dialog.setModalityType(toSwing(modality));
+                dialog.setModalityType(UiUtil.toSwing(modality).orElse(ModalityType.APPLICATION_MODAL));
                 dialog.pack();
                 dialog.setLocationRelativeTo(parent);
                 dialog.setVisible(true);
@@ -76,7 +75,7 @@ public class SwingCreator<T> extends AbstractCreator<T> {
                 R panel = builder.call(parameter);
                 OkCancelDialog<R> dialog = new OkCancelDialog<>(parent, panel);
                 dialog.setTitle(UiUtil.extractTitle(panel).orElse("Auswahldialog"));
-                dialog.setModalityType(toSwing(modality));
+                dialog.setModalityType(UiUtil.toSwing(modality).orElse(ModalityType.APPLICATION_MODAL));
                 dialog.pack();
                 dialog.setLocationRelativeTo(parent);
                 dialog.setVisible(true);
@@ -85,8 +84,14 @@ public class SwingCreator<T> extends AbstractCreator<T> {
         }, parent, modality);
     }
 
-    public <R extends JPanel> SwingOpen<R> open(Class<R> t) {
+    @Override
+    public <R extends JPanel> SwingOpenPanel<T> open(Class<R> clazz) {
+        return new SwingOpenPanel<>(before.getCallable(), clazz, null, parent, modality);
+    }
 
+    @Override
+    public <R extends JPanel> SwingOpenPanel<T> open(Class<R> clazz, Object id) {
+        return new SwingOpenPanel<>(before.getCallable(), clazz, id, parent, modality);
     }
 
     @Override
@@ -106,19 +111,6 @@ public class SwingCreator<T> extends AbstractCreator<T> {
             });
             return new OkCancelResult<>(file, file != null);
         }, parent, modality);
-    }
-
-    private Dialog.ModalityType toSwing(Modality m) {
-        if (m == null) return Dialog.ModalityType.APPLICATION_MODAL;
-        switch (m) {
-            case APPLICATION_MODAL:
-                return Dialog.ModalityType.APPLICATION_MODAL;
-            case WINDOW_MODAL:
-                return Dialog.ModalityType.DOCUMENT_MODAL;
-            case NONE:
-                return Dialog.ModalityType.MODELESS;
-        }
-        return Dialog.ModalityType.APPLICATION_MODAL;
     }
 
 }

@@ -5,17 +5,14 @@ import eu.ggnet.saft.core.aux.CallableA1;
 import eu.ggnet.saft.core.fx.FxCreator;
 import eu.ggnet.saft.core.fx.FxSaft;
 import eu.ggnet.saft.core.swing.*;
+import java.awt.*;
+import java.io.File;
+import java.util.concurrent.*;
 import javafx.scene.Parent;
 import javafx.scene.layout.Pane;
 import javax.swing.JPanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.awt.*;
-import java.io.File;
-import java.util.concurrent.*;
-
-import static javafx.stage.Modality.APPLICATION_MODAL;
 
 /**
  * The main entry point.
@@ -37,26 +34,26 @@ public class Ui {
     public static <R> UiCreator<R> parent(Component parent) {
         if (UiCore.isRunning() && UiCore.isFx()) {
             L.warn("Using a swing component as parent in JavaFx Mode is not yet implemented");
-            return new FxCreator<>(null, UiCore.mainStage, APPLICATION_MODAL); // TODO: Find a way to get a Stage from a Swing embedded component.
+            return new FxCreator<>(null, UiCore.mainStage, null); // TODO: Find a way to get a Stage from a Swing embedded component.
         }
         if (UiCore.isRunning() && UiCore.isSwing())
-            return new SwingCreator<>(null, SwingSaft.windowAncestor(parent).orElse(UiCore.mainPanel), APPLICATION_MODAL);
+            return new SwingCreator<>(null, SwingSaft.windowAncestor(parent).orElse(UiCore.mainPanel), null);
         throw new IllegalStateException("UiCore not initalized");
     }
 
     public static <R> UiCreator<R> parent(Parent parent) {
         if (UiCore.isRunning() && UiCore.isFx())
-            return new FxCreator<>(null, FxSaft.windowAncestor(parent), APPLICATION_MODAL);
+            return new FxCreator<>(null, FxSaft.windowAncestor(parent), null);
         if (UiCore.isRunning() && UiCore.isSwing())
-            return new SwingCreator<>(null, SwingSaft.windowAncestor(parent).orElse(UiCore.mainPanel), APPLICATION_MODAL);
+            return new SwingCreator<>(null, SwingSaft.windowAncestor(parent).orElse(UiCore.mainPanel), null);
         throw new IllegalStateException("UiCore not initalized");
     }
 
     private static <R> UiCreator<R> creator() {
         if (UiCore.isRunning() && UiCore.isFx())
-            return new FxCreator<>(null, UiCore.mainStage, APPLICATION_MODAL);
+            return new FxCreator<>(null, UiCore.mainStage, null);
         if (UiCore.isRunning() && UiCore.isSwing())
-            return new SwingCreator<>(null, UiCore.mainPanel, APPLICATION_MODAL);
+            return new SwingCreator<>(null, UiCore.mainPanel, null);
         throw new IllegalStateException("UiCore not initalized");
     }
 
@@ -81,8 +78,12 @@ public class Ui {
         return Ui.<File>creator().openFileChooser();
     }
 
-    public static <T extends JPanel> SwingOpen<T> open(Class<T> t) {
+    public static <T, R extends JPanel> SwingOpenPanel<T> open(Class<R> clazz) {
+        return new SwingCreator<T>(null, UiCore.mainPanel, null).open(clazz);
+    }
 
+    public static <T, R extends JPanel> SwingOpenPanel<T> open(Class<R> clazz, Object id) {
+        return new SwingCreator<T>(null, UiCore.mainPanel, null).open(clazz, id);
     }
 
     public static <V> void exec(Callable<V> ie) {
