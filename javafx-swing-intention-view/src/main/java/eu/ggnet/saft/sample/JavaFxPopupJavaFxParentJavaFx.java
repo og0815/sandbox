@@ -9,8 +9,9 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
-import static javafx.scene.text.Font.font;
 import javafx.stage.Stage;
+
+import static javafx.scene.text.Font.font;
 
 /**
  * Opening a JavaFX Pane as popup Dialog, blocking the hole application.
@@ -35,6 +36,7 @@ public class JavaFxPopupJavaFxParentJavaFx extends Application {
 
         final Stage stage = FxSaft.dispatch(() -> {
             Stage s = new Stage();
+            s.setTitle("Second MainStage");
             s.setX(400);
             s.setY(600);
             s.setScene(new Scene(p));

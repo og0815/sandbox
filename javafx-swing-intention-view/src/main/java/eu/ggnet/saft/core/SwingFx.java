@@ -5,14 +5,15 @@ import eu.ggnet.saft.core.aux.*;
 import eu.ggnet.saft.core.fx.FxCreator;
 import eu.ggnet.saft.core.fx.FxSaft;
 import eu.ggnet.saft.core.swing.*;
-import java.awt.*;
-import java.io.File;
-import java.util.concurrent.*;
 import javafx.scene.Parent;
 import javafx.scene.layout.Pane;
 import javax.swing.JPanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.awt.*;
+import java.io.File;
+import java.util.concurrent.*;
 
 /**
  * The main entry point.
@@ -65,6 +66,10 @@ public class SwingFx {
         return SwingFx.<T>creator().choiceFx(panelClazz);
     }
 
+    public static <T, R extends FxController> UiOk<R> choiceFxml(Class<R> controllerClass) {
+        return SwingFx.<T>creator().choiceFxml(controllerClass);
+    }
+
     public static <T, R extends JPanel> UiOk<R> choiceSwing(Class<R> panelClazz) {
         return SwingFx.<T>creator().choiceSwing(panelClazz);
     }
@@ -87,7 +92,7 @@ public class SwingFx {
     }
 
     public static <V> void exec(Callable<V> ie) {
-        // See CompletableFuture(), might be cooler.
+        // See CompletableFuture() or ForkJoinPool, might be cooler.
         // Return of Futur might
         Thread t = new Thread() {
             @Override

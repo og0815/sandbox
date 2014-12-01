@@ -4,15 +4,17 @@ import eu.ggnet.saft.core.UiCore;
 import eu.ggnet.saft.core.all.*;
 import eu.ggnet.saft.core.aux.*;
 import eu.ggnet.saft.core.fx.FxSaft;
-import java.awt.Window;
-import java.io.File;
-import java.util.concurrent.*;
 import javafx.embed.swing.JFXPanel;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.Pane;
 import javafx.stage.*;
 import javax.swing.JPanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.awt.Window;
+import java.io.File;
+import java.util.concurrent.*;
 
 /**
  *
@@ -57,6 +59,18 @@ public class SwingCreator<T> extends AbstractCreator<T> {
             final R pane = FxSaft.construct(paneClazz, parameter);
             JFXPanel p = FxSaft.wrap(pane);
             return SwingSaft.wrapAndShow(parent, p, modality, pane);
+        }, parent, modality);
+    }
+
+    @Override
+    public <R extends FxController> UiOk<R> choiceFxml(Class<R> controllerClass) {
+        return new SwingOk<>(() -> {
+            if (before.ifPresentIsNull()) return null; // Chainbreaker
+            final T parameter = before.get();
+            FxSaft.ensurePlatformIsRunning();
+            final FXMLLoader loader = FxSaft.constructFxml(controllerClass, parameter);
+            JFXPanel p = FxSaft.wrap(loader.getRoot());
+            return SwingSaft.wrapAndShow(parent, p, modality, loader.getController());
         }, parent, modality);
     }
 

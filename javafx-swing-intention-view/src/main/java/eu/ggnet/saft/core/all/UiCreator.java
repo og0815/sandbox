@@ -1,11 +1,13 @@
 package eu.ggnet.saft.core.all;
 
 import eu.ggnet.saft.core.aux.CallableA1;
+import eu.ggnet.saft.core.aux.FxController;
 import eu.ggnet.saft.core.swing.*;
-import java.io.File;
-import java.util.concurrent.Callable;
 import javafx.scene.layout.Pane;
 import javax.swing.JPanel;
+
+import java.io.File;
+import java.util.concurrent.Callable;
 
 /**
  * Interface to all Ui's.
@@ -18,6 +20,8 @@ public interface UiCreator<T> extends Callable<T> {
     <R extends JPanel> UiOk<R> choiceSwing(Class<R> panelClazz);
 
     <R extends Pane> UiOk<R> choiceFx(Class<R> paneClazz);
+
+    <R extends FxController> UiOk<R> choiceFxml(Class<R> controllerClass);
 
     public <D> UiCreator<D> call(Callable<D> callable);
 

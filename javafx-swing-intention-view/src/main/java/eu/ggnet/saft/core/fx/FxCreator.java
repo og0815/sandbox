@@ -3,17 +3,21 @@ package eu.ggnet.saft.core.fx;
 import eu.ggnet.saft.core.UiCore;
 import eu.ggnet.saft.core.all.*;
 import eu.ggnet.saft.core.aux.CallableA1;
+import eu.ggnet.saft.core.aux.FxController;
 import eu.ggnet.saft.core.swing.*;
-import java.io.File;
-import java.util.concurrent.*;
 import javafx.embed.swing.SwingNode;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 import javafx.stage.*;
-import static javafx.stage.Modality.APPLICATION_MODAL;
 import javax.swing.JPanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.File;
+import java.util.concurrent.*;
+
+import static javafx.stage.Modality.APPLICATION_MODAL;
 
 /**
  *
@@ -46,6 +50,16 @@ public class FxCreator<T> extends AbstractCreator<T> {
             D r = callable.call();
             UiCore.backgroundActivityProperty().set(false);
             return r;
+        }, parent, modality);
+    }
+
+    @Override
+    public <R extends FxController> UiOk<R> choiceFxml(Class<R> controllerClass) {
+        return new FxOk<>(() -> {
+            if (before.ifPresentIsNull()) return null; // Chainbreaker
+            final T parameter = before.get();
+            final FXMLLoader loader = FxSaft.constructFxml(controllerClass, parameter);
+            return wrapAndShow(parent, loader.getRoot(), modality, loader.getController());
         }, parent, modality);
     }
 
@@ -109,4 +123,5 @@ public class FxCreator<T> extends AbstractCreator<T> {
     public <R extends Pane> SwingOpenPane<T, R> openFx(String key, CallableA1<T, R> builder) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
 }
