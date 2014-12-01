@@ -1,8 +1,7 @@
 package eu.ggnet.saft.core.all;
 
 import eu.ggnet.saft.core.aux.CallableA1;
-import eu.ggnet.saft.core.swing.SwingOpenPane;
-import eu.ggnet.saft.core.swing.SwingOpenPanel;
+import eu.ggnet.saft.core.swing.*;
 import java.io.File;
 import java.util.concurrent.Callable;
 import javafx.scene.layout.Pane;
@@ -16,18 +15,17 @@ import javax.swing.JPanel;
  */
 public interface UiCreator<T> extends Callable<T> {
 
-    // HINT: we need the CallableA1, because we want to have the type of the return value of the builder in the next stage (e.g. onOk())
-    <R extends JPanel> UiOk<R> popupOkCancel(CallableA1<T, R> builder);
+    <R extends JPanel> UiOk<R> choiceSwing(Class<R> panelClazz);
 
-    <R extends Pane> UiOk<R> popupOkCancelFx(CallableA1<T, R> builder);
+    <R extends Pane> UiOk<R> choiceFx(Class<R> paneClazz);
 
     public <D> UiCreator<D> call(Callable<D> callable);
 
     public Callable<Void> osOpen();
 
-    public <R extends JPanel> SwingOpenPanel<T, R> openJ(String key, CallableA1<T, R> builder);
+    public <R extends JPanel> SwingOpenPanel<T, R> openSwing(String key, CallableA1<T, R> builder);
 
-    public <R extends Pane> SwingOpenPane<T, R> open(String key, CallableA1<T, R> builder);
+    public <R extends Pane> SwingOpenPane<T, R> openFx(String key, CallableA1<T, R> builder);
 
     public UiOk<File> openFileChooser();
 

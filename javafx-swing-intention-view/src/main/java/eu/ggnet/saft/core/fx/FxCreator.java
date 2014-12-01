@@ -7,6 +7,7 @@ import eu.ggnet.saft.core.swing.*;
 import java.io.File;
 import java.util.concurrent.*;
 import javafx.embed.swing.SwingNode;
+import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 import javafx.stage.*;
 import static javafx.stage.Modality.APPLICATION_MODAL;
@@ -25,7 +26,7 @@ public class FxCreator<T> extends AbstractCreator<T> {
 
     private final Modality modality;
 
-    private final Logger L = LoggerFactory.getLogger(FxCreator.class);
+    private final static Logger L = LoggerFactory.getLogger(FxCreator.class);
 
     public FxCreator(Callable<T> before, Window parent, Modality modality) {
         super(before);
@@ -49,42 +50,36 @@ public class FxCreator<T> extends AbstractCreator<T> {
     }
 
     @Override
-    public <R extends Pane> FxOk<R> popupOkCancelFx(CallableA1<T, R> builder) {
+    public <R extends Pane> UiOk<R> choiceFx(Class<R> paneClazz) {
         return new FxOk<>(() -> {
             if (before.ifPresentIsNull()) return null; // Chainbreaker
             final T parameter = before.get();
-            final R pane = builder.call(parameter); // Call outside all ui threads assumed
-
-            return FxSaft.dispatch(() -> {
-                OkCancelStage<R> s = new OkCancelStage(UiUtil.extractTitle(pane).orElse("Auswahldialog"), pane);
-                s.initOwner(parent);
-                if (modality == null) s.initModality(APPLICATION_MODAL);
-                else s.initModality(modality);
-                L.warn("setLocationRelativeTo in JavaFx Mode not yet implemented");
-                s.showAndWait();
-                return new OkCancelResult<>(pane, s.isOk());
-            });
-
+            final R pane = FxSaft.construct(paneClazz, parameter);
+            return wrapAndShow(parent, pane, modality, pane);
         }, parent, modality);
     }
 
     @Override
-    public <R extends JPanel> FxOk<R> popupOkCancel(CallableA1<T, R> builder) {
+    public <R extends JPanel> FxOk<R> choiceSwing(Class<R> panelClazz) {
         return new FxOk<>(() -> {
             if (before.ifPresentIsNull()) return null; // Chainbreaker
-            final R pannel = builder.call(before.get()); // Call outside all ui threads assumed
-            final SwingNode node = SwingSaft.wrap(pannel);
-
-            return FxSaft.dispatch(() -> {
-                OkCancelStage<SwingNode> s = new OkCancelStage(UiUtil.extractTitle(pannel).orElse("Auswahldialog"), node);
-                s.initOwner(parent);
-                if (modality == null) s.initModality(APPLICATION_MODAL);
-                else s.initModality(modality);
-                L.warn("setLocationRelativeTo in JavaFx Mode not yet implemented");
-                s.showAndWait();
-                return new OkCancelResult<>(pannel, s.isOk());
-            });
+            final T parameter = before.get();
+            final R panel = SwingSaft.construct(panelClazz, parameter);
+            final SwingNode node = SwingSaft.wrap(panel);
+            return wrapAndShow(parent, node, modality, panel);
         }, parent, modality);
+    }
+
+    private static <T, R, P extends Node> OkCancelResult<R> wrapAndShow(Window parent, Node node, Modality modality, R payload) throws InterruptedException, ExecutionException {
+        return FxSaft.dispatch(() -> {
+            OkCancelStage<SwingNode> s = new OkCancelStage(UiUtil.extractTitle(payload).orElse("Dialog :" + payload.getClass()), node);
+            s.initOwner(parent);
+            if (modality == null) s.initModality(APPLICATION_MODAL);
+            else s.initModality(modality);
+            L.warn("setLocationRelativeTo in JavaFx Mode not yet implemented");
+            s.showAndWait();
+            return new OkCancelResult<>(payload, s.isOk());
+        });
     }
 
     @Override
@@ -106,12 +101,12 @@ public class FxCreator<T> extends AbstractCreator<T> {
     }
 
     @Override
-    public <R extends JPanel> SwingOpenPanel<T, R> openJ(String key, CallableA1<T, R> builder) {
+    public <R extends JPanel> SwingOpenPanel<T, R> openSwing(String key, CallableA1<T, R> builder) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public <R extends Pane> SwingOpenPane<T, R> open(String key, CallableA1<T, R> builder) {
+    public <R extends Pane> SwingOpenPane<T, R> openFx(String key, CallableA1<T, R> builder) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

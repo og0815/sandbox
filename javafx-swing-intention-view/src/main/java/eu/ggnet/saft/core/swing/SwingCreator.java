@@ -4,7 +4,6 @@ import eu.ggnet.saft.core.UiCore;
 import eu.ggnet.saft.core.all.*;
 import eu.ggnet.saft.core.aux.*;
 import eu.ggnet.saft.core.fx.FxSaft;
-import java.awt.Dialog.ModalityType;
 import java.awt.Window;
 import java.io.File;
 import java.util.concurrent.*;
@@ -12,6 +11,8 @@ import javafx.embed.swing.JFXPanel;
 import javafx.scene.layout.Pane;
 import javafx.stage.*;
 import javax.swing.JPanel;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -19,6 +20,8 @@ import javax.swing.JPanel;
  * @param <T>
  */
 public class SwingCreator<T> extends AbstractCreator<T> {
+
+    private final Logger L = LoggerFactory.getLogger(SwingCreator.class);
 
     private final Window parent;
 
@@ -46,50 +49,33 @@ public class SwingCreator<T> extends AbstractCreator<T> {
     }
 
     @Override
-    public <R extends Pane> SwingOk<R> popupOkCancelFx(CallableA1<T, R> builder) {
+    public <R extends Pane> SwingOk<R> choiceFx(Class<R> paneClazz) {
         return new SwingOk<>(() -> {
             if (before.ifPresentIsNull()) return null; // Chainbreaker
             final T parameter = before.get();
             FxSaft.ensurePlatformIsRunning();
-            final R pane = builder.call(parameter); // Call outside all ui threads assumed
+            final R pane = FxSaft.construct(paneClazz, parameter);
             JFXPanel p = FxSaft.wrap(pane);
-            return SwingSaft.dispatch(() -> {
-                OkCancelDialog<JFXPanel> dialog = new OkCancelDialog<>(parent, p);
-                dialog.setTitle(UiUtil.extractTitle(pane).orElse("Auswahldialog"));
-                dialog.setModalityType(UiUtil.toSwing(modality).orElse(ModalityType.APPLICATION_MODAL));
-                dialog.pack();
-                dialog.setLocationRelativeTo(parent);
-                dialog.setVisible(true);
-                return new OkCancelResult<>(pane, dialog.isOk());
-            });
+            return SwingSaft.wrapAndShow(parent, p, modality, pane);
         }, parent, modality);
     }
 
     @Override
-    public <R extends JPanel> SwingOk<R> popupOkCancel(CallableA1<T, R> builder) {
+    public <R extends JPanel> SwingOk<R> choiceSwing(Class<R> panelClazz) {
         return new SwingOk<>(() -> {
             if (before.ifPresentIsNull()) return null; // Chainbreaker
             final T parameter = before.get(); // Call outside all ui threads assumed
-
-            return SwingSaft.dispatch(() -> {
-                R panel = builder.call(parameter);
-                OkCancelDialog<R> dialog = new OkCancelDialog<>(parent, panel);
-                dialog.setTitle(UiUtil.extractTitle(panel).orElse("Auswahldialog"));
-                dialog.setModalityType(UiUtil.toSwing(modality).orElse(ModalityType.APPLICATION_MODAL));
-                dialog.pack();
-                dialog.setLocationRelativeTo(parent);
-                dialog.setVisible(true);
-                return new OkCancelResult<>(dialog.getSubContainer(), dialog.isOk());
-            });
+            final R panel = SwingSaft.construct(panelClazz, parameter);
+            return SwingSaft.wrapAndShow(parent, panel, modality, panel);
         }, parent, modality);
     }
 
     @Override
-    public <R extends JPanel> SwingOpenPanel<T, R> openJ(String key, CallableA1<T, R> builder) {
+    public <R extends JPanel> SwingOpenPanel<T, R> openSwing(String key, CallableA1<T, R> builder) {
         return new SwingOpenPanel<>(before.getCallable(), parent, modality, key, builder);
     }
 
-    public <R extends Pane> SwingOpenPane<T, R> open(String key, CallableA1<T, R> builder) {
+    public <R extends Pane> SwingOpenPane<T, R> openFx(String key, CallableA1<T, R> builder) {
         return new SwingOpenPane<>(before.getCallable(), parent, modality, key, builder);
     }
 

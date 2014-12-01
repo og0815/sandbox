@@ -1,11 +1,10 @@
 package eu.ggnet.saft.sample;
 
-import eu.ggnet.saft.core.Ui;
+import eu.ggnet.saft.core.SwingFx;
 import eu.ggnet.saft.core.UiCore;
 import eu.ggnet.saft.core.aux.CallableA1;
 import eu.ggnet.saft.sample.aux.DocumentAdressUpdateView;
 import eu.ggnet.saft.sample.aux.MainPanel;
-
 import java.awt.EventQueue;
 import java.util.concurrent.Callable;
 
@@ -36,34 +35,26 @@ public class AsyncRunThenPopUp {
             });
         });
 
-        Ui.exec(
-                Ui
+        SwingFx.exec(SwingFx
                 .call(() -> HardWorker.work2s("per", "Eine leere Adresse"))
-                .popupOkCancel(p -> new DocumentAdressUpdateView(1, p, true))
+                .choiceSwing(DocumentAdressUpdateView.class)
                 .onOk((t) -> HardWorker.work2s("middle", t.getAddress()))
-                .popupOkCancel(p -> new DocumentAdressUpdateView(1, p, true))
+                .choiceSwing(DocumentAdressUpdateView.class)
                 .onOk((t) -> HardWorker.work2s("post", t.getAddress()))
         );
     }
 
     public static void longer() {
         // A JAva 7 View.
-        Ui.exec(
-                Ui.call(new Callable<String>() {
+        SwingFx.exec(SwingFx.call(new Callable<String>() {
 
-                    @Override
-                    public String call() throws Exception {
-                        return "Hallo";
-                    }
+            @Override
+            public String call() throws Exception {
+                return "Hallo";
+            }
 
-                })
-                .popupOkCancel(new CallableA1<String, DocumentAdressUpdateView>() {
-
-                    @Override
-                    public DocumentAdressUpdateView call(String parameter) {
-                        return new DocumentAdressUpdateView(1, parameter, true);
-                    }
-                })
+        })
+                .choiceSwing(DocumentAdressUpdateView.class)
                 .onOk(new CallableA1<DocumentAdressUpdateView, Integer>() {
 
                     @Override

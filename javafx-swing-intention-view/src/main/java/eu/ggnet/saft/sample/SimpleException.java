@@ -1,7 +1,7 @@
 package eu.ggnet.saft.sample;
 
 import eu.ggnet.saft.sample.aux.MainPanel;
-import eu.ggnet.saft.core.Ui;
+import eu.ggnet.saft.core.SwingFx;
 import eu.ggnet.saft.core.UiCore;
 
 /**
@@ -14,8 +14,7 @@ public class SimpleException {
     public static void main(String[] args) {
         UiCore.startSwing(() -> new MainPanel());
 
-        Ui.exec(
-                Ui.call(() -> {
+        SwingFx.exec(SwingFx.call(() -> {
                     throw new IllegalAccessException("Sinnlos");
                 })
         );

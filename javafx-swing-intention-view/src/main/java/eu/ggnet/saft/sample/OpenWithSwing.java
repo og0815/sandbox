@@ -1,6 +1,6 @@
 package eu.ggnet.saft.sample;
 
-import eu.ggnet.saft.core.Ui;
+import eu.ggnet.saft.core.SwingFx;
 import eu.ggnet.saft.core.UiCore;
 import eu.ggnet.saft.sample.aux.*;
 import javax.swing.JButton;
@@ -17,34 +17,33 @@ public class OpenWithSwing {
             MainPanelAddButtons main = new MainPanelAddButtons();
 
             JButton b = new JButton("Swing:Once as Application");
-            b.addActionListener((e) -> Ui.exec(Ui.openJ(PanelOnceDialog.class.getName(), (t) -> new PanelOnceDialog())));
+            b.addActionListener((e) -> SwingFx.exec(SwingFx.openJ(PanelOnceDialog.class.getName(), (t) -> new PanelOnceDialog())));
             main.getButtonPanel().add(b);
 
             b = new JButton("Swing:Multiple, id : 1");
-            b.addActionListener((e) -> Ui.exec(Ui.openJ(UnitViewer.class + " 1", (t) -> new UnitViewer())));
+            b.addActionListener((e) -> SwingFx.exec(SwingFx.openJ(UnitViewer.class + " 1", (t) -> new UnitViewer())));
             main.getButtonPanel().add(b);
 
             b = new JButton("Swing:Multiple, id : 2");
-            b.addActionListener((e) -> Ui.exec(Ui.openJ(UnitViewer.class + " 2", (t) -> new UnitViewer())));
+            b.addActionListener((e) -> SwingFx.exec(SwingFx.openJ(UnitViewer.class + " 2", (t) -> new UnitViewer())));
             main.getButtonPanel().add(b);
 
             b = new JButton("Swing:Multiple, id : 3 , with precall");
-            b.addActionListener((e) -> Ui.exec(
-                    Ui
+            b.addActionListener((e) -> SwingFx.exec(SwingFx
                     .call(() -> "Das ist der Riesentext für Unit 3")
-                    .openJ(UnitViewer.class + " 3", (t) -> new UnitViewer(t))
+                    .openSwing(UnitViewer.class + " 3", (t) -> new UnitViewer(t))
             ));
             main.getButtonPanel().add(b);
 
             b = new JButton("JavaFx:Once as Application");
-            b.addActionListener((e) -> Ui.exec(Ui.open("MainPanelBuilder", (t) -> new MainPaneBuilder().call())));
+            b.addActionListener((e) -> SwingFx.exec(SwingFx.open("MainPanelBuilder", (t) -> new MainPaneBuilder().call())));
             main.getButtonPanel().add(b);
 
             return main;
         });
 
-        // Ui.openJ(UnitView.class,"12345").exec();
-        // ui.openJ(UnitView.class,"12345").prepare((UnitView v) -> v.setValue("lannnger String")).exec();
+        // SwingFx.openSwing(UnitView.class,"12345").exec();
+        // ui.openSwing(UnitView.class,"12345").prepare((UnitView v) -> v.setValue("lannnger String")).exec();
         // JavaFX Pane in Swing Dialog.
     }
 

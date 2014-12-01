@@ -27,9 +27,9 @@ import org.slf4j.LoggerFactory;
  *
  * @author oliver.guenther
  */
-public class Ui {
+public class SwingFx {
 
-    private final static Logger L = LoggerFactory.getLogger(Ui.class);
+    private final static Logger L = LoggerFactory.getLogger(SwingFx.class);
 
     public static <R> UiCreator<R> parent(Component parent) {
         if (UiCore.isRunning() && UiCore.isFx()) {
@@ -61,29 +61,29 @@ public class Ui {
         return creator().call(callable);
     }
 
-    public static <T, R extends Pane> UiOk<R> popupOkCancelFx(CallableA1<T, R> callableA1) {
-        return Ui.<T>creator().popupOkCancelFx(callableA1);
+    public static <T, R extends Pane> UiOk<R> choiceFx(Class<R> panelClazz) {
+        return SwingFx.<T>creator().choiceFx(panelClazz);
     }
 
-    public static <T, R extends JPanel> UiOk<R> popupOkCancel(CallableA1<T, R> callableA1) {
-        return Ui.<T>creator().popupOkCancel(callableA1);
+    public static <T, R extends JPanel> UiOk<R> choiceSwing(Class<R> panelClazz) {
+        return SwingFx.<T>creator().choiceSwing(panelClazz);
     }
 
     public static UiOk<File> openFileChosser(String title) {
-        return Ui.<File>creator().openFileChooser(title);
+        return SwingFx.<File>creator().openFileChooser(title);
 
     }
 
     public static UiOk<File> openFileChosser() {
-        return Ui.<File>creator().openFileChooser();
+        return SwingFx.<File>creator().openFileChooser();
     }
 
     public static <T, R extends JPanel> SwingOpenPanel<T, R> openJ(String key, CallableA1<T, R> callableA1) {
-        return new SwingCreator<T>(null, UiCore.mainPanel, null).openJ(key, callableA1);
+        return new SwingCreator<T>(null, UiCore.mainPanel, null).openSwing(key, callableA1);
     }
 
     public static <T, R extends Pane> SwingOpenPane<T, R> open(String key, CallableA1<T, R> callableA1) {
-        return new SwingCreator<T>(null, UiCore.mainPanel, null).open(key, callableA1);
+        return new SwingCreator<T>(null, UiCore.mainPanel, null).openFx(key, callableA1);
     }
 
     public static <V> void exec(Callable<V> ie) {

@@ -1,6 +1,6 @@
 package eu.ggnet.saft.sample;
 
-import eu.ggnet.saft.core.Ui;
+import eu.ggnet.saft.core.SwingFx;
 import eu.ggnet.saft.core.UiCore;
 import eu.ggnet.saft.core.fx.FxSaft;
 import eu.ggnet.saft.sample.aux.MainPaneBuilder;
@@ -9,9 +9,8 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
-import javafx.stage.Stage;
-
 import static javafx.scene.text.Font.font;
+import javafx.stage.Stage;
 
 /**
  * Opening a JavaFX Pane as popup Dialog, blocking the hole application.
@@ -45,10 +44,9 @@ public class JavaFxPopupJavaFxParentJavaFx extends Application {
         });
 
         // JavaFX Pane in Swing Dialog.
-        Ui.exec(
-                Ui
+        SwingFx.exec(SwingFx
                 .parent(p)
-                .popupOkCancelFx((x) -> new RevenueReportSelectorPane())
+                .choiceFx(RevenueReportSelectorPane.class)
                 .onOk(v -> {
                     System.out.println(v);
                     return null;

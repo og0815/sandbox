@@ -1,7 +1,7 @@
 package eu.ggnet.saft.sample;
 
 import eu.ggnet.saft.sample.aux.MainPanel;
-import eu.ggnet.saft.core.Ui;
+import eu.ggnet.saft.core.SwingFx;
 import eu.ggnet.saft.core.UiCore;
 
 /**
@@ -14,8 +14,7 @@ public class FileHandling {
     public static void main(String[] args) {
         UiCore.startSwing(() -> new MainPanel());
 
-        Ui.exec(
-                Ui.openFileChosser()
+        SwingFx.exec(SwingFx.openFileChosser()
                 .onOk(f -> {
                     System.out.println("Ok pressed, File: " + f.getAbsolutePath());
                     return null;

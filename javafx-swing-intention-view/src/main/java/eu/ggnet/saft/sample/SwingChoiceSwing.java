@@ -1,9 +1,9 @@
 package eu.ggnet.saft.sample;
 
+import eu.ggnet.saft.core.SwingFx;
+import eu.ggnet.saft.core.UiCore;
 import eu.ggnet.saft.sample.aux.DocumentAdressUpdateView;
 import eu.ggnet.saft.sample.aux.MainPanel;
-import eu.ggnet.saft.core.Ui;
-import eu.ggnet.saft.core.UiCore;
 
 /**
  * Opens a Swing Panel as Popup Dialog blocking the hole application.
@@ -18,15 +18,14 @@ import eu.ggnet.saft.core.UiCore;
  *
  * @author oliver.guenther
  */
-public class SwingPopupSwing {
+public class SwingChoiceSwing {
 
     public static void main(String[] args) {
         UiCore.startSwing(() -> new MainPanel());
 
         String adress = "Hans Mustermann\nMusterstrasse 22\n12345 Musterhausen";
         // Swing Panel in Swing Dialog
-        Ui.exec(
-                Ui.popupOkCancel((t) -> new DocumentAdressUpdateView(1, adress, true)) // Needs to be in the UI Thread, should block all
+        SwingFx.exec(SwingFx.choiceSwing(DocumentAdressUpdateView.class) // Needs to be in the UI Thread, should block all
                 .onOk(v -> {
                     System.out.println(v.getAddress());
                     return null;

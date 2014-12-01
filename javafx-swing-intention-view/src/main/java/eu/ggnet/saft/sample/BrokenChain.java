@@ -1,6 +1,6 @@
 package eu.ggnet.saft.sample;
 
-import eu.ggnet.saft.core.Ui;
+import eu.ggnet.saft.core.SwingFx;
 
 /**
  * Shows a chain,that is broken through a null result.
@@ -10,7 +10,7 @@ import eu.ggnet.saft.core.Ui;
 public class BrokenChain {
 
     public static void main(String[] args) throws Exception {
-        Ui.call(() -> {
+        SwingFx.call(() -> {
             System.out.println("One");
             return "X";
         }).call(() -> {

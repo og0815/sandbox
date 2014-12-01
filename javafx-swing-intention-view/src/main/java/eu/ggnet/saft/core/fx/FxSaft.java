@@ -1,14 +1,16 @@
 package eu.ggnet.saft.core.fx;
 
 import eu.ggnet.saft.core.UiCore;
+import eu.ggnet.saft.core.aux.Initialiser;
+import java.util.concurrent.*;
+import java.util.function.Consumer;
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Window;
-
-import java.util.concurrent.*;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -25,6 +27,22 @@ public class FxSaft {
             startHelper = new JFXPanel();
             started = true;
         }
+    }
+
+    public static <T, R extends Pane> R construct(Class<R> panelClazz, T parameter) throws Exception {
+        R panel = panelClazz.getConstructor().newInstance();
+        if (panel instanceof Initialiser) {
+            ((Initialiser) panel).initialise();
+        }
+        if (parameter != null && panel instanceof Consumer) {
+            try {
+                ((Consumer<T>) panel).accept(parameter);
+            } catch (ClassCastException e) {
+                LoggerFactory.getLogger(FxSaft.class).warn(panel.getClass() + " implements Consumer, but not of type " + parameter.getClass());
+            }
+        }
+        return panel;
+
     }
 
     public static JFXPanel wrap(Pane p) throws InterruptedException {
