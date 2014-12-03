@@ -1,10 +1,11 @@
 package eu.ggnet.saft.sample;
 
-import eu.ggnet.saft.core.SwingFx;
+import eu.ggnet.saft.core.Ui;
 import eu.ggnet.saft.core.UiCore;
 import eu.ggnet.saft.core.aux.CallableA1;
 import eu.ggnet.saft.sample.aux.DocumentAdressUpdateView;
 import eu.ggnet.saft.sample.aux.MainPanel;
+
 import java.awt.EventQueue;
 import java.util.concurrent.Callable;
 
@@ -35,7 +36,7 @@ public class AsyncRunThenPopUp {
             });
         });
 
-        SwingFx.exec(SwingFx
+        Ui.exec(Ui
                 .call(() -> HardWorker.work2s("per", "Eine leere Adresse"))
                 .choiceSwing(DocumentAdressUpdateView.class)
                 .onOk((t) -> HardWorker.work2s("middle", t.getAddress()))
@@ -46,7 +47,7 @@ public class AsyncRunThenPopUp {
 
     public static void longer() {
         // A JAva 7 View.
-        SwingFx.exec(SwingFx.call(new Callable<String>() {
+        Ui.exec(Ui.call(new Callable<String>() {
 
             @Override
             public String call() throws Exception {

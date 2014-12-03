@@ -1,11 +1,13 @@
 package eu.ggnet.saft.sample;
 
-import eu.ggnet.saft.core.SwingFx;
+import eu.ggnet.saft.core.Ui;
 import eu.ggnet.saft.core.UiCore;
 import eu.ggnet.saft.sample.aux.DocumentAdressUpdateView;
 import eu.ggnet.saft.sample.aux.MainPanel;
+
 import java.awt.Dialog;
 import java.awt.Label;
+
 import javax.swing.JDialog;
 
 /**
@@ -35,7 +37,7 @@ public class SwingPopupSwingParentSwing {
 
         String adress = "Hans Mustermann\nMusterstrasse 22\n12345 Musterhausen";
         // Swing Panel in Swing Dialog
-        SwingFx.exec(SwingFx
+        Ui.exec(Ui
                 .parent(label)
                 .call(() -> adress)
                 .choiceSwing(DocumentAdressUpdateView.class) // Needs to be in the UI Thread, should block all

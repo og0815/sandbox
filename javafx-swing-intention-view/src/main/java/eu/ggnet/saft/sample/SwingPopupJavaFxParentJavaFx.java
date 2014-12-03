@@ -1,13 +1,16 @@
 package eu.ggnet.saft.sample;
 
-import eu.ggnet.saft.core.SwingFx;
+import eu.ggnet.saft.core.Ui;
 import eu.ggnet.saft.core.UiCore;
 import eu.ggnet.saft.sample.aux.MainPanel;
 import eu.ggnet.saft.sample.aux.RevenueReportSelectorPane;
+
 import java.util.concurrent.ExecutionException;
+
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
+
 import static javafx.scene.text.Font.font;
 
 /**
@@ -24,7 +27,7 @@ public class SwingPopupJavaFxParentJavaFx {
             l.setFont(font(50));
             Button b = new Button("Open another Dialog");
             b.setOnAction((e) -> {
-                SwingFx.exec(SwingFx
+                Ui.exec(Ui
                         .parent(l)
                         .choiceFx(RevenueReportSelectorPane.class)
                         .onOk(v -> {
@@ -44,7 +47,7 @@ public class SwingPopupJavaFxParentJavaFx {
         UiCore.startSwing(() -> new MainPanel());
 
         // JavaFX Pane in Swing Dialog.
-        SwingFx.exec(SwingFx
+        Ui.exec(Ui
                 .choiceFx(TestPane.class)
                 .onOk(v -> {
                     System.out.println(v.getId());

@@ -5,6 +5,7 @@ import eu.ggnet.saft.core.aux.*;
 import eu.ggnet.saft.core.fx.FxCreator;
 import eu.ggnet.saft.core.fx.FxSaft;
 import eu.ggnet.saft.core.swing.*;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.layout.Pane;
 import javax.swing.JPanel;
@@ -28,9 +29,9 @@ import java.util.concurrent.*;
  *
  * @author oliver.guenther
  */
-public class SwingFx {
+public class Ui {
 
-    private final static Logger L = LoggerFactory.getLogger(SwingFx.class);
+    private final static Logger L = LoggerFactory.getLogger(Ui.class);
 
     public static <R> UiCreator<R> parent(Component parent) {
         if (UiCore.isRunning() && UiCore.isFx()) {
@@ -63,32 +64,48 @@ public class SwingFx {
     }
 
     public static <T, R extends Pane> UiOk<R> choiceFx(Class<R> panelClazz) {
-        return SwingFx.<T>creator().choiceFx(panelClazz);
+        return Ui.<T>creator().choiceFx(panelClazz);
     }
 
     public static <T, R extends FxController> UiOk<R> choiceFxml(Class<R> controllerClass) {
-        return SwingFx.<T>creator().choiceFxml(controllerClass);
+        return Ui.<T>creator().choiceFxml(controllerClass);
     }
 
     public static <T, R extends JPanel> UiOk<R> choiceSwing(Class<R> panelClazz) {
-        return SwingFx.<T>creator().choiceSwing(panelClazz);
+        return Ui.<T>creator().choiceSwing(panelClazz);
     }
 
-    public static UiOk<File> openFileChosser(String title) {
-        return SwingFx.<File>creator().openFileChooser(title);
+    public static UiOk<File> openFileChooser(String title) {
+        return Ui.<File>creator().openFileChooser(title);
 
     }
 
-    public static UiOk<File> openFileChosser() {
-        return SwingFx.<File>creator().openFileChooser();
+    public static UiOk<File> openFileChooser() {
+        return Ui.<File>creator().openFileChooser();
     }
 
-    public static <T, R extends JPanel> SwingOpenPanel<T, R> openJ(String key, CallableA1<T, R> callableA1) {
-        return new SwingCreator<T>(null, UiCore.mainPanel, null).openSwing(key, callableA1);
+    public static <T, R extends JPanel> SwingOpenPanel<T, R> openSwing(Class<R> panelClass) {
+        return openSwing(panelClass, null);
     }
 
-    public static <T, R extends Pane> SwingOpenPane<T, R> open(String key, CallableA1<T, R> callableA1) {
-        return new SwingCreator<T>(null, UiCore.mainPanel, null).openFx(key, callableA1);
+    public static <T, R extends JPanel> SwingOpenPanel<T, R> openSwing(Class<R> panelClass, String key) {
+        return new SwingCreator<T>(null, UiCore.mainPanel, null).openSwing(panelClass, key);
+    }
+
+    public static <T, R extends Pane> SwingOpenPane<T, R> openFx(Class<R> panelClass) {
+        return openFx(panelClass, null);
+    }
+
+    public static <T, R extends Pane> SwingOpenPane<T, R> openFx(Class<R> panelClass, String id) {
+        return new SwingCreator<T>(null, UiCore.mainPanel, null).openFx(panelClass, id);
+    }
+
+    public static <T, R extends FxController> SwingOpenFxml<T, R> openFxml(Class<R> controllerClass) {
+        return openFxml(controllerClass, null);
+    }
+
+    public static <T, R extends FxController> SwingOpenFxml<T, R> openFxml(Class<R> controllerClass, String id) {
+        return new SwingCreator<T>(null, UiCore.mainPanel, null).openFxml(controllerClass, id);
     }
 
     public static <V> void exec(Callable<V> ie) {
@@ -106,6 +123,24 @@ public class SwingFx {
         };
         t.setDaemon(true); // Shut down on application shutdown.
         t.start();
+    }
+
+    public static void closeWindowOf(Component c) {
+        if (!UiCore.isRunning()) return;
+        if (UiCore.isFx()) throw new RuntimeException("Cosing of embedded Swing in JavaFx not yet implemented");
+        SwingSaft.windowAncestor(c).ifPresent((w) -> {
+            w.setVisible(false);
+            w.dispose();
+        });
+    }
+
+    public static void closeWindowOf(Node n) {
+        if (!UiCore.isRunning()) return;
+        if (UiCore.isFx()) throw new RuntimeException("Cosing of embedded Swing in JavaFx not yet implemented");
+        SwingSaft.windowAncestor(n).ifPresent((w) -> {
+            w.setVisible(false);
+            w.dispose();
+        });
     }
 
 }

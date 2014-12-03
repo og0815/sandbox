@@ -58,7 +58,7 @@ public class SwingCreator<T> extends AbstractCreator<T> {
             FxSaft.ensurePlatformIsRunning();
             final R pane = FxSaft.construct(paneClazz, parameter);
             JFXPanel p = FxSaft.wrap(pane);
-            return SwingSaft.wrapAndShow(parent, p, modality, pane);
+            return SwingSaft.wrapInChoiceAndShow(parent, p, modality, pane);
         }, parent, modality);
     }
 
@@ -70,7 +70,7 @@ public class SwingCreator<T> extends AbstractCreator<T> {
             FxSaft.ensurePlatformIsRunning();
             final FXMLLoader loader = FxSaft.constructFxml(controllerClass, parameter);
             JFXPanel p = FxSaft.wrap(loader.getRoot());
-            return SwingSaft.wrapAndShow(parent, p, modality, loader.getController());
+            return SwingSaft.wrapInChoiceAndShow(parent, p, modality, loader.getController());
         }, parent, modality);
     }
 
@@ -80,17 +80,38 @@ public class SwingCreator<T> extends AbstractCreator<T> {
             if (before.ifPresentIsNull()) return null; // Chainbreaker
             final T parameter = before.get(); // Call outside all ui threads assumed
             final R panel = SwingSaft.construct(panelClazz, parameter);
-            return SwingSaft.wrapAndShow(parent, panel, modality, panel);
+            return SwingSaft.wrapInChoiceAndShow(parent, panel, modality, panel);
         }, parent, modality);
     }
 
     @Override
-    public <R extends JPanel> SwingOpenPanel<T, R> openSwing(String key, CallableA1<T, R> builder) {
-        return new SwingOpenPanel<>(before.getCallable(), parent, modality, key, builder);
+    public <R extends JPanel> SwingOpenPanel<T, R> openSwing(Class<R> panelClass) {
+        return openSwing(panelClass, null);
     }
 
-    public <R extends Pane> SwingOpenPane<T, R> openFx(String key, CallableA1<T, R> builder) {
-        return new SwingOpenPane<>(before.getCallable(), parent, modality, key, builder);
+    @Override
+    public <R extends JPanel> SwingOpenPanel<T, R> openSwing(Class<R> panelClass, String id) {
+        return new SwingOpenPanel<>(before.getCallable(), parent, modality, id, panelClass);
+    }
+
+    @Override
+    public <R extends Pane> SwingOpenPane<T, R> openFx(Class<R> panelClass, String id) {
+        return new SwingOpenPane<>(before.getCallable(), parent, modality, id, panelClass);
+    }
+
+    @Override
+    public <R extends Pane> SwingOpenPane<T, R> openFx(Class<R> panelClass) {
+        return openFx(panelClass, null);
+    }
+
+    @Override
+    public <R extends FxController> SwingOpenFxml<T, R> openFxml(Class<R> controllerClass) {
+        return openFxml(controllerClass, null);
+    }
+
+    @Override
+    public <R extends FxController> SwingOpenFxml<T, R> openFxml(Class<R> controllerClass, String id) {
+        return new SwingOpenFxml<>(before.getCallable(), parent, modality, id, controllerClass);
     }
 
     @Override

@@ -3,18 +3,21 @@ package eu.ggnet.saft.core.swing;
 import eu.ggnet.saft.core.UiCore;
 import eu.ggnet.saft.core.all.OkCancelResult;
 import eu.ggnet.saft.core.all.UiUtil;
-import eu.ggnet.saft.core.aux.Initialiser;
-import java.awt.*;
-import java.awt.Dialog.ModalityType;
-import java.lang.reflect.InvocationTargetException;
-import java.util.Optional;
-import java.util.concurrent.*;
-import java.util.function.Consumer;
+import eu.ggnet.saft.core.aux.*;
 import javafx.embed.swing.SwingNode;
 import javafx.scene.*;
 import javafx.stage.Modality;
 import javax.swing.*;
 import org.slf4j.LoggerFactory;
+
+import java.awt.*;
+import java.awt.Dialog.ModalityType;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.lang.reflect.InvocationTargetException;
+import java.util.Optional;
+import java.util.concurrent.*;
+import java.util.function.Consumer;
 
 /**
  *
@@ -39,10 +42,10 @@ public class SwingSaft {
         });
     }
 
-    public static <T, R, P extends JComponent> OkCancelResult<R> wrapAndShow(Window parent, P panel, Modality modality, R payload) throws ExecutionException, InterruptedException, InvocationTargetException {
+    public static <T, R, P extends JComponent> OkCancelResult<R> wrapInChoiceAndShow(Window parent, P panel, Modality modality, R payload) throws ExecutionException, InterruptedException, InvocationTargetException {
         return dispatch(() -> {
             OkCancelDialog<P> dialog = new OkCancelDialog<>(parent, panel);
-            dialog.setTitle(UiUtil.extractTitle(panel).orElse("Dialog : " + panel.getClass().getSimpleName()));
+            dialog.setTitle(UiUtil.title(panel.getClass()));
             dialog.setModalityType(UiUtil.toSwing(modality).orElse(ModalityType.APPLICATION_MODAL));
             dialog.pack();
             dialog.setLocationRelativeTo(parent);
@@ -67,8 +70,8 @@ public class SwingSaft {
     }
 
     /**
-     * Special form of {@link SwingUtilities#getWindowAncestor(java.awt.Component) }, as it also verifies if the supplied parameter is of type Window and if
-     * true returns it.
+     * Special form of {@link SwingUtilities#getWindowAncestor(java.awt.Component) }, as it also verifies if the
+     * supplied parameter is of type Window and if true returns it.
      *
      * @param c the component
      * @return a window.
@@ -88,6 +91,19 @@ public class SwingSaft {
     public static Optional<Window> windowAncestor(Node p) {
         if (p == null) return Optional.empty();
         return windowAncestor(UiCore.swingParentHelper.get(p.getScene()));
+    }
+
+    public static void enableCloser(Window window, Object uiElement) {
+        if (uiElement instanceof ClosedListener) {
+            window.addWindowListener(new WindowAdapter() {
+
+                @Override
+                public void windowClosed(WindowEvent e) {
+                    ((ClosedListener) uiElement).closed();
+                }
+
+            });
+        }
     }
 
 }

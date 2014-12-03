@@ -13,6 +13,7 @@ import javafx.stage.Window;
 import org.slf4j.LoggerFactory;
 
 import java.net.URL;
+import java.util.Objects;
 import java.util.concurrent.*;
 import java.util.function.Consumer;
 
@@ -37,14 +38,13 @@ public class FxSaft {
         if (!controllerClazz.getSimpleName().endsWith("Controller"))
             throw new IllegalArgumentException(controllerClazz + " does not end with Controller");
         String head = controllerClazz.getSimpleName().substring(0, controllerClazz.getSimpleName().length() - "Controller".length());
-        System.out.println("Head:" + head);
         return controllerClazz.getResource(head + "View.fxml");
     }
 
     public static <T, R extends FxController> FXMLLoader constructFxml(Class<R> controllerClazz, T parameter) throws Exception {
-        FXMLLoader loader = new FXMLLoader(loadView(controllerClazz));
+        FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(loadView(controllerClazz), "No View for " + controllerClazz));
         loader.load();
-        R controller = loader.getController();
+        R controller = Objects.requireNonNull(loader.getController(), "No controller based on " + controllerClazz + ". Controller set in Fxml ?");
         if (parameter != null && controller instanceof Consumer) {
             try {
                 ((Consumer<T>) controller).accept(parameter);

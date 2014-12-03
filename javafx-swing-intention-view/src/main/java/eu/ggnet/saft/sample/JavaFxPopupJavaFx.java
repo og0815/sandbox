@@ -1,9 +1,9 @@
 package eu.ggnet.saft.sample;
 
-import eu.ggnet.saft.core.SwingFx;
+import eu.ggnet.saft.core.Ui;
 import eu.ggnet.saft.core.UiCore;
-import eu.ggnet.saft.sample.aux.MainPaneBuilder;
 import eu.ggnet.saft.sample.aux.RevenueReportSelectorPane;
+import eu.ggnet.saft.sample.aux.SimplePane;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -21,10 +21,10 @@ public class JavaFxPopupJavaFx extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        UiCore.startJavaFx(primaryStage, new MainPaneBuilder());
+        UiCore.startJavaFx(primaryStage, () -> new SimplePane());
 
         // JavaFX Pane in Swing Dialog.
-        SwingFx.exec(SwingFx.choiceFx(RevenueReportSelectorPane.class)
+        Ui.exec(Ui.choiceFx(RevenueReportSelectorPane.class)
                 .onOk(v -> {
                     System.out.println(v);
                     return null;

@@ -1,23 +1,22 @@
 package eu.ggnet.saft.sample.aux;
 
-import java.util.concurrent.Callable;
+import eu.ggnet.saft.core.aux.Title;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Pane;
+
 import static javafx.scene.text.Font.font;
 
 /**
  *
  * @author oliver.guenther
  */
-public class MainPaneBuilder implements Callable<Pane> {
+@Title("Extra Title of Simple Pane with Id={id}")
+public class SimplePane extends BorderPane {
 
-    @Override
-    public Pane call() throws Exception {
+    public SimplePane() {
         Label l = new Label("Die JavaFx Main Application");
         l.setFont(font(50));
-        BorderPane p = new BorderPane(l);
-        return p;
+        setCenter(l);
     }
 
 }

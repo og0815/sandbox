@@ -3,12 +3,13 @@ package eu.ggnet.saft.core.all;
 import eu.ggnet.saft.core.UiCore;
 import eu.ggnet.saft.core.aux.CallableA1;
 import eu.ggnet.saft.core.aux.Title;
+import javafx.stage.Modality;
+
 import java.awt.Desktop;
 import java.awt.Dialog;
 import java.io.File;
 import java.util.Optional;
 import java.util.concurrent.Callable;
-import javafx.stage.Modality;
 
 /**
  * Util is
@@ -46,13 +47,25 @@ public class UiUtil {
     /**
      * Returns the Value of {@link Title} if set on the parameter, otherwise empty.
      *
-     * @param o the element to extract from.
+     * @param clazz the clazz to parse
      * @return the Value of {@link Title} if set on the parameter, otherwise empty.
      */
-    public static Optional<String> extractTitle(Object o) {
-        Title annotation = o.getClass().getAnnotation(Title.class);
-        if (annotation == null) return Optional.empty();
-        return Optional.ofNullable(annotation.value());
+    public static String title(Class<?> clazz) {
+        return title(clazz, null);
+    }
+
+    /**
+     * Returns the Value of {@link Title} if set on the parameter, otherwise empty.
+     *
+     * @param clazz a class to be the alternative
+     * @param optionalId an optional id.
+     * @return the Value of {@link Title} if set on the parameter, otherwise empty.
+     */
+    public static String title(Class<?> clazz, String optionalId) {
+        Title annotation = clazz.getAnnotation(Title.class);
+        if (annotation == null) return clazz.getSimpleName() + (optionalId == null ? "" : " : " + optionalId);
+        if (optionalId == null) return annotation.value();
+        return annotation.value().replace("{id}", optionalId);
     }
 
     public static Optional<Dialog.ModalityType> toSwing(Modality m) {

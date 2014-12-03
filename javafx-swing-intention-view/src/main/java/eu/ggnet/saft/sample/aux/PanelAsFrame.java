@@ -5,30 +5,27 @@
  */
 package eu.ggnet.saft.sample.aux;
 
-import javax.swing.*;
-
-import java.awt.BorderLayout;
+import eu.ggnet.saft.core.Alert;
+import eu.ggnet.saft.core.aux.ClosedListener;
+import eu.ggnet.saft.core.aux.Frame;
 
 /**
  *
  * @author oliver.guenther
  */
-public class MainPanelAddButtons extends javax.swing.JPanel {
+@Frame
+public class PanelAsFrame extends javax.swing.JPanel implements ClosedListener {
 
     /**
-     * Creates new form MainPanel
+     * Creates new form PanelAsFrame
      */
-    public MainPanelAddButtons() {
+    public PanelAsFrame() {
         initComponents();
-        add(menuBar, BorderLayout.NORTH);
     }
 
-    public JProgressBar getProgressBar() {
-        return ProgressBar;
-    }
-
-    public JMenuBar getMenuBar() {
-        return menuBar;
+    @Override
+    public void closed() {
+        Alert.show(this + " got closed !");
     }
 
     /**
@@ -39,21 +36,17 @@ public class MainPanelAddButtons extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        menuBar = new javax.swing.JMenuBar();
         jLabel1 = new javax.swing.JLabel();
-        ProgressBar = new javax.swing.JProgressBar();
 
         setLayout(new java.awt.BorderLayout());
 
-        jLabel1.setFont(new java.awt.Font("DejaVu Sans", 0, 48)); // NOI18N
-        jLabel1.setText("The Main Application");
+        jLabel1.setFont(new java.awt.Font("DejaVu Sans", 0, 24)); // NOI18N
+        jLabel1.setText("Panel that shoud be a frame with ClosedListener");
         add(jLabel1, java.awt.BorderLayout.CENTER);
-        add(ProgressBar, java.awt.BorderLayout.PAGE_END);
     }// </editor-fold>//GEN-END:initComponents
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JProgressBar ProgressBar;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JMenuBar menuBar;
     // End of variables declaration//GEN-END:variables
+
 }

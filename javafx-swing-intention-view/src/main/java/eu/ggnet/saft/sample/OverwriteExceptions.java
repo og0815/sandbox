@@ -2,7 +2,7 @@ package eu.ggnet.saft.sample;
 
 import javax.swing.JOptionPane;
 import eu.ggnet.saft.sample.aux.MainPanel;
-import eu.ggnet.saft.core.SwingFx;
+import eu.ggnet.saft.core.Ui;
 import eu.ggnet.saft.core.UiCore;
 
 /**
@@ -18,7 +18,7 @@ public class OverwriteExceptions {
             JOptionPane.showMessageDialog(null, "Important:" + t.getClass().getSimpleName() + " : " + t.getMessage());
         });
 
-        SwingFx.exec(SwingFx.call(() -> {
+        Ui.exec(Ui.call(() -> {
                     throw new IllegalArgumentException("Sinnlos");
                 })
         );

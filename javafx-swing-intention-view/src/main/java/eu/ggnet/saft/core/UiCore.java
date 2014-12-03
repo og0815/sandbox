@@ -78,6 +78,15 @@ public class UiCore {
         mainPanel.addWindowListener(new WindowAdapter() {
 
             @Override
+            public void windowClosing(WindowEvent e) {
+                for (WeakReference<Window> windowRef : swingActiveWindows.values()) {
+                    if (windowRef.get() == null) continue;
+                    windowRef.get().setVisible(false); // Close all windows.
+                    windowRef.get().dispose();
+                }
+            }
+
+            @Override
             public void windowClosed(WindowEvent e) {
                 Platform.exit();
             }
@@ -94,26 +103,17 @@ public class UiCore {
     public static <T extends Component> void startSwing(final Callable<T> builder) {
         if (isRunning()) throw new IllegalStateException("UiCore is already initialised and running");
 
-        Platform.setImplicitExit(false); // Need this, as we asume many javafx elements opening and closing.
-
         try {
-            SwingSaft.dispatch(() -> {
-                mainPanel = new JFrame();
-                mainPanel.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                mainPanel.getContentPane().add(builder.call());
-                mainPanel.pack();
-                mainPanel.setLocationByPlatform(true);
-                mainPanel.setVisible(true);
-                mainPanel.addWindowListener(new WindowAdapter() {
-
-                    @Override
-                    public void windowClosed(WindowEvent e) {
-                        Platform.exit();
-                    }
-
-                });
-                return mainPanel;
+            JFrame panel = SwingSaft.dispatch(() -> {
+                JFrame p = new JFrame();
+                p.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                p.getContentPane().add(builder.call());
+                p.pack();
+                p.setLocationByPlatform(true);
+                p.setVisible(true);
+                return p;
             });
+            continueSwing(panel);
         } catch (InterruptedException | InvocationTargetException | ExecutionException ex) {
             catchException(ex);
         }
@@ -139,7 +139,7 @@ public class UiCore {
         try {
             FxSaft.dispatch(() -> {
                 T node = builder.call();
-                mainStage.setTitle(UiUtil.extractTitle(node).orElse("MainStage"));
+                mainStage.setTitle(UiUtil.title(node.getClass()));
                 mainStage.setScene(new Scene(node));
                 mainStage.centerOnScreen();
                 mainStage.sizeToScene();

@@ -1,6 +1,6 @@
 package eu.ggnet.saft.sample;
 
-import eu.ggnet.saft.core.SwingFx;
+import eu.ggnet.saft.core.Ui;
 import eu.ggnet.saft.core.UiCore;
 import eu.ggnet.saft.sample.aux.DocumentAdressUpdateView;
 import eu.ggnet.saft.sample.aux.MainPanel;
@@ -25,7 +25,7 @@ public class SwingChoiceSwing {
 
         String adress = "Hans Mustermann\nMusterstrasse 22\n12345 Musterhausen";
         // Swing Panel in Swing Dialog
-        SwingFx.exec(SwingFx.choiceSwing(DocumentAdressUpdateView.class) // Needs to be in the UI Thread, should block all
+        Ui.exec(Ui.choiceSwing(DocumentAdressUpdateView.class) // Needs to be in the UI Thread, should block all
                 .onOk(v -> {
                     System.out.println(v.getAddress());
                     return null;

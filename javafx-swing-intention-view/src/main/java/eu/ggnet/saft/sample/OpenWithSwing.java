@@ -1,9 +1,9 @@
 package eu.ggnet.saft.sample;
 
-import eu.ggnet.saft.core.SwingFx;
+import eu.ggnet.saft.core.Ui;
 import eu.ggnet.saft.core.UiCore;
 import eu.ggnet.saft.sample.aux.*;
-import javax.swing.JButton;
+import javax.swing.*;
 
 /**
  * Opening a JavaFX Pane as popup Dialog, blocking the hole application.
@@ -16,33 +16,79 @@ public class OpenWithSwing {
         UiCore.startSwing(() -> {
             MainPanelAddButtons main = new MainPanelAddButtons();
 
-            JButton b = new JButton("Swing:Once as Application");
-            b.addActionListener((e) -> SwingFx.exec(SwingFx.openJ(PanelOnceDialog.class.getName(), (t) -> new PanelOnceDialog())));
-            main.getButtonPanel().add(b);
+            JMenu menu = new JMenu("SwingDialogs");
 
-            b = new JButton("Swing:Multiple, id : 1");
-            b.addActionListener((e) -> SwingFx.exec(SwingFx.openJ(UnitViewer.class + " 1", (t) -> new UnitViewer())));
-            main.getButtonPanel().add(b);
+            JMenuItem b = new JMenuItem("Once");
+            b.addActionListener((e) -> Ui.exec(Ui.openSwing(PanelOnceDialog.class)));
+            menu.add(b);
 
-            b = new JButton("Swing:Multiple, id : 2");
-            b.addActionListener((e) -> SwingFx.exec(SwingFx.openJ(UnitViewer.class + " 2", (t) -> new UnitViewer())));
-            main.getButtonPanel().add(b);
+            b = new JMenuItem("Multiple : 1");
+            b.addActionListener((e) -> Ui.exec(Ui.openSwing(UnitViewer.class, "1")));
+            menu.add(b);
 
-            b = new JButton("Swing:Multiple, id : 3 , with precall");
-            b.addActionListener((e) -> SwingFx.exec(SwingFx
+            b = new JMenuItem("Multiple : 2");
+            b.addActionListener((e) -> Ui.exec(Ui.openSwing(UnitViewer.class, " 2")));
+            menu.add(b);
+
+            b = new JMenuItem("Multiple : 3 , with precall");
+            b.addActionListener((e) -> Ui.exec(Ui
                     .call(() -> "Das ist der Riesentext für Unit 3")
-                    .openSwing(UnitViewer.class + " 3", (t) -> new UnitViewer(t))
+                    .openSwing(UnitViewer.class, "3")
             ));
-            main.getButtonPanel().add(b);
+            menu.add(b);
 
-            b = new JButton("JavaFx:Once as Application");
-            b.addActionListener((e) -> SwingFx.exec(SwingFx.open("MainPanelBuilder", (t) -> new MainPaneBuilder().call())));
-            main.getButtonPanel().add(b);
+            b = new JMenuItem("SelfCloser");
+            b.addActionListener((e) -> Ui.exec(Ui.openSwing(PanelWithSelfCloser.class)));
+            menu.add(b);
+
+            main.getMenuBar().add(menu);
+
+            menu = new JMenu("SwingFrames");
+
+            b = new JMenuItem("Once");
+            b.addActionListener((e) -> Ui.exec(Ui.openSwing(PanelAsFrame.class)));
+            menu.add(b);
+
+            main.getMenuBar().add(menu);
+
+            menu = new JMenu("JavaFxDialogs");
+
+            b = new JMenuItem("Once");
+            b.addActionListener((e) -> Ui.exec(Ui.openFx(SimplePane.class)));
+            menu.add(b);
+
+            b = new JMenuItem("Mutiple 1 with Title");
+            b.addActionListener((e) -> Ui.exec(Ui.openFx(SimplePane.class, "1")));
+            menu.add(b);
+
+            b = new JMenuItem("Mutiple 2 with Title");
+            b.addActionListener((e) -> Ui.exec(Ui.openFx(SimplePane.class, "2")));
+            menu.add(b);
+
+            b = new JMenuItem("Once Fxml");
+            b.addActionListener((e) -> Ui.exec(Ui.openFxml(SimpleFxmlController.class)));
+            menu.add(b);
+            main.getMenuBar().add(menu);
+
+            menu = new JMenu("JavaFxFrames");
+
+            b = new JMenuItem("Once");
+            b.addActionListener((e) -> Ui.exec(Ui.openFx(PaneAsFrame.class)));
+            menu.add(b);
+
+            b = new JMenuItem("Once With Self Closer");
+            b.addActionListener((e) -> Ui.exec(Ui.openFx(PaneAsFrameWithSelfCloser.class)));
+            menu.add(b);
+
+            b = new JMenuItem("Once Fxml");
+            b.addActionListener((e) -> Ui.exec(Ui.openFxml(BasicApplicationController.class)));
+            menu.add(b);
+            main.getMenuBar().add(menu);
 
             return main;
         });
 
-        // SwingFx.openSwing(UnitView.class,"12345").exec();
+        // Ui.openSwing(UnitView.class,"12345").exec();
         // ui.openSwing(UnitView.class,"12345").prepare((UnitView v) -> v.setValue("lannnger String")).exec();
         // JavaFX Pane in Swing Dialog.
     }

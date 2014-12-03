@@ -2,7 +2,6 @@ package eu.ggnet.saft.core.fx;
 
 import eu.ggnet.saft.core.UiCore;
 import eu.ggnet.saft.core.all.*;
-import eu.ggnet.saft.core.aux.CallableA1;
 import eu.ggnet.saft.core.aux.FxController;
 import eu.ggnet.saft.core.swing.*;
 import javafx.embed.swing.SwingNode;
@@ -86,7 +85,7 @@ public class FxCreator<T> extends AbstractCreator<T> {
 
     private static <T, R, P extends Node> OkCancelResult<R> wrapAndShow(Window parent, Node node, Modality modality, R payload) throws InterruptedException, ExecutionException {
         return FxSaft.dispatch(() -> {
-            OkCancelStage<SwingNode> s = new OkCancelStage(UiUtil.extractTitle(payload).orElse("Dialog :" + payload.getClass()), node);
+            OkCancelStage<SwingNode> s = new OkCancelStage(UiUtil.title(payload.getClass()), node);
             s.initOwner(parent);
             if (modality == null) s.initModality(APPLICATION_MODAL);
             else s.initModality(modality);
@@ -115,12 +114,32 @@ public class FxCreator<T> extends AbstractCreator<T> {
     }
 
     @Override
-    public <R extends JPanel> SwingOpenPanel<T, R> openSwing(String key, CallableA1<T, R> builder) {
+    public <R extends JPanel> SwingOpenPanel<T, R> openSwing(Class<R> builder) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public <R extends Pane> SwingOpenPane<T, R> openFx(String key, CallableA1<T, R> builder) {
+    public <R extends JPanel> SwingOpenPanel<T, R> openSwing(Class<R> builder, String id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public <R extends Pane> SwingOpenPane<T, R> openFx(Class<R> builder, String id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public <R extends Pane> SwingOpenPane<T, R> openFx(Class<R> panelClass) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public <R extends FxController> SwingOpenFxml<T, R> openFxml(Class<R> controllerClass) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public <R extends FxController> SwingOpenFxml<T, R> openFxml(Class<R> controllerClass, String id) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
