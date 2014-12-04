@@ -2,11 +2,10 @@ package eu.ggnet.saft.core.all;
 
 import eu.ggnet.saft.core.aux.FxController;
 import eu.ggnet.saft.core.swing.*;
-import javafx.scene.layout.Pane;
-import javax.swing.JPanel;
-
 import java.io.File;
 import java.util.concurrent.Callable;
+import javafx.scene.layout.Pane;
+import javax.swing.JPanel;
 
 /**
  * Interface to all Ui's.
@@ -41,4 +40,6 @@ public interface UiCreator<T> extends Callable<T> {
     UiOk<File> openFileChooser();
 
     UiOk<File> openFileChooser(String title);
+
+    void exec();
 }

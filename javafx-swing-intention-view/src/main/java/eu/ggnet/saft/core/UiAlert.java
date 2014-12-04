@@ -1,15 +1,14 @@
 package eu.ggnet.saft.core;
 
 import eu.ggnet.saft.core.swing.SwingSaft;
+import java.awt.Component;
+import java.lang.reflect.InvocationTargetException;
+import java.util.concurrent.ExecutionException;
 import javafx.scene.Parent;
 import javax.swing.*;
 import lombok.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.awt.Component;
-import java.lang.reflect.InvocationTargetException;
-import java.util.concurrent.ExecutionException;
 
 /**
  * Replacement for JOptionPane.
@@ -104,8 +103,8 @@ public class UiAlert {
             return null;
         }
         // In Swing mode.
-        if (swingParent != null) return SwingSaft.windowAncestor(swingParent).orElse(UiCore.mainPanel);
-        if (javafxParent != null) return SwingSaft.windowAncestor(javafxParent).orElse(UiCore.mainPanel);
-        return UiCore.mainPanel;
+        if (swingParent != null) return SwingCore.windowAncestor(swingParent).orElse(SwingCore.mainFrame());
+        if (javafxParent != null) return SwingCore.windowAncestor(javafxParent).orElse(SwingCore.mainFrame());
+        return SwingCore.mainFrame();
     }
 }

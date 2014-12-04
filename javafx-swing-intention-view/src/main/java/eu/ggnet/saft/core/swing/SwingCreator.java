@@ -1,9 +1,12 @@
 package eu.ggnet.saft.core.swing;
 
-import eu.ggnet.saft.core.UiCore;
+import eu.ggnet.saft.core.*;
 import eu.ggnet.saft.core.all.*;
 import eu.ggnet.saft.core.aux.*;
 import eu.ggnet.saft.core.fx.FxSaft;
+import java.awt.Window;
+import java.io.File;
+import java.util.concurrent.*;
 import javafx.embed.swing.JFXPanel;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.Pane;
@@ -11,10 +14,6 @@ import javafx.stage.*;
 import javax.swing.JPanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.awt.Window;
-import java.io.File;
-import java.util.concurrent.*;
 
 /**
  *
@@ -55,9 +54,9 @@ public class SwingCreator<T> extends AbstractCreator<T> {
         return new SwingOk<>(() -> {
             if (before.ifPresentIsNull()) return null; // Chainbreaker
             final T parameter = before.get();
-            FxSaft.ensurePlatformIsRunning();
+            SwingCore.ensurePlatformIsRunning();
             final R pane = FxSaft.construct(paneClazz, parameter);
-            JFXPanel p = FxSaft.wrap(pane);
+            JFXPanel p = SwingCore.wrap(pane);
             return SwingSaft.wrapInChoiceAndShow(parent, p, modality, pane);
         }, parent, modality);
     }
@@ -67,9 +66,9 @@ public class SwingCreator<T> extends AbstractCreator<T> {
         return new SwingOk<>(() -> {
             if (before.ifPresentIsNull()) return null; // Chainbreaker
             final T parameter = before.get();
-            FxSaft.ensurePlatformIsRunning();
+            SwingCore.ensurePlatformIsRunning();
             final FXMLLoader loader = FxSaft.constructFxml(controllerClass, parameter);
-            JFXPanel p = FxSaft.wrap(loader.getRoot());
+            JFXPanel p = SwingCore.wrap(loader.getRoot());
             return SwingSaft.wrapInChoiceAndShow(parent, p, modality, loader.getController());
         }, parent, modality);
     }
@@ -122,7 +121,7 @@ public class SwingCreator<T> extends AbstractCreator<T> {
     @Override
     public SwingOk<File> openFileChooser(String title) {
         return new SwingOk<>(() -> {
-            FxSaft.ensurePlatformIsRunning();
+            SwingCore.ensurePlatformIsRunning();
             File file = FxSaft.dispatch(() -> {
                 FileChooser fileChooser = new FileChooser();
                 if (title == null) fileChooser.setTitle("Open File");
@@ -131,6 +130,11 @@ public class SwingCreator<T> extends AbstractCreator<T> {
             });
             return new OkCancelResult<>(file, file != null);
         }, parent, modality);
+    }
+
+    @Override
+    public void exec() {
+        Ui.exec(this);
     }
 
 }

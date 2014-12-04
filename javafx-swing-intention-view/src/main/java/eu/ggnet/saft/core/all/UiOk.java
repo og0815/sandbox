@@ -1,7 +1,6 @@
 package eu.ggnet.saft.core.all;
 
 import eu.ggnet.saft.core.aux.CallableA1;
-
 import java.util.concurrent.Callable;
 
 /**
@@ -13,4 +12,5 @@ public interface UiOk<V> extends Callable<OkCancelResult<V>> {
 
     <R> UiCreator<R> onOk(CallableA1<V, R> function);
 
+    void exec();
 }

@@ -3,13 +3,12 @@ package eu.ggnet.saft.core.all;
 import eu.ggnet.saft.core.UiCore;
 import eu.ggnet.saft.core.aux.CallableA1;
 import eu.ggnet.saft.core.aux.Title;
-import javafx.stage.Modality;
-
 import java.awt.Desktop;
 import java.awt.Dialog;
 import java.io.File;
 import java.util.Optional;
 import java.util.concurrent.Callable;
+import javafx.stage.Modality;
 
 /**
  * Util is
@@ -79,6 +78,19 @@ public class UiUtil {
                 return Optional.of(Dialog.ModalityType.MODELESS);
         }
         return Optional.empty();
+    }
+
+    public static boolean isBlank(final CharSequence cs) {
+        int strLen;
+        if (cs == null || (strLen = cs.length()) == 0) {
+            return true;
+        }
+        for (int i = 0; i < strLen; i++) {
+            if (Character.isWhitespace(cs.charAt(i)) == false) {
+                return false;
+            }
+        }
+        return true;
     }
 
 }

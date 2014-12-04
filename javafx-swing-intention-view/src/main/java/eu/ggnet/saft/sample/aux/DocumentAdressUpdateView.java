@@ -1,10 +1,10 @@
 package eu.ggnet.saft.sample.aux;
 
+import eu.ggnet.saft.core.all.UiUtil;
 import eu.ggnet.saft.core.aux.OnOk;
 import eu.ggnet.saft.core.swing.OkCancelDialog;
 import java.util.function.Consumer;
 import javax.swing.JOptionPane;
-import org.apache.commons.lang3.StringUtils;
 
 /**
  *
@@ -30,7 +30,7 @@ public class DocumentAdressUpdateView extends javax.swing.JPanel implements OnOk
 
     @Override
     public boolean onOk() {
-        if (StringUtils.isBlank(adressArea.getText())) {
+        if (UiUtil.isBlank(adressArea.getText())) {
             JOptionPane.showMessageDialog(this, "Addressfeld ist leer...");
             return false;
         }

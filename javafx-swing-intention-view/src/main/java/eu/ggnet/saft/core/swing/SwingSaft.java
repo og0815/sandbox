@@ -4,26 +4,21 @@ import eu.ggnet.saft.core.UiCore;
 import eu.ggnet.saft.core.all.OkCancelResult;
 import eu.ggnet.saft.core.all.UiUtil;
 import eu.ggnet.saft.core.aux.*;
-import javafx.embed.swing.SwingNode;
-import javafx.scene.*;
-import javafx.stage.Modality;
-import javax.swing.*;
-import org.apache.commons.io.Charsets;
-import org.apache.commons.io.IOUtils;
-import org.slf4j.LoggerFactory;
-
 import java.awt.*;
 import java.awt.Dialog.ModalityType;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.io.IOException;
+import java.io.*;
 import java.lang.reflect.InvocationTargetException;
-import java.util.Arrays;
-import java.util.Optional;
+import java.nio.charset.Charset;
+import java.util.*;
 import java.util.concurrent.*;
 import java.util.function.Consumer;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+import javafx.stage.Modality;
+import javax.swing.*;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -67,38 +62,6 @@ public class SwingSaft {
         return task.get();
     }
 
-    public static SwingNode wrap(final JPanel p) throws ExecutionException, InterruptedException, InvocationTargetException {
-        return dispatch(() -> {
-            SwingNode swingNode = new SwingNode();
-            swingNode.setContent(p);
-            return swingNode;
-        });
-    }
-
-    /**
-     * Special form of {@link SwingUtilities#getWindowAncestor(java.awt.Component) }, as it also verifies if the
-     * supplied parameter is of type Window and if true returns it.
-     *
-     * @param c the component
-     * @return a window.
-     */
-    public static Optional<Window> windowAncestor(Component c) {
-        if (c == null) return Optional.empty();
-        if (c instanceof Window) return Optional.of((Window) c);
-        return Optional.ofNullable(SwingUtilities.getWindowAncestor(c));
-    }
-
-    /**
-     * Returns the Swing Window in Swing Mode from a wrapped JavaFx Node.
-     *
-     * @param p the node
-     * @return a window
-     */
-    public static Optional<Window> windowAncestor(Node p) {
-        if (p == null) return Optional.empty();
-        return windowAncestor(UiCore.swingParentHelper.get(p.getScene()));
-    }
-
     public static void enableCloser(Window window, Object uiElement) {
         if (uiElement instanceof ClosedListener) {
             window.addWindowListener(new WindowAdapter() {
@@ -113,8 +76,7 @@ public class SwingSaft {
     }
 
     public static java.util.List<Image> loadIcons(Class<?> reference) throws IOException {
-        java.util.List<String> files = IOUtils.readLines(reference.getResourceAsStream("."), Charsets.UTF_8);
-
+        java.util.List<String> files = readLines(reference.getResourceAsStream("."));
         String head = UiCore.CLASS_SUFFIXES_FOR_ICONS
                 .stream()
                 .filter(s -> reference.getSimpleName().endsWith(s))
@@ -126,6 +88,17 @@ public class SwingSaft {
         Toolkit toolkit = Toolkit.getDefaultToolkit();
 
         return files.stream().filter(t -> Pattern.matches(pattern, t)).map(t -> toolkit.getImage(reference.getResource(t))).collect(Collectors.toList());
+    }
+
+    private static java.util.List<String> readLines(InputStream input) throws IOException {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(input, Charset.forName("UTF-8")));
+        java.util.List<String> list = new ArrayList<>();
+        String line = reader.readLine();
+        while (line != null) {
+            list.add(line);
+            line = reader.readLine();
+        }
+        return list;
     }
 
     public static void main(String[] args) {

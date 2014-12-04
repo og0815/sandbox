@@ -1,7 +1,7 @@
 package eu.ggnet.saft.core.aux;
 
 /**
- * Is called while the ui setVisible process.
+ * Optional Initialiser for JPanel and Panes, called while the ui setVisible process.
  *
  * @author oliver.guenther
  */

@@ -1,11 +1,11 @@
 package eu.ggnet.saft.core.swing;
 
+import eu.ggnet.saft.core.Ui;
 import eu.ggnet.saft.core.all.*;
 import eu.ggnet.saft.core.aux.CallableA1;
-import javafx.stage.Modality;
-
 import java.awt.Window;
 import java.util.concurrent.Callable;
+import javafx.stage.Modality;
 
 /**
  *
@@ -34,6 +34,11 @@ public class SwingOk<V> implements UiOk<V> {
     @Override
     public OkCancelResult<V> call() throws Exception {
         return before.get();
+    }
+
+    @Override
+    public void exec() {
+        Ui.exec(this);
     }
 
 }

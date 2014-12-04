@@ -38,7 +38,7 @@ public class OpenWithSwing {
             menu.add(b);
 
             b = new JMenuItem("SelfCloser");
-            b.addActionListener((e) -> Ui.exec(Ui.openSwing(PanelWithSelfCloser.class)));
+            b.addActionListener((e) -> Ui.openSwing(PanelWithSelfCloser.class).exec());
             menu.add(b);
 
             main.getMenuBar().add(menu);

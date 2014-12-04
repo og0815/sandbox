@@ -5,16 +5,15 @@ import eu.ggnet.saft.core.aux.*;
 import eu.ggnet.saft.core.fx.FxCreator;
 import eu.ggnet.saft.core.fx.FxSaft;
 import eu.ggnet.saft.core.swing.*;
+import java.awt.*;
+import java.io.File;
+import java.util.concurrent.*;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.layout.Pane;
 import javax.swing.JPanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.awt.*;
-import java.io.File;
-import java.util.concurrent.*;
 
 /**
  * The main entry point.
@@ -36,10 +35,10 @@ public class Ui {
     public static <R> UiCreator<R> parent(Component parent) {
         if (UiCore.isRunning() && UiCore.isFx()) {
             L.warn("Using a swing component as parent in JavaFx Mode is not yet implemented");
-            return new FxCreator<>(null, UiCore.mainStage, null); // TODO: Find a way to get a Stage from a Swing embedded component.
+            return new FxCreator<>(null, FxCore.mainStage(), null); // TODO: Find a way to get a Stage from a Swing embedded component.
         }
         if (UiCore.isRunning() && UiCore.isSwing())
-            return new SwingCreator<>(null, SwingSaft.windowAncestor(parent).orElse(UiCore.mainPanel), null);
+            return new SwingCreator<>(null, SwingCore.windowAncestor(parent).orElse(SwingCore.mainFrame()), null);
         throw new IllegalStateException("UiCore not initalized");
     }
 
@@ -47,15 +46,15 @@ public class Ui {
         if (UiCore.isRunning() && UiCore.isFx())
             return new FxCreator<>(null, FxSaft.windowAncestor(parent), null);
         if (UiCore.isRunning() && UiCore.isSwing())
-            return new SwingCreator<>(null, SwingSaft.windowAncestor(parent).orElse(UiCore.mainPanel), null);
+            return new SwingCreator<>(null, SwingCore.windowAncestor(parent).orElse(SwingCore.mainFrame()), null);
         throw new IllegalStateException("UiCore not initalized");
     }
 
     private static <R> UiCreator<R> creator() {
         if (UiCore.isRunning() && UiCore.isFx())
-            return new FxCreator<>(null, UiCore.mainStage, null);
+            return new FxCreator<>(null, FxCore.mainStage(), null);
         if (UiCore.isRunning() && UiCore.isSwing())
-            return new SwingCreator<>(null, UiCore.mainPanel, null);
+            return new SwingCreator<>(null, SwingCore.mainFrame(), null);
         throw new IllegalStateException("UiCore not initalized");
     }
 
@@ -89,7 +88,7 @@ public class Ui {
     }
 
     public static <T, R extends JPanel> SwingOpenPanel<T, R> openSwing(Class<R> panelClass, String key) {
-        return new SwingCreator<T>(null, UiCore.mainPanel, null).openSwing(panelClass, key);
+        return new SwingCreator<T>(null, SwingCore.mainFrame(), null).openSwing(panelClass, key);
     }
 
     public static <T, R extends Pane> SwingOpenPane<T, R> openFx(Class<R> panelClass) {
@@ -97,7 +96,7 @@ public class Ui {
     }
 
     public static <T, R extends Pane> SwingOpenPane<T, R> openFx(Class<R> panelClass, String id) {
-        return new SwingCreator<T>(null, UiCore.mainPanel, null).openFx(panelClass, id);
+        return new SwingCreator<T>(null, SwingCore.mainFrame(), null).openFx(panelClass, id);
     }
 
     public static <T, R extends FxController> SwingOpenFxml<T, R> openFxml(Class<R> controllerClass) {
@@ -105,30 +104,23 @@ public class Ui {
     }
 
     public static <T, R extends FxController> SwingOpenFxml<T, R> openFxml(Class<R> controllerClass, String id) {
-        return new SwingCreator<T>(null, UiCore.mainPanel, null).openFxml(controllerClass, id);
+        return new SwingCreator<T>(null, SwingCore.mainFrame(), null).openFxml(controllerClass, id);
     }
 
     public static <V> void exec(Callable<V> ie) {
-        // See CompletableFuture() or ForkJoinPool, might be cooler.
-        // Return of Futur might
-        Thread t = new Thread() {
-            @Override
-            public void run() {
-                try {
-                    ie.call();
-                } catch (Exception e) {
-                    UiCore.catchException(e);
-                }
+        ForkJoinPool.commonPool().execute(() -> {
+            try {
+                ie.call();
+            } catch (Exception e) {
+                UiCore.catchException(e);
             }
-        };
-        t.setDaemon(true); // Shut down on application shutdown.
-        t.start();
+        });
     }
 
     public static void closeWindowOf(Component c) {
         if (!UiCore.isRunning()) return;
         if (UiCore.isFx()) throw new RuntimeException("Cosing of embedded Swing in JavaFx not yet implemented");
-        SwingSaft.windowAncestor(c).ifPresent((w) -> {
+        SwingCore.windowAncestor(c).ifPresent((w) -> {
             w.setVisible(false);
             w.dispose();
         });
@@ -136,8 +128,8 @@ public class Ui {
 
     public static void closeWindowOf(Node n) {
         if (!UiCore.isRunning()) return;
-        if (UiCore.isFx()) throw new RuntimeException("Cosing of embedded Swing in JavaFx not yet implemented");
-        SwingSaft.windowAncestor(n).ifPresent((w) -> {
+        if (UiCore.isFx()) throw new RuntimeException("Cosing of JavaFx not yet implemented");
+        SwingCore.windowAncestor(n).ifPresent((w) -> {
             w.setVisible(false);
             w.dispose();
         });

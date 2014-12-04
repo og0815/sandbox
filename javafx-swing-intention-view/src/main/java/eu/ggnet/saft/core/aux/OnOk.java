@@ -1,7 +1,9 @@
 package eu.ggnet.saft.core.aux;
 
+import eu.ggnet.saft.core.Ui;
+
 /**
- * If implemented by a Pane or JPanel, the onOk is called if ok is pressed.
+ * May be implemented by a Pane or JPanel, is called by using {@link Ui#choiceFx(java.lang.Class) }, if ok is pressed.
  */
 public interface OnOk {
 

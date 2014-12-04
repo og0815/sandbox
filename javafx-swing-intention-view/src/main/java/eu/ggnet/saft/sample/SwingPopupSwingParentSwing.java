@@ -1,13 +1,10 @@
 package eu.ggnet.saft.sample;
 
-import eu.ggnet.saft.core.Ui;
-import eu.ggnet.saft.core.UiCore;
+import eu.ggnet.saft.core.*;
 import eu.ggnet.saft.sample.aux.DocumentAdressUpdateView;
 import eu.ggnet.saft.sample.aux.MainPanel;
-
 import java.awt.Dialog;
 import java.awt.Label;
-
 import javax.swing.JDialog;
 
 /**
@@ -28,7 +25,7 @@ public class SwingPopupSwingParentSwing {
     public static void main(String[] args) {
         UiCore.startSwing(() -> new MainPanel());
 
-        final JDialog d = new JDialog(UiCore.mainPanel, "ExtraDialog", Dialog.ModalityType.MODELESS);
+        final JDialog d = new JDialog(SwingCore.mainFrame(), "ExtraDialog", Dialog.ModalityType.MODELESS);
         Label label = new Label("Ein extra Dialog");
         d.getContentPane().add(label);
         d.pack();

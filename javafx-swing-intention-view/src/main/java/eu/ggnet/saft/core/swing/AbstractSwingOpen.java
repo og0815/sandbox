@@ -1,18 +1,17 @@
 package eu.ggnet.saft.core.swing;
 
-import eu.ggnet.saft.core.UiCore;
+import eu.ggnet.saft.core.*;
 import eu.ggnet.saft.core.all.OnceCaller;
 import eu.ggnet.saft.core.all.UiUtil;
 import eu.ggnet.saft.core.aux.Frame;
-import javafx.stage.Modality;
-import javax.swing.*;
-
 import java.awt.Dialog;
 import java.awt.Window;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.lang.ref.WeakReference;
 import java.util.concurrent.Callable;
+import javafx.stage.Modality;
+import javax.swing.*;
 
 public abstract class AbstractSwingOpen<T, R> implements Callable<Window> {
 
@@ -51,9 +50,9 @@ public abstract class AbstractSwingOpen<T, R> implements Callable<Window> {
     public Window call() throws Exception {
         String key = creatorClass.getName() + (id == null ? "" : ":" + id);
         // Look into existing Instances and push up to the front if exist.
-        if (UiCore.swingActiveWindows.containsKey(key)) {
-            Window window = UiCore.swingActiveWindows.get(key).get();
-            if (window == null || !window.isVisible()) /* cleanup saftynet */ UiCore.swingActiveWindows.remove(key);
+        if (SwingCore.ACTIVE_WINDOWS.containsKey(key)) {
+            Window window = SwingCore.ACTIVE_WINDOWS.get(key).get();
+            if (window == null || !window.isVisible()) /* cleanup saftynet */ SwingCore.ACTIVE_WINDOWS.remove(key);
             else {
                 if (window instanceof JFrame) ((JFrame) window).setExtendedState(JFrame.NORMAL);
                 window.toFront();
@@ -90,7 +89,7 @@ public abstract class AbstractSwingOpen<T, R> implements Callable<Window> {
             return w;
         });
         SwingSaft.enableCloser(window, t2.source);
-        UiCore.swingActiveWindows.put(key, new WeakReference<>(window));
+        SwingCore.ACTIVE_WINDOWS.put(key, new WeakReference<>(window));
 
         // Removes on close.
         window.addWindowListener(new WindowAdapter() {
@@ -98,7 +97,7 @@ public abstract class AbstractSwingOpen<T, R> implements Callable<Window> {
             @Override
             public void windowClosed(WindowEvent e) {
                 // Clean us up.
-                UiCore.swingActiveWindows.remove(key);
+                SwingCore.ACTIVE_WINDOWS.remove(key);
             }
 
         });
@@ -107,5 +106,9 @@ public abstract class AbstractSwingOpen<T, R> implements Callable<Window> {
     }
 
     protected abstract T2<R> build(T parameter, Class<R> clazz) throws Exception;
+
+    public void exec() {
+        Ui.exec(this);
+    }
 
 }

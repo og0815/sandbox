@@ -1,13 +1,10 @@
 package eu.ggnet.saft.core.fx;
 
-import eu.ggnet.saft.core.UiCore;
 import eu.ggnet.saft.core.aux.FxController;
 import eu.ggnet.saft.core.aux.Initialiser;
 import javafx.application.Platform;
-import javafx.embed.swing.JFXPanel;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Window;
 import org.slf4j.LoggerFactory;
@@ -22,17 +19,6 @@ import java.util.function.Consumer;
  * @author oliver.guenther
  */
 public class FxSaft {
-
-    private static JFXPanel startHelper = null;
-
-    private static boolean started = false;
-
-    public static void ensurePlatformIsRunning() {
-        if (!started) {
-            startHelper = new JFXPanel();
-            started = true;
-        }
-    }
 
     public static <R extends FxController> URL loadView(Class<R> controllerClazz) {
         if (!controllerClazz.getSimpleName().endsWith("Controller"))
@@ -71,24 +57,6 @@ public class FxSaft {
 
     }
 
-    public static JFXPanel wrap(Pane p) throws InterruptedException {
-        final JFXPanel fxp = jfxPanel();
-        final CountDownLatch cdl = new CountDownLatch(1);
-        if (Platform.isFxApplicationThread()) {
-            fxp.setScene(new Scene(p));
-            UiCore.swingParentHelper.put(fxp.getScene(), fxp);
-            cdl.countDown();
-        } else {
-            Platform.runLater(() -> {
-                fxp.setScene(new Scene(p));
-                UiCore.swingParentHelper.put(fxp.getScene(), fxp);
-                cdl.countDown();
-            });
-        }
-        cdl.await();
-        return fxp;
-    }
-
     /**
      * Dispatches the Callable to the Platform Ui Thread.
      *
@@ -117,17 +85,6 @@ public class FxSaft {
     public static Window windowAncestor(Node c) {
         if (c == null) return null;
         return c.getScene().getWindow();
-    }
-
-    private static JFXPanel jfxPanel() {
-        JFXPanel result;
-        if (startHelper != null) {
-            result = startHelper;
-            startHelper = null;
-        } else {
-            result = new JFXPanel();
-        }
-        return result;
     }
 
 }

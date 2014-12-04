@@ -1,13 +1,13 @@
 package eu.ggnet.saft.core.swing;
 
+import eu.ggnet.saft.core.SwingCore;
 import eu.ggnet.saft.core.aux.FxController;
 import eu.ggnet.saft.core.fx.FxSaft;
+import java.awt.Window;
+import java.util.concurrent.Callable;
 import javafx.embed.swing.JFXPanel;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Modality;
-
-import java.awt.Window;
-import java.util.concurrent.Callable;
 
 /**
  *
@@ -23,9 +23,9 @@ public class SwingOpenFxml<T, R extends FxController> extends AbstractSwingOpen<
 
     @Override
     protected T2<R> build(T parameter, Class<R> controllerClass) throws Exception {
-        FxSaft.ensurePlatformIsRunning();
+        SwingCore.ensurePlatformIsRunning();
         FXMLLoader loader = FxSaft.constructFxml(controllerClass, parameter);
-        JFXPanel p = FxSaft.wrap(loader.getRoot());
+        JFXPanel p = SwingCore.wrap(loader.getRoot());
         return new T2<>(p, loader.getController());
     }
 

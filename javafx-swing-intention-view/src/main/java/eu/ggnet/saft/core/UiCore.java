@@ -5,14 +5,6 @@ import eu.ggnet.saft.core.exception.ExceptionUtil;
 import eu.ggnet.saft.core.exception.SwingExceptionDialog;
 import eu.ggnet.saft.core.fx.FxSaft;
 import eu.ggnet.saft.core.swing.SwingSaft;
-import javafx.application.Platform;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.embed.swing.JFXPanel;
-import javafx.scene.*;
-import javafx.stage.Stage;
-import javax.swing.JFrame;
-
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -21,6 +13,12 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 import java.util.concurrent.*;
 import java.util.function.Consumer;
+import javafx.application.Platform;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.scene.*;
+import javafx.stage.Stage;
+import javax.swing.JFrame;
 
 /**
  *
@@ -28,18 +26,7 @@ import java.util.function.Consumer;
  */
 public class UiCore {
 
-    public static JFrame mainPanel = null;
-
-    public static Stage mainStage = null;
-
-    public static Map<String, WeakReference<Window>> swingActiveWindows = new HashMap<>();
-
     public final static java.util.List<String> CLASS_SUFFIXES_FOR_ICONS = Arrays.asList("Controller", "View", "ViewCask");
-
-    /**
-     * Holds a mapping of all Scenes in JFXPanels.
-     */
-    public static Map<Scene, JFXPanel> swingParentHelper = new WeakHashMap<>();
 
     private final static BooleanProperty backgroundActivity = new SimpleBooleanProperty();
 
@@ -49,7 +36,7 @@ public class UiCore {
 
     private static Consumer<Throwable> finalConsumer = (b) -> {
         Runnable r = () -> {
-            SwingExceptionDialog.show(mainPanel, "Systemfehler", ExceptionUtil.extractDeepestMessage(b),
+            SwingExceptionDialog.show(SwingCore.mainFrame(), "Systemfehler", ExceptionUtil.extractDeepestMessage(b),
                     ExceptionUtil.toMultilineStacktraceMessages(b), ExceptionUtil.toStackStrace(b));
         };
 
@@ -76,12 +63,12 @@ public class UiCore {
     public static void continueSwing(JFrame mainView) {
         if (isRunning()) throw new IllegalStateException("UiCore is already initialised and running");
         Platform.setImplicitExit(false); // Need this, as we asume many javafx elements opening and closing.
-        mainPanel = mainView;
-        mainPanel.addWindowListener(new WindowAdapter() {
+        SwingCore.mainFrame = mainView;
+        mainView.addWindowListener(new WindowAdapter() {
 
             @Override
             public void windowClosing(WindowEvent e) {
-                for (WeakReference<Window> windowRef : swingActiveWindows.values()) {
+                for (WeakReference<Window> windowRef : SwingCore.ACTIVE_WINDOWS.values()) {
                     if (windowRef.get() == null) continue;
                     windowRef.get().setVisible(false); // Close all windows.
                     windowRef.get().dispose();
@@ -126,8 +113,7 @@ public class UiCore {
      *
      * This also assumes two things:
      * <ul>
-     * <li>The JavaFX Platfrom is already running (as a Stage already exists), most likely created through default
-     * lifecycle of javaFx</li>
+     * <li>The JavaFX Platfrom is already running (as a Stage already exists), most likely created through default lifecycle of javaFx</li>
      * <li>This Stage will always be open or the final to be closed, so implicitExit is ok</li>
      * </ul>
      *
@@ -135,17 +121,17 @@ public class UiCore {
      * @param primaryStage the primaryStage for the application, not yet visible.
      * @param builder the build for the main ui.
      */
-    public static <T extends Parent> void startJavaFx(Stage primaryStage, final Callable<T> builder) {
+    public static <T extends Parent> void startJavaFx(final Stage primaryStage, final Callable<T> builder) {
         if (isRunning()) throw new IllegalStateException("UiCore is already initialised and running");
-        mainStage = primaryStage;
+        FxCore.mainStage = primaryStage;
         try {
             FxSaft.dispatch(() -> {
                 T node = builder.call();
-                mainStage.setTitle(UiUtil.title(node.getClass()));
-                mainStage.setScene(new Scene(node));
-                mainStage.centerOnScreen();
-                mainStage.sizeToScene();
-                mainStage.show();
+                primaryStage.setTitle(UiUtil.title(node.getClass()));
+                primaryStage.setScene(new Scene(node));
+                primaryStage.centerOnScreen();
+                primaryStage.sizeToScene();
+                primaryStage.show();
                 return null;
             });
         } catch (ExecutionException | InterruptedException e) {
@@ -154,9 +140,8 @@ public class UiCore {
     }
 
     /**
-     * Registers an extra renderer for an Exception in any stacktrace. HINT: There is no order or hierachy in the
-     * engine. So if you register duplicates or have more than one match in a StackTrace, no one knows what might
-     * happen.
+     * Registers an extra renderer for an Exception in any stacktrace. HINT: There is no order or hierachy in the engine. So if you register duplicates or have
+     * more than one match in a StackTrace, no one knows what might happen.
      *
      * @param <T> type of the Exception
      * @param clazz the class of the Exception
@@ -187,15 +172,15 @@ public class UiCore {
     }
 
     public static boolean isRunning() {
-        return mainPanel != null || mainStage != null;
+        return SwingCore.mainFrame() != null || FxCore.mainStage() != null;
     }
 
     public static boolean isFx() {
-        return (mainStage != null);
+        return (FxCore.mainStage() != null);
     }
 
     public static boolean isSwing() {
-        return (mainPanel != null);
+        return (SwingCore.mainFrame() != null);
     }
 
 }

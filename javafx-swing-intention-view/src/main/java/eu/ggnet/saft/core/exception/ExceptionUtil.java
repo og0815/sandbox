@@ -1,7 +1,5 @@
 package eu.ggnet.saft.core.exception;
 
-import org.apache.commons.lang3.SystemUtils;
-
 import java.io.*;
 
 /**
@@ -32,7 +30,7 @@ public class ExceptionUtil {
     public static String toMultilineStacktraceMessages(Throwable ex) {
         if (ex == null) return "";
         if (ex.getCause() == null) return ex.getClass().getSimpleName() + ":" + ex.getLocalizedMessage();
-        return ex.getClass().getSimpleName() + ":" + ex.getLocalizedMessage() + SystemUtils.LINE_SEPARATOR + toMultilineStacktraceMessages(ex.getCause());
+        return ex.getClass().getSimpleName() + ":" + ex.getLocalizedMessage() + "\n" + toMultilineStacktraceMessages(ex.getCause());
     }
 
     /**

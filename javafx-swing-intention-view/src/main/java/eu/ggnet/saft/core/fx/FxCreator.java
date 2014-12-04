@@ -1,22 +1,20 @@
 package eu.ggnet.saft.core.fx;
 
-import eu.ggnet.saft.core.UiCore;
+import eu.ggnet.saft.core.*;
 import eu.ggnet.saft.core.all.*;
 import eu.ggnet.saft.core.aux.FxController;
 import eu.ggnet.saft.core.swing.*;
+import java.io.File;
+import java.util.concurrent.*;
 import javafx.embed.swing.SwingNode;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 import javafx.stage.*;
+import static javafx.stage.Modality.APPLICATION_MODAL;
 import javax.swing.JPanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.io.File;
-import java.util.concurrent.*;
-
-import static javafx.stage.Modality.APPLICATION_MODAL;
 
 /**
  *
@@ -78,7 +76,7 @@ public class FxCreator<T> extends AbstractCreator<T> {
             if (before.ifPresentIsNull()) return null; // Chainbreaker
             final T parameter = before.get();
             final R panel = SwingSaft.construct(panelClazz, parameter);
-            final SwingNode node = SwingSaft.wrap(panel);
+            final SwingNode node = FxCore.wrap(panel);
             return wrapAndShow(parent, node, modality, panel);
         }, parent, modality);
     }
@@ -107,7 +105,7 @@ public class FxCreator<T> extends AbstractCreator<T> {
                 FileChooser fileChooser = new FileChooser();
                 if (title == null) fileChooser.setTitle("Open File");
                 else fileChooser.setTitle(title);
-                return fileChooser.showOpenDialog(UiCore.mainStage);
+                return fileChooser.showOpenDialog(FxCore.mainStage());
             });
             return new OkCancelResult<>(file, file != null);
         }, parent, modality);
@@ -141,6 +139,11 @@ public class FxCreator<T> extends AbstractCreator<T> {
     @Override
     public <R extends FxController> SwingOpenFxml<T, R> openFxml(Class<R> controllerClass, String id) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void exec() {
+        Ui.exec(this);
     }
 
 }

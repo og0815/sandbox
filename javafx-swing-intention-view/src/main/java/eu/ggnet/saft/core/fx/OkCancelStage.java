@@ -1,5 +1,6 @@
 package eu.ggnet.saft.core.fx;
 
+import eu.ggnet.saft.core.all.UiUtil;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
@@ -8,7 +9,6 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
-import org.apache.commons.lang3.StringUtils;
 import eu.ggnet.saft.core.aux.OnOk;
 
 /**
@@ -38,7 +38,7 @@ public class OkCancelStage<T extends Node> extends Stage {
         bottom.setPadding(new Insets(10));
         bottom.getChildren().addAll(okButton, cancelButton);
         pane.setBottom(bottom);
-        if (!StringUtils.isBlank(title)) setTitle(title);
+        if (!UiUtil.isBlank(title)) setTitle(title);
         setScene(new Scene(pane));
 
         okButton.setOnAction((ActionEvent t) -> {
