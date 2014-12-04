@@ -34,6 +34,8 @@ public class UiCore {
 
     public static Map<String, WeakReference<Window>> swingActiveWindows = new HashMap<>();
 
+    public final static java.util.List<String> CLASS_SUFFIXES_FOR_ICONS = Arrays.asList("Controller", "View", "ViewCask");
+
     /**
      * Holds a mapping of all Scenes in JFXPanels.
      */

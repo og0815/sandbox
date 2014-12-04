@@ -83,6 +83,7 @@ public abstract class AbstractSwingOpen<T, R> implements Callable<Window> {
                 dialog.getContentPane().add(t2.panel);
                 w = dialog;
             }
+            w.setIconImages(SwingSaft.loadIcons(creatorClass));
             w.pack();
             w.setLocationRelativeTo(parent);
             w.setVisible(true);

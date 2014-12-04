@@ -8,16 +8,22 @@ import javafx.embed.swing.SwingNode;
 import javafx.scene.*;
 import javafx.stage.Modality;
 import javax.swing.*;
+import org.apache.commons.io.Charsets;
+import org.apache.commons.io.IOUtils;
 import org.slf4j.LoggerFactory;
 
 import java.awt.*;
 import java.awt.Dialog.ModalityType;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.util.Arrays;
 import java.util.Optional;
 import java.util.concurrent.*;
 import java.util.function.Consumer;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -104,6 +110,33 @@ public class SwingSaft {
 
             });
         }
+    }
+
+    public static java.util.List<Image> loadIcons(Class<?> reference) throws IOException {
+        java.util.List<String> files = IOUtils.readLines(reference.getResourceAsStream("."), Charsets.UTF_8);
+
+        String head = UiCore.CLASS_SUFFIXES_FOR_ICONS
+                .stream()
+                .filter(s -> reference.getSimpleName().endsWith(s))
+                .map(s -> reference.getSimpleName().substring(0, reference.getSimpleName().length() - s.length()))
+                .findFirst()
+                .orElse(reference.getSimpleName());
+
+        String pattern = "^" + head + "Icon.*.(png|gif|jpg)$";
+        Toolkit toolkit = Toolkit.getDefaultToolkit();
+
+        return files.stream().filter(t -> Pattern.matches(pattern, t)).map(t -> toolkit.getImage(reference.getResource(t))).collect(Collectors.toList());
+    }
+
+    public static void main(String[] args) {
+        String head = "Base";
+        String pattern = "^" + head + "Icon.*.(png|gif|jpg)$";
+        System.out.println("Pattern:" + pattern);
+        for (String file : Arrays.asList("BaseIcon.png", "Muh", "BaseIcon.jpg", "BaseIcon_1.jpg", "BaseIconDDDD.jpg")) {
+            if (Pattern.matches(pattern, file)) System.out.println("Match:" + file);
+            else System.out.println("No Match:" + file);
+        }
+
     }
 
 }
