@@ -1,4 +1,4 @@
-package eu.ggnet.saft.core.aux;
+package eu.ggnet.saft.core.support;
 
 /**
  * Implement in Panel, Pane or FxController to get informed on closing.

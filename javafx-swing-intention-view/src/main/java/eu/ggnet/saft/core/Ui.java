@@ -1,13 +1,15 @@
 package eu.ggnet.saft.core;
 
+import eu.ggnet.saft.core.support.FxController;
 import eu.ggnet.saft.core.all.*;
-import eu.ggnet.saft.core.aux.*;
 import eu.ggnet.saft.core.fx.FxCreator;
 import eu.ggnet.saft.core.fx.FxSaft;
 import eu.ggnet.saft.core.swing.*;
+
 import java.awt.*;
 import java.io.File;
 import java.util.concurrent.*;
+
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.layout.Pane;

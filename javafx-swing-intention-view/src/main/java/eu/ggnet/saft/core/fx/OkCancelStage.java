@@ -9,7 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
-import eu.ggnet.saft.core.aux.OnOk;
+import eu.ggnet.saft.core.support.OnOk;
 
 /**
  *

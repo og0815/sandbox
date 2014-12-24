@@ -1,9 +1,11 @@
 package eu.ggnet.saft.core.swing;
 
+import eu.ggnet.saft.core.support.ClosedListener;
+import eu.ggnet.saft.core.support.Initialiser;
 import eu.ggnet.saft.core.UiCore;
 import eu.ggnet.saft.core.all.OkCancelResult;
 import eu.ggnet.saft.core.all.UiUtil;
-import eu.ggnet.saft.core.aux.*;
+
 import java.awt.*;
 import java.awt.Dialog.ModalityType;
 import java.awt.event.WindowAdapter;
@@ -16,6 +18,7 @@ import java.util.concurrent.*;
 import java.util.function.Consumer;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+
 import javafx.stage.Modality;
 import javax.swing.*;
 import org.slf4j.LoggerFactory;

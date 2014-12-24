@@ -1,13 +1,15 @@
 package eu.ggnet.saft.core.all;
 
 import eu.ggnet.saft.core.UiCore;
-import eu.ggnet.saft.core.aux.CallableA1;
-import eu.ggnet.saft.core.aux.Title;
+import eu.ggnet.saft.core.support.CallableA1;
+import eu.ggnet.saft.core.support.Title;
+
 import java.awt.Desktop;
 import java.awt.Dialog;
 import java.io.File;
 import java.util.Optional;
 import java.util.concurrent.Callable;
+
 import javafx.stage.Modality;
 
 /**

@@ -1,4 +1,4 @@
-package eu.ggnet.saft.sample.aux;
+package eu.ggnet.saft.sample.support;
 
 import javafx.application.Platform;
 import javafx.beans.property.*;
@@ -6,7 +6,7 @@ import javafx.embed.swing.JFXPanel;
 import javafx.geometry.*;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
-import eu.ggnet.saft.core.aux.Title;
+import eu.ggnet.saft.core.support.Title;
 import eu.ggnet.saft.core.fx.OkCancelStage;
 
 import java.time.*;

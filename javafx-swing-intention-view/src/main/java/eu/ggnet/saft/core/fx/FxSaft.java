@@ -1,7 +1,7 @@
 package eu.ggnet.saft.core.fx;
 
-import eu.ggnet.saft.core.aux.FxController;
-import eu.ggnet.saft.core.aux.Initialiser;
+import eu.ggnet.saft.core.support.FxController;
+import eu.ggnet.saft.core.support.Initialiser;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;

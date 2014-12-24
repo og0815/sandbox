@@ -1,4 +1,4 @@
-package eu.ggnet.saft.core.aux;
+package eu.ggnet.saft.core.support;
 
 /**
  * Like {@link java.util.concurrent.Callable } , but with a parameter.

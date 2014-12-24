@@ -1,7 +1,7 @@
-package eu.ggnet.saft.sample.aux;
+package eu.ggnet.saft.sample.support;
 
-import eu.ggnet.saft.core.aux.FxController;
-import eu.ggnet.saft.core.aux.Title;
+import eu.ggnet.saft.core.support.FxController;
+import eu.ggnet.saft.core.support.Title;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 

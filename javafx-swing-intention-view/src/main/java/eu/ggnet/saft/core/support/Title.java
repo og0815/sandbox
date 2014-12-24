@@ -1,4 +1,4 @@
-package eu.ggnet.saft.core.aux;
+package eu.ggnet.saft.core.support;
 
 import java.lang.annotation.*;
 import static java.lang.annotation.ElementType.TYPE;

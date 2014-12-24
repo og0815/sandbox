@@ -1,6 +1,6 @@
-package eu.ggnet.saft.sample.aux;
+package eu.ggnet.saft.sample.support;
 
-import eu.ggnet.saft.core.aux.Frame;
+import eu.ggnet.saft.core.support.Frame;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 

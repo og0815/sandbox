@@ -1,9 +1,11 @@
-package eu.ggnet.saft.sample.aux;
+package eu.ggnet.saft.sample.support;
 
 import eu.ggnet.saft.core.all.UiUtil;
-import eu.ggnet.saft.core.aux.OnOk;
+import eu.ggnet.saft.core.support.OnOk;
 import eu.ggnet.saft.core.swing.OkCancelDialog;
+
 import java.util.function.Consumer;
+
 import javax.swing.JOptionPane;
 
 /**

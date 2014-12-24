@@ -1,4 +1,4 @@
-package eu.ggnet.saft.core.aux;
+package eu.ggnet.saft.core.support;
 
 /**
  * Optional Initialiser for JPanel and Panes, called while the ui setVisible process.

@@ -1,9 +1,11 @@
 package eu.ggnet.saft.core.all;
 
-import eu.ggnet.saft.core.aux.FxController;
+import eu.ggnet.saft.core.support.FxController;
 import eu.ggnet.saft.core.swing.*;
+
 import java.io.File;
 import java.util.concurrent.Callable;
+
 import javafx.scene.layout.Pane;
 import javax.swing.JPanel;
 

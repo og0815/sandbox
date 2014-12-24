@@ -1,4 +1,4 @@
-package eu.ggnet.saft.core.aux;
+package eu.ggnet.saft.core.support;
 
 /**
  * Tagging interface for FX Controller of FXML Files. Expected Naming:
