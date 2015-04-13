@@ -1,6 +1,6 @@
 package eu.ggnet.saft.core.swing;
 
-import eu.ggnet.saft.core.aux.OnOk;
+import eu.ggnet.saft.core.support.OnOk;
 
 import java.awt.*;
 

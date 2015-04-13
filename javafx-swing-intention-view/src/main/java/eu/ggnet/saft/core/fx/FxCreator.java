@@ -2,16 +2,20 @@ package eu.ggnet.saft.core.fx;
 
 import eu.ggnet.saft.core.*;
 import eu.ggnet.saft.core.all.*;
-import eu.ggnet.saft.core.aux.FxController;
+import eu.ggnet.saft.core.support.FxController;
 import eu.ggnet.saft.core.swing.*;
+
 import java.io.File;
 import java.util.concurrent.*;
+
 import javafx.embed.swing.SwingNode;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 import javafx.stage.*;
+
 import static javafx.stage.Modality.APPLICATION_MODAL;
+
 import javax.swing.JPanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

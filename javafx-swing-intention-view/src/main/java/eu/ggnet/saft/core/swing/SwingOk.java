@@ -2,9 +2,11 @@ package eu.ggnet.saft.core.swing;
 
 import eu.ggnet.saft.core.Ui;
 import eu.ggnet.saft.core.all.*;
-import eu.ggnet.saft.core.aux.CallableA1;
+import eu.ggnet.saft.core.support.CallableA1;
+
 import java.awt.Window;
 import java.util.concurrent.Callable;
+
 import javafx.stage.Modality;
 
 /**

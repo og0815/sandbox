@@ -1,7 +1,7 @@
 package eu.ggnet.saft.sample;
 
 import javax.swing.JOptionPane;
-import eu.ggnet.saft.sample.aux.MainPanel;
+import eu.ggnet.saft.sample.support.MainPanel;
 import eu.ggnet.saft.core.Ui;
 import eu.ggnet.saft.core.UiCore;
 

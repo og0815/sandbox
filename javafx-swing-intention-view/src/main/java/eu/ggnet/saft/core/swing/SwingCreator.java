@@ -1,12 +1,14 @@
 package eu.ggnet.saft.core.swing;
 
+import eu.ggnet.saft.core.support.FxController;
 import eu.ggnet.saft.core.*;
 import eu.ggnet.saft.core.all.*;
-import eu.ggnet.saft.core.aux.*;
 import eu.ggnet.saft.core.fx.FxSaft;
+
 import java.awt.Window;
 import java.io.File;
 import java.util.concurrent.*;
+
 import javafx.embed.swing.JFXPanel;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.Pane;
