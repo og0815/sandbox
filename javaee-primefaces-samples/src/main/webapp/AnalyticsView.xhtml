@@ -43,7 +43,10 @@
                 </p:layoutUnit>
 
                 <p:layoutUnit position="center">
-                    Welcome to PrimeFaces
+                    <h:panelGrid columns="2" cellpadding="5">
+                        <p:outputLabel value="Kunde:" for="acSimple" />
+                        <p:autoComplete id="acSimple" value="#{analyticsController.customer}" completeMethod="#{analyticsController.completeCustomer}" />
+                    </h:panelGrid>
                 </p:layoutUnit>
 
             </p:layout>
