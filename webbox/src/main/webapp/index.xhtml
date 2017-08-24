@@ -15,6 +15,18 @@
 
         <h:body>
             <p:layout fullPage="true">
+                <p:layoutUnit position="north" resizable="true" header="Jndi Inspect">
+                    <h:form>
+                        <h:panelGrid columns="4" cellpadding="5">
+                            <h:outputLabel for="name" value="Prefix:" style="font-weight:bold" />
+                            <p:inputText id="name" value="#{treeController.prefix}" />
+                            <p:commandButton value="Submit" update="display" icon="ui-icon-check" />
+                            <p:dataList id="display" value="#{treeController.inspect()}" var="result" >
+                                #{result}
+                            </p:dataList>
+                        </h:panelGrid>
+                    </h:form>
+                </p:layoutUnit>
                 <p:layoutUnit resizable="true" position="west" size="30%" header="Projekte">
                     <h:form>
                         <p:tree value="#{treeController.root}" var="doc"
