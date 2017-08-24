@@ -38,7 +38,7 @@
                     </h:form>
                 </p:layoutUnit>
                 <p:layoutUnit position="center" header="Dateien">
-                    <p:dataTable id="files" var="file" value="#{treeController.selections}">
+                    <p:dataTable id="files" var="file" value="#{treeController.selections}" reflow="true">
                         <p:column headerText="Name">
                             <h:outputText value="#{file.name}" />
                         </p:column>
