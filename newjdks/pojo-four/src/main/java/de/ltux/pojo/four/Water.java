@@ -24,7 +24,7 @@ public class Water {
     
     public static void main(String[] args) {
         var w = new Water();
-        w.setClean(true); // maven doesn't compile. Seams some lombok - module java - magic
+//        w.setClean(true); // maven doesn't compile. Seams some lombok - module java - magic
         // seams to be an live issue : https://github.com/rzwitserloot/lombok/issues/1723
         System.out.println(w);
     }

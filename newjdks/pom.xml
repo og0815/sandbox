@@ -27,6 +27,11 @@
                     <artifactId>maven-compiler-plugin</artifactId>
                     <version>3.8.0</version>
                 </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-war-plugin</artifactId>
+                    <version>3.2.2</version>
+                </plugin>
             </plugins>
         </pluginManagement>
     </build>
@@ -38,6 +43,11 @@
                 <artifactId>lombok</artifactId>
                 <version>1.18.4</version>
             </dependency>
+            <dependency>
+                <groupId>javax</groupId>
+                <artifactId>javaee-api</artifactId>
+                <version>8.0</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
     
@@ -48,6 +58,9 @@
         <module>pojo-two</module>
         <module>pojo-three</module>
         <module>pojo-four</module>
+        <module>jsf</module>
+        <module>remote</module>
+        <module>api</module>
     </modules>
 
 </project>

@@ -18,6 +18,7 @@ public class Main {
         p.setWrittenOn(true);
         
         System.out.println(p);
+        System.out.println(p.toMarkdown());
         
         var s = new Stone("yellow", Stone.Type.OBSIDIAN);
         System.out.println(s);

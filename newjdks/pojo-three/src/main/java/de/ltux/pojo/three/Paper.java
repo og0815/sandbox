@@ -5,6 +5,7 @@
  */
 package de.ltux.pojo.three;
 
+import java.io.Serializable;
 import lombok.Data;
 
 /**
@@ -12,12 +13,19 @@ import lombok.Data;
  * @author oliver.guenther
  */
 @Data
-public class Paper {
-    
+public class Paper implements Serializable {
+
     private String color;
-    
+
     private boolean writtenOn;
-    
+
     private String content;
-    
+
+    public String toMarkdown() {
+        return "Paper\n"
+                + "=====\n"
+                + "- color: " + color + "\n"
+                + "- content: " + content + "\n"
+                + "- writtenOn: " + writtenOn + "\n";
+    }
 }

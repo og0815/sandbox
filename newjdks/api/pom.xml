@@ -6,23 +6,18 @@
         <artifactId>newjdks</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
-    <artifactId>main-one</artifactId>
+    <artifactId>api</artifactId>
     <packaging>jar</packaging>
-    <name>New Jdks - Main 1 (clean)</name>
+    <name>New Jdks - Remote API</name>
     <dependencies>
         <dependency>
-            <groupId>com.vladsch.flexmark</groupId>
-            <artifactId>flexmark-all</artifactId>
-            <version>0.40.0</version>
+            <groupId>javax</groupId>
+            <artifactId>javaee-api</artifactId>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>pojo-one</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>pojo-two</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>

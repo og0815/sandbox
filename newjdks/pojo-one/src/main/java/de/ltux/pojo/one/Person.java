@@ -5,14 +5,19 @@
  */
 package de.ltux.pojo.one;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
  *
  * @author oliver.guenther
  */
-public class Person {
+public class Person implements Serializable {
 
+    public enum Sex {
+        MALE,FEMALE;
+    } 
+    
     private String firstname;
 
     private String lastname;
@@ -50,6 +55,14 @@ public class Person {
 
     public void setAge(int age) {
         this.age = age;
+    }
+
+    public String toMarkdown() {
+        return this.getClass().getSimpleName() + "\n"
+                + "=====\n"
+                + "- firstName: " + firstname + "\n"
+                + "- lastName: " + lastname + "\n"
+                + "- age: " + age + "\n";
     }
 
     @Override

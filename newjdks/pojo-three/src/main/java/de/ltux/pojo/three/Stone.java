@@ -5,6 +5,7 @@
  */
 package de.ltux.pojo.three;
 
+import java.io.Serializable;
 import lombok.Builder;
 import lombok.Value;
 
@@ -14,13 +15,21 @@ import lombok.Value;
  */
 @Value
 @Builder
-public class Stone {
-    
+public class Stone implements Serializable {
+
     public enum Type {
-        GRANITE,SANDSTONE,OBSIDIAN
+        GRANITE, SANDSTONE, OBSIDIAN
     }
-    
+
     private final String color;
-    
+
     private final Type type;
+
+    public String toMarkdown() {
+        return this.getClass().getSimpleName() + "\n"
+                + "=====\n"
+                + "- color: " + color + "\n"
+                + "- type: " + type + "\n";
+    }
+
 }
