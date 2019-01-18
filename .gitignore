@@ -13,3 +13,10 @@ hs_err_pid*
 /geronimo-javamail-imap-bug/target/
 /netbeans-api-only/target/
 /javafx-swing-intention-view/target/
+/webbox/target/
+/deadlock/nbproject/private/
+/deadlock/build/
+/deadlock/dist/
+/omron-fins-collector/nbproject/private/
+/omron-fins-collector/build/
+/sql-nativ/target/
