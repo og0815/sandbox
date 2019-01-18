@@ -20,3 +20,10 @@ hs_err_pid*
 /omron-fins-collector/nbproject/private/
 /omron-fins-collector/build/
 /sql-nativ/target/
+/eedemo/eedemo-ejb/target/
+/eedemo/eedemo-webOne/target/
+/eedemo/eedemo-webTwo/target/
+/eedemo/eedemo-ear/target/
+/java-9-tryout/nbproject/private/
+/java-9-tryout/build/
+/java-9-tryout/dist/

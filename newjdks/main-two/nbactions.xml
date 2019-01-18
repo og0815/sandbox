@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<actions>
+        <action>
+            <actionName>CUSTOM-RUN1</actionName>
+            <displayName>run Pojos - with classpath</displayName>
+            <goals>
+                <goal>process-classes</goal>
+                <goal>org.codehaus.mojo:exec-maven-plugin:1.6.0:exec</goal>
+            </goals>
+            <properties>
+                <exec.args>-classpath %classpath de.ltux.main.two.Pojos</exec.args>
+                <exec.executable>java</exec.executable>
+            </properties>
+        </action>
+        <action>
+            <actionName>CUSTOM-RUN2</actionName>
+            <displayName>run Pojos - with module - error for now</displayName>
+            <goals>
+                <goal>process-classes</goal>
+                <goal>org.codehaus.mojo:exec-maven-plugin:1.6.0:exec</goal>
+            </goals>
+            <properties>
+                <exec.args>--module-path %modulepath --module de.ltux.main.two/de.ltux.main.two.Pojos</exec.args>
+                <exec.executable>java</exec.executable>
+            </properties>
+        </action>
+        <action>
+            <actionName>CUSTOM-RUN3</actionName>
+            <displayName>run Pojos - with module - pom configured</displayName>
+            <goals>
+                <goal>process-classes</goal>
+                <goal>exec:exec@run3</goal>
+            </goals>
+        </action>
+        <action>
+            <actionName>CUSTOM-RUN4</actionName>
+            <displayName>run Pojos - goal java (classpath) - pom configured</displayName>
+            <goals>
+                <goal>process-classes</goal>
+                <goal>exec:java@run4</goal>
+            </goals>
+        </action>
+    </actions>
