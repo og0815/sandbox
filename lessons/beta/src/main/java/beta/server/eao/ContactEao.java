@@ -12,6 +12,8 @@ import java.util.List;
 import java.util.Random;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -19,35 +21,38 @@ import javax.inject.Inject;
  */
 @Stateless
 public class ContactEao {
-       
+
+    private final Logger L = LoggerFactory.getLogger(ContactEao.class);
+
     @Inject
     private SingletonDatabase db;
-    
+
     /**
      * Returns a random contact.
-     * 
-     * @return a random contact. 
+     *
+     * @return a random contact.
      */
     public Contact findAny() {
         Random r = new Random();
-        int size = db.allContacts.size();
-        return db.allContacts.get(r.nextInt(size));
+        int size = db.allContacts().size();
+        return db.allContacts().get(r.nextInt(size));
     }
-    
+
     /**
      * Returns all contacts.
-     * 
-     * @return  all contacts.
+     *
+     * @return all contacts.
      */
     public List<Contact> findAll() {
-        return new ArrayList<>(db.allContacts);
+        L.info("Hashcode in findall {} ", System.identityHashCode(db.allContacts()));
+        return new ArrayList<>(db.allContacts());
     }
-    
+
     /**
      * Returns all contacts, within a range.
-     * 
+     *
      * @param start start in the total result
-     * @param limit amount to return 
+     * @param limit amount to return
      * @return all contacts, within a range.
      */
     public List<Contact> findAll(int start, int limit) {
@@ -59,6 +64,5 @@ public class ContactEao {
         // TODO: Jens
         return null;
     }
-    
-    
+
 }
