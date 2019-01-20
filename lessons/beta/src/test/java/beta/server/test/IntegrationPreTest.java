@@ -5,9 +5,8 @@
  */
 package beta.server.test;
 
-import beta.server.itest.WebIT;
+import beta.server.itest.Deployer;
 import org.assertj.core.api.Assertions;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -15,10 +14,10 @@ import org.junit.Test;
  * @author oliver.guenther
  */
 public class IntegrationPreTest {
- 
+
     @Test
     public void createDeployment() {
-        Assertions.assertThat(WebIT.createDeployment()).isNotNull();
+        Assertions.assertThat(Deployer.createDeployment()).isNotNull();
     }
-    
+
 }
