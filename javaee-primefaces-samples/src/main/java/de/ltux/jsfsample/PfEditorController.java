@@ -23,8 +23,8 @@ public class PfEditorController implements Serializable {
         return name;
     }
 
-    public void setName(String name) {
-        L.debug("setName({}) called");
+    public void setName(String name) {        
+        L.debug("setName({}) called",name);
         this.name = name;
         L.info("Name was set to '{}'", name);
     }
