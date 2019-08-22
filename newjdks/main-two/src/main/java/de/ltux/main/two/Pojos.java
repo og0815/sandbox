@@ -5,7 +5,7 @@
  */
 package de.ltux.main.two;
 
-import de.ltux.pojo.one.Person;
+import de.ltux.pojo.one.Person; //NB11.1 doesn't find packages in automodules
 import de.ltux.pojo.two.Song;
 
 /**
