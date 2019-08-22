@@ -62,6 +62,7 @@
         <module>remote</module>
         <module>api</module>
         <module>jsf-module</module>
-    </modules>
+    <module>javafx</module>
+  </modules>
 
 </project>
