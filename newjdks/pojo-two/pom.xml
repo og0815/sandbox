@@ -8,5 +8,6 @@
     </parent>
     <artifactId>pojo-two</artifactId>
     <packaging>jar</packaging>
-    <name>New Jdks - Pojo 2 (module) - Song</name>
+    <name>New Jdks - Pojo 2 (Mode:module, no lombok) - Song</name>
+    <description>A Pojo with a module-info.jave. But no lombok in useage</description>
 </project>

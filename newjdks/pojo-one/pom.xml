@@ -8,6 +8,6 @@
     </parent>
     <artifactId>pojo-one</artifactId>
     <packaging>jar</packaging>
-    <name>New Jdks - Pojo 1 (clean) - Person</name>
+    <name>New Jdks - Pojo 1 (Mode:classpath, no lombok) - Person</name>
     <description>Tryout of new jdk syntax and ide handling. no modules, no lombok</description>
 </project>

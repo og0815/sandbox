@@ -8,7 +8,7 @@
     </parent>
     <artifactId>pojo-four</artifactId>
     <packaging>jar</packaging>
-    <name>New Jdks - Pojo 4 (module,lombok) - Water</name>
+    <name>New Jdks - Pojo 4 (Mode:module, lombok) - Water</name>
 
     <dependencies>
         <dependency>

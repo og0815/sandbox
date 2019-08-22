@@ -8,7 +8,7 @@
     </parent>
     <artifactId>pojo-three</artifactId>
     <packaging>jar</packaging>
-    <name>New Jdks - Pojo 3 (clean,lombok) - Stone, Paper</name>
+    <name>New Jdks - Pojo 3 (Mode:classpath, lombok) - Stone, Paper</name>
     <dependencies>
         <dependency>
             <groupId>org.projectlombok</groupId>
