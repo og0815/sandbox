@@ -5,6 +5,6 @@
  */
 
 module de.ltux.main.two {
-    requires pojo.one; // automatic module generation.
+    requires pojo.one; // automatic module name generation. NB11.1 still doesn't handle that
     requires de.ltux.pojo.two; // direct module usage
 }

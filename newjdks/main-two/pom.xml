@@ -8,7 +8,7 @@
     </parent>
     <artifactId>main-two</artifactId>
     <packaging>jar</packaging>
-    <name>New Jdks - Main 2 (module)</name>
+    <name>New Jdks - Main 2 (Mode:module)</name>
     <build>
         <plugins>
             <plugin>

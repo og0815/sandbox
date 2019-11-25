@@ -8,24 +8,8 @@
     </parent>
     <artifactId>pojo-four</artifactId>
     <packaging>jar</packaging>
-    <name>New Jdks - Pojo 4 (module,lombok) - Water</name>
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.projectlombok</groupId>
-                <artifactId>lombok-maven-plugin</artifactId>
-                <version>1.18.4.0</version>
-                <executions>
-                    <execution>
-                        <phase>generate-sources</phase>
-                        <goals>
-                            <goal>delombok</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
+    <name>New Jdks - Pojo 4 (Mode:module, lombok) - Water</name>
+
     <dependencies>
         <dependency>
             <groupId>org.projectlombok</groupId>

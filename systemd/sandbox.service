@@ -1,0 +1,11 @@
+[Unit]	
+Description=Ollis Sandbox Application
+After=syslog.target
+
+[Service]	
+SyslogIdentifier=OllisSandbox
+ExecStart=/bin/bash -c "java -jar /home/oliver.guenther/Development/sandbox/systemd/target/systemd-1.0-SNAPSHOT.jar"
+Type=simple
+	
+[Install]
+WantedBy=multi-user.target

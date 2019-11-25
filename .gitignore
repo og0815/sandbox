@@ -27,3 +27,7 @@ hs_err_pid*
 /java-9-tryout/nbproject/private/
 /java-9-tryout/build/
 /java-9-tryout/dist/
+/newjdks/switchreturn/target/
+/newjdks/switchreturn-ant/nbproject/private/
+/newjdks/ea/target/
+/newjdks/javafx/target/
