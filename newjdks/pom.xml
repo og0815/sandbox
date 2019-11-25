@@ -7,16 +7,16 @@
     <packaging>pom</packaging>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
+        <maven.compiler.release>11</maven.compiler.release>
+        <netbeans.hint.jdkPlatform>JDK_13</netbeans.hint.jdkPlatform>
     </properties>
     <description>
-        Collection of projects to test some features in newer jdks. 
+        Collection of projects to test some features in newer jdks.
         - netbeans compiler and code compleetion
         - projekt lobok
         - wildfly
         - arquillian
-        - wildfly remote 
+        - wildfly remote
     </description>
     <name>New Jdks</name>
     <build>
@@ -35,13 +35,13 @@
             </plugins>
         </pluginManagement>
     </build>
-    
+
     <dependencyManagement>
         <dependencies>
             <dependency>
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
-                <version>1.18.4</version>
+                <version>1.18.10</version>
             </dependency>
             <dependency>
                 <groupId>javax</groupId>
@@ -50,7 +50,7 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
-    
+
     <modules>
         <module>main-one</module>
         <module>main-two</module>
@@ -61,7 +61,8 @@
         <module>jsf</module>
         <module>remote</module>
         <module>api</module>
-    <module>jsf-module</module>
-  </modules>
+        <module>jsf-module</module>
+        <module>ea</module>
+    </modules>
 
 </project>
