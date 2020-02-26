@@ -7,16 +7,16 @@
     <packaging>pom</packaging>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
+        <maven.compiler.release>11</maven.compiler.release>
+        <netbeans.hint.jdkPlatform>JDK_13</netbeans.hint.jdkPlatform>
     </properties>
     <description>
-        Collection of projects to test some features in newer jdks. 
+        Collection of projects to test some features in newer jdks.
         - netbeans compiler and code compleetion
         - projekt lobok
         - wildfly
         - arquillian
-        - wildfly remote 
+        - wildfly remote
     </description>
     <name>New Jdks</name>
     <build>
@@ -25,23 +25,23 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
-                    <version>3.8.0</version>
+                    <version>3.8.1</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-war-plugin</artifactId>
-                    <version>3.2.2</version>
+                    <version>3.2.3</version>
                 </plugin>
             </plugins>
         </pluginManagement>
     </build>
-        
+
     <dependencyManagement>
         <dependencies>
             <dependency>
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
-                <version>1.18.8</version>
+                <version>1.18.10</version>
             </dependency>
             <dependency>
                 <groupId>javax</groupId>
@@ -50,7 +50,7 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
-    
+
     <modules>
         <module>main-one</module>
         <module>main-two</module>
@@ -62,7 +62,8 @@
         <module>remote</module>
         <module>api</module>
         <module>jsf-module</module>
-    <module>javafx</module>
-  </modules>
+        <module>ea</module>
+        <module>javafx</module>
+    </modules>
 
 </project>

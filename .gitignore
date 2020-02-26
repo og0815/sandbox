@@ -54,3 +54,7 @@ hs_err_pid*
 /newjdks/javafx/target/
 /systemd/target/
 /freebuilder/target/
+/newjdks/switchreturn/target/
+/newjdks/switchreturn-ant/nbproject/private/
+/newjdks/ea/target/
+/newjdks/javafx/target/
