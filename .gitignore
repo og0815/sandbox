@@ -31,3 +31,6 @@ hs_err_pid*
 /newjdks/switchreturn-ant/nbproject/private/
 /newjdks/ea/target/
 /newjdks/javafx/target/
+/iostreams/nbproject/private/
+/javafx11-tryout/nbproject/
+/javafx-swing-doubleclick-bug/target/
