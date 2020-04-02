@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<atlassian-plugin key="${atlassian.plugin.key}" name="${project.name}" plugins-version="2"> 
+  <plugin-info> 
+    <description>${project.description}</description>  
+    <version>${project.version}</version>  
+    <vendor name="${project.organization.name}" url="${project.organization.url}"/>  
+    <param name="plugin-icon">images/pluginIcon.png</param>  
+    <param name="plugin-logo">images/pluginLogo.png</param> 
+  </plugin-info>  
+  <!-- add our i18n resource -->  
+  <resource type="i18n" name="i18n" location="mindmaster"/>  
+  <!-- add our web resources -->  
+  <web-resource key="mindmaster-resources" name="mindmaster Web Resources"> 
+    <dependency>com.atlassian.auiplugin:ajs</dependency>  
+    <resource type="download" name="mindmaster.css" location="/css/mindmaster.css"/>  
+    <resource type="download" name="mindmaster.js" location="/js/mindmaster.js"/>  
+    <resource type="download" name="images/" location="/images"/>  
+    <context>mindmaster</context> 
+  </web-resource>  
+  <web-section name="mindmaster" i18n-name-key="mindmaster.name" key="mindmaster" location="mindmaster-link" weight="1000"> 
+    <description key="mindmaster.description">The mindmaster Plugin</description> 
+  </web-section>  
+  <web-item name="mindmasterItem" i18n-name-key="mindmaster-item.name" key="mindmaster-item" section="system.top.navigation.bar" weight="1000"> 
+    <description key="mindmaster-item.description">The mindmasterItem Plugin</description>  
+    <label key="mindmaster-item.label"/>  
+    <link linkId="mindmaster-item-link"/> 
+  </web-item>  
+  <web-item name="GG-Net Website" i18n-name-key="gg---net-website.name" key="gg---net-website" section="mindmaster-item-link/my-section" weight="1000"> 
+    <description key="gg---net-website.description">The GG-Net Website Plugin</description>  
+    <label key="gg---net-website.label"></label>  
+    <link linkId="gg---net-website-link">http://gg-net.de</link> 
+  </web-item>
+</atlassian-plugin>
