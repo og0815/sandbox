@@ -6,6 +6,7 @@
 package itest;
 
 import java.io.File;
+import java.util.List;
 import javax.inject.Inject;
 import static org.assertj.core.api.Assertions.assertThat;
 import org.jboss.arquillian.container.test.api.Deployment;
@@ -19,7 +20,8 @@ import static org.jboss.shrinkwrap.resolver.api.maven.ScopeType.RUNTIME;
 import org.jboss.shrinkwrap.resolver.api.maven.coordinate.MavenDependencies;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import rest.RestCaller;
+import rest.Person;
+import rest.PersonCaller;
 
 /**
  *
@@ -31,7 +33,7 @@ public class RestCallerIT {
     private final static String FULL_NAME = "rest-test";
 
     @Inject
-    private RestCaller caller;
+    private PersonCaller caller;
 
     @Deployment
     public static WebArchive deployment() {
@@ -49,9 +51,17 @@ public class RestCallerIT {
     }
 
     @Test
-    public void externalTest() {
+    public void callPersonsWithoutMapping() {
         assertThat(caller).isNotNull();
-        String facts = caller.callCatFacts();
+        String facts = caller.callPersonsManual("http://localhost:8080/" + FULL_NAME + "/rest");
         assertThat(facts).isNotBlank();
     }
+
+    @Test
+    public void callPersonsProxy() {
+        assertThat(caller).isNotNull();
+        List<Person> facts = caller.callPersonsProxy("http://localhost:8080/" + FULL_NAME + "/rest");
+        assertThat(facts).isNotNull().isNotEmpty();
+    }
+
 }
