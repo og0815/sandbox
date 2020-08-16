@@ -37,11 +37,11 @@ public class Main {
     }
 
     private static void on() {
-        send(526, "f:1001".getBytes());
+        send(0x526, "f:1001".getBytes());
     }
 
     private static void off() {
-        send(526, "f:1000".getBytes());
+        send(0x526, "f:1000".getBytes());
     }
 
     private static void listen() {
