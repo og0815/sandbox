@@ -51,7 +51,9 @@ public class Main {
             while (true) {
                 var result = socket.read();
                 System.out.println("Id      : " + result.getId());
-                System.out.println("Frame : " + toString(result.getBuffer().array()));
+                byte[] data = new byte[result.getDataLength()];
+                result.getData(data, 0, result.getDataLength());
+                System.out.println("Frame : " + toString(data));
             }
         } catch (IOException ex) {
             throw new RuntimeException(ex);
