@@ -10,9 +10,14 @@
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
     </properties>
-   
+
     <build>
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
@@ -22,15 +27,53 @@
                     <sourcepath>src/main/java;target/generated-sources/annotations</sourcepath>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.graalvm.nativeimage</groupId>
+                <artifactId>native-image-maven-plugin</artifactId>
+                <version>20.1.0</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>native-image</goal>
+                        </goals>
+                        <phase>package</phase>
+                    </execution>
+                </executions>
+                <configuration>
+                    <mainClass>de.ltux.freebuilder.Main</mainClass>
+                    <skip>false</skip>
+                    <imageName>example</imageName>
+                    <buildArgs>
+                        --no-fallback
+                    </buildArgs>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
-      
+
     <dependencies>
         <dependency>
             <groupId>org.inferred</groupId>
             <artifactId>freebuilder</artifactId>
             <version>2.4.1</version>
             <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.graalvm.sdk</groupId>
+            <artifactId>graal-sdk</artifactId>
+            <version>20.1.0</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.glassfish.jersey.core</groupId>
+            <artifactId>jersey-client</artifactId>
+            <version>2.31</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.glassfish.jersey.media</groupId>
+            <artifactId>jersey-media-json-jackson</artifactId>
+            <version>2.31</version>
         </dependency>
     </dependencies>
 </project>
