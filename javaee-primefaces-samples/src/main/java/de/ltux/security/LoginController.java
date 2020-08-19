@@ -13,7 +13,6 @@ import javax.security.enterprise.authentication.mechanism.http.AuthenticationPar
 import javax.security.enterprise.credential.UsernamePasswordCredential;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
@@ -26,7 +25,7 @@ public class LoginController {
     private String password;
 
     @NotEmpty
-    @Email(message = "Please provide a valid e-mail")
+//    @Email(message = "Please provide a valid e-mail")
     private String email;
 
     @Inject
