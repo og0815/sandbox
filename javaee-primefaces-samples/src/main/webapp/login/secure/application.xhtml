@@ -8,7 +8,13 @@
         <h:body>
             <p:outputLabel>Welcome to the application!</p:outputLabel>
 
-            <p>Logged-in as #{request.userPrincipal.name}</p>
+            <p>Logged-in as #{logoutController.userName}</p>
+            <p>Roles: #{logoutController.roles}</p>
+
+            <ul>
+                <li><h:link outcome="admin" value="Admin Site" /></li>
+                <li><h:link outcome="user" value="User Site" /></li>
+            </ul>
 
             <h:form>
                 <p:commandButton value="Logout" action="#{logoutController.submit}"/>

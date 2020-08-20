@@ -20,6 +20,9 @@
         <role-name>USER</role-name>
     </security-role>
     <security-role>
+        <role-name>DEPOSIT</role-name>
+    </security-role>
+    <security-role>
         <role-name>ADMIN</role-name>
     </security-role>
 
