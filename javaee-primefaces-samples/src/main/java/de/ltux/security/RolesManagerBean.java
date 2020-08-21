@@ -41,7 +41,7 @@ public class RolesManagerBean {
             return "null";
         }
         StringBuilder sb = new StringBuilder();
-        for (String role : Arrays.asList("USER", "ADMIN", Roles.DEPOSIT_ALL_VIEW, Roles.DEPOSIT_MODIFY, Roles.DEPOSIT_VIEW, Roles.STEIN)) {
+        for (String role : Arrays.asList("user-inmem", "admin-inmem", "USER", "ADMIN", Roles.DEPOSIT_ALL_VIEW, Roles.DEPOSIT_MODIFY, Roles.DEPOSIT_VIEW, Roles.STEIN)) {
             sb.append(role).append("=").append(sc.isCallerInRole(role)).append("|");
         }
         return sb.toString();
