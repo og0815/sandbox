@@ -33,7 +33,7 @@ public class RolesManagerBean {
             return "null";
         }
         log.info("principal={}", sc.getCallerPrincipal());
-        return sc.getCallerPrincipal().getName();
+        return sc.getCallerPrincipal() == null ? "null" : sc.getCallerPrincipal().getName();
     }
 
     public String getRoles() {

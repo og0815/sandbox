@@ -21,6 +21,8 @@ public class Roles {
 
     public final static String STEIN = "STEIN";
 
+    public final static String DEPOSIT_CREATE = HEAD + "deposit.create";
+
     public final static String[] ALL = new String[]{DEPOSIT_VIEW, DEPOSIT_MODIFY, DEPOSIT_ALL_VIEW, STEIN};
 
 }

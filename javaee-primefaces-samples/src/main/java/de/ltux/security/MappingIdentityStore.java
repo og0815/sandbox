@@ -20,6 +20,9 @@ public class MappingIdentityStore implements IdentityStore {
         if (validationResult.getCallerPrincipal().getName().equals("user-inmem")) {
             return Set.of(Roles.STEIN);
         }
+        if (validationResult.getCallerPrincipal().getName().equals("admin-inmem")) {
+            return Set.of(Roles.STEIN, Roles.DEPOSIT_CREATE);
+        }
         return validationResult.getCallerGroups();
     }
 
@@ -28,8 +31,4 @@ public class MappingIdentityStore implements IdentityStore {
         return EnumSet.of(IdentityStore.ValidationType.PROVIDE_GROUPS);
     }
 
-//    @Override
-//    public int priority() {
-//        return IdentityStore.super.priority(); //To change body of generated methods, choose Tools | Templates.
-//    }
 }
