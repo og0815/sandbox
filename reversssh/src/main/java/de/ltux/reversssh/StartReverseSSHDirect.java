@@ -14,7 +14,7 @@ import java.util.List;
  *
  * @author oliver.guenther
  */
-public class StartReverseSSH {
+public class StartReverseSSHDirect {
 
     public static void main(String[] args) throws IOException, InterruptedException {
         // DO NOT CONMIT User and pass.
