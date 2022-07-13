@@ -21,6 +21,7 @@ public class CanModel {
         System.out.println(Can.RequestLedChannelPowerUsage.Answer.matchesMessage(m1));
         System.out.println(Can.RequestLedChannelPowerUsage.Answer.matchesMessage(m2));
 
+        
         System.out.println(Can.RequestLedChannelPowerUsage.Answer.fromMessage("client2", "can2", 10, m2));
 
         var b = new Can.RequestLedChannelPowerUsage.Answer("client1", "can9", 10, 1, 13);
