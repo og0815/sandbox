@@ -1,0 +1,18 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
+ */
+package de.ltux.rmi;
+
+import java.rmi.Remote;
+import java.rmi.RemoteException;
+
+/**
+ *
+ * @author oliver.guenther
+ */
+public interface ServiceTwo extends Remote {
+ 
+     boolean messageTwo(String  message) throws RemoteException;
+    
+}
