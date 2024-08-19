@@ -1,0 +1,78 @@
+{
+  "lldp": [
+    {
+      "interface": [
+        {
+          "name": "eno2",
+          "via": "LLDP",
+          "rid": "1",
+          "age": "0 day, 02:12:18",
+          "chassis": [
+            {
+              "id": [
+                {
+                  "type": "mac",
+                  "value": "dc:15:c8:43:99:5a"
+                }
+              ],
+              "name": [
+                {
+                  "value": "fritz.box"
+                }
+              ],
+              "descr": [
+                {
+                  "value": "AVM FRITZ!Box 7530 164.07.59"
+                }
+              ],
+              "mgmt-ip": [
+                {
+                  "value": "192.168.2.1"
+                }
+              ],
+              "mgmt-iface": [
+                {
+                  "value": "4"
+                }
+              ],
+              "capability": [
+                {
+                  "type": "Bridge",
+                  "enabled": true
+                },
+                {
+                  "type": "Router",
+                  "enabled": true
+                },
+                {
+                  "type": "Wlan",
+                  "enabled": true
+                }
+              ]
+            }
+          ],
+          "port": [
+            {
+              "id": [
+                {
+                  "type": "mac",
+                  "value": "dc:15:c8:43:99:5a"
+                }
+              ],
+              "descr": [
+                {
+                  "value": "LAN:2"
+                }
+              ],
+              "ttl": [
+                {
+                  "value": "60"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
