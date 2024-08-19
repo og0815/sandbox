@@ -19,27 +19,11 @@ import javafx.util.Duration;
  */
 public class App extends Application {
 
-//    @Override
-//    public void start(Stage stage) {
-//        var javaVersion = SystemInfo.javaVersion();
-//        var javafxVersion = SystemInfo.javafxVersion();
-//
-//        var label = new Label("Hello, JavaFX " + javafxVersion + ", running on Java " + javaVersion + ".");
-//        var scene = new Scene(new StackPane(label), 640, 480);
-//        stage.setScene(scene);
-//        stage.show();
-//    }
     private static final String IMAGES_FOLDER = "C:/Users/oliver.guenther/Pictures/slideshow"; // Change this if your images are in a different folder
-    private static final int SLIDE_DURATION_SECONDS = 5; // Change this to adjust slide duration
 
-    private int currentImageIndex = 0;
     private ImageView front;
 
     private ImageView back;
-
-    public static void main(String[] args) {
-        launch(args);
-    }
 
     @Override
     public void start(Stage primaryStage) {
@@ -54,11 +38,13 @@ public class App extends Application {
 
         // Create the ImageView to display the images
         front = new ImageView();
+        front.fitHeightProperty().bind(primaryStage.heightProperty());
+        front.fitWidthProperty().bind(primaryStage.widthProperty());
         front.setPreserveRatio(true);
-        front.setFitWidth(800); // Adjust the size as needed
         back = new ImageView();
+        back.fitHeightProperty().bind(primaryStage.heightProperty());
+        back.fitWidthProperty().bind(primaryStage.widthProperty());
         back.setPreserveRatio(true);
-        back.setFitWidth(800); // Adjust the size as needed
 
         // Start the slideshow
         startSlideshow(imageFiles);
@@ -94,14 +80,12 @@ public class App extends Application {
 
         front.setImage(new Image(imageFiles[0].toURI().toString()));
         front.setOpacity(1.0);
-
         back.setImage(new Image(imageFiles[0].toURI().toString()));
-        front.setOpacity(1.0);
 
-                SequentialTransition st = new SequentialTransition();
+        SequentialTransition st = new SequentialTransition();
         st.setCycleCount(Integer.MAX_VALUE);
 
-        for (int n = 0; n < (imageFiles.length-1); n++) {
+        for (int n = 0; n < (imageFiles.length - 1); n++) {
             String fi = imageFiles[n].toURI().toString();
             int np1 = (n == imageFiles.length) ? 0 : n + 1;
             String bi = imageFiles[np1].toURI().toString();
@@ -161,6 +145,5 @@ public class App extends Application {
 //        st.setCycleCount(Integer.MAX_VALUE);
 //
 //        st.play();
-
     }
 }
