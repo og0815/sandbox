@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.List;
 import oshi.SystemInfo;
 import oshi.hardware.NetworkIF;
+import oshi.software.os.OSFileStore;
 
 /**
  *
@@ -22,31 +23,27 @@ public class OshiPlayground {
         System.out.println("Hardware: " + si.getHardware().getComputerSystem());
         System.out.println("OperatingSystem.Family: " + si.getOperatingSystem().getFamily());
         System.out.println("System.getProperty(os.name): " + System.getProperty("os.name"));
-        System.out.println("-----------");
+
+        System.out.println("OperatingSystem.Version: " + si.getOperatingSystem().toString());
         
+        System.out.println("Memory:" + si.getHardware().getMemory());
+        
+        System.out.println("CpuTemp:" + si.getHardware().getSensors().getCpuTemperature());
+        
+        for (OSFileStore store : si.getOperatingSystem().getFileSystem().getFileStores()) {
+            System.out.println("Store: " + store);
+        }
+        
+
+        System.out.println("-----------");
+
         List<NetworkIF> networkIFs = si.getHardware().getNetworkIFs();
         if (System.getProperty("os.name").equals("Linux")) {
-            networkIFs = DisconnectedLinuxNetworkIF.getNetworks(false);            
+            networkIFs = DisconnectedLinuxNetworkIF.getNetworks(false);
         }
 
         for (NetworkIF n : networkIFs) {
             System.out.println(n);
-            System.out.println("+++++++++");
-
-            System.out.println("DisplayName: " + n.getDisplayName());
-            System.out.println("Name: " + n.getName());
-            System.out.println("IfAlias: " + n.getIfAlias());
-            System.out.println("Mac: " + n.getMacaddr());
-            System.out.println("IPv4s: " + Arrays.toString(n.getIPv4addr()));
-            System.out.println("IPv6s: " + Arrays.toString(n.getIPv6addr()));
-            System.out.println("PacketsSent: " + n.getPacketsSent());
-            System.out.println("PacketsReceivd: " + n.getPacketsRecv());
-            System.out.println("Collisions: " + n.getCollisions());
-            System.out.println("Drops: " + n.getInDrops());
-            System.out.println("InErrors: " + n.getInErrors());
-            System.out.println("OutErrors: " + n.getOutErrors());
-            System.out.println("OperStatus: " + n.getIfOperStatus());
-            System.out.println("Connector: " + n.isConnectorPresent());
             System.out.println("-----------");
         }
 
