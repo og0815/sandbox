@@ -41,6 +41,8 @@ public class App extends Application {
 
     private File imageFolder = null;
 
+    private boolean enableOverride = false;
+
     private Optional<File> detectParameterImageFolder() {
         if (getParameters().getNamed().containsKey("images")) {
             File folder = new File(getParameters().getNamed().get("images"));
@@ -52,7 +54,7 @@ public class App extends Application {
                 return Optional.empty();
             }
         }
-        System.err.println("No Parameter -images=PathToImages given.");
+        System.err.println("No Parameter --images=PathToImages given.");
         return Optional.empty();
     }
 
@@ -73,6 +75,11 @@ public class App extends Application {
         imageFolder = detectParameterImageFolder()
                 .or(() -> detectFallbackImageFolder())
                 .orElseThrow(() -> new RuntimeException("No usable image folder found. Use -images= to select path."));
+        if (getParameters().getRaw().contains("--override")) {
+            System.out.println("Override enabled");
+            enableOverride = true;
+        }
+
     }
 
     @Override
@@ -139,15 +146,12 @@ public class App extends Application {
         front.setOpacity(1.0);
         back.setImage(new Image(imageFiles[1].toURI().toString()));
 
-        final Duration SEC_2 = Duration.millis(2000);
-        final Duration SEC_3 = Duration.millis(3000);
-
-        PauseTransition pauseAfter = new PauseTransition(Duration.seconds(15));
-        FadeTransition ftin = new FadeTransition(SEC_3);
+        PauseTransition pauseAfter = new PauseTransition(Duration.minutes(2));
+        FadeTransition ftin = new FadeTransition(Duration.seconds(3));
         ftin.setFromValue(0);
         ftin.setToValue(1);
-        PauseTransition pauseIn = new PauseTransition(Duration.seconds(5));
-        FadeTransition ftout = new FadeTransition(SEC_3);
+        PauseTransition pauseIn = new PauseTransition(Duration.seconds(15));
+        FadeTransition ftout = new FadeTransition(Duration.seconds(3));
         ftout.setFromValue(1);
         ftout.setToValue(0);
 
@@ -187,7 +191,7 @@ public class App extends Application {
             int n2 = (n == imageFiles.length) ? 0 : n1 + 1; // Image Collection is even. 
 
             sequenceNormal.getChildren().add(new PauseTransition(Duration.seconds(DISPLAYTIME)));
-            
+
             FadeTransition frontFadeout = new FadeTransition(Duration.seconds(FADETIME));
             frontFadeout.setFromValue(1);
             frontFadeout.setToValue(0);
@@ -229,9 +233,12 @@ public class App extends Application {
 //            sequenceNormal.getChildren().add(new PauseTransition(Duration.seconds(DISPLAYTIME)));
 //        }
 //        sequenceNormal.play();
-
-        ParallelTransition pt = new ParallelTransition(sequenceOverride, sequenceNormal);
-        pt.play();
+        if (enableOverride) {
+            ParallelTransition pt = new ParallelTransition(sequenceOverride, sequenceNormal);
+            pt.play();
+        } else {
+            sequenceNormal.play();
+        }
 
     }
 }
