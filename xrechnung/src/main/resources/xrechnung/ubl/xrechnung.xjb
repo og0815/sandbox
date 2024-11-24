@@ -1,0 +1,125 @@
+<jaxb:bindings xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb"
+               xmlns:xs="http://www.w3.org/2001/XMLSchema"
+               jxb:extensionBindingPrefixes="xjc"
+               version="3.0">
+
+    <jaxb:bindings schemaLocation="common/CCTS_CCT_SchemaModule-2.1.xsd">
+        <jaxb:bindings node="*[@name='IdentifierType']">
+            <jaxb:class name="CctsIdentifierType"/>
+        </jaxb:bindings>
+    </jaxb:bindings>
+
+    
+    <jaxb:bindings schemaLocation="common/UBL-UnqualifiedDataTypes-2.1.xsd">
+        <jaxb:bindings node="*[@name='AmountType']">
+            <jaxb:class name="UdtAmountType"/>
+        </jaxb:bindings>
+        <jaxb:bindings node="*[@name='BinaryObjectType']">
+            <jaxb:class name="UdtBinaryObjectType"/>
+        </jaxb:bindings>
+        <jaxb:bindings node="*[@name='CodeType']">
+            <jaxb:class name="UdtCodeType"/>
+        </jaxb:bindings>
+        <jaxb:bindings node="*[@name='DateTimeType']">
+            <jaxb:class name="UdtDateTimeType"/>
+        </jaxb:bindings>
+        <jaxb:bindings node="*[@name='IdentifierType']">
+            <jaxb:class name="UdtIdentifierType"/>
+        </jaxb:bindings>
+        <jaxb:bindings node="*[@name='IndicatorType']">
+            <jaxb:class name="UdtIndicatorType"/>
+        </jaxb:bindings>
+        <jaxb:bindings node="*[@name='MeasureType']">
+            <jaxb:class name="UdtMeasureType"/>
+        </jaxb:bindings>
+        <jaxb:bindings node="*[@name='NumericType']">
+            <jaxb:class name="UdtNumericType"/>
+        </jaxb:bindings>
+        <jaxb:bindings node="*[@name='QuantityType']">
+            <jaxb:class name="UdtQuantityType"/>
+        </jaxb:bindings>
+        <jaxb:bindings node="*[@name='TextType']">
+            <jaxb:class name="UdtTextType"/>
+        </jaxb:bindings>        
+    </jaxb:bindings>
+    
+    <jaxb:bindings schemaLocation="common/UBL-CommonBasicComponents-2.1.xsd">
+        <jaxb:bindings node="*[@name='AmountType']">
+            <jaxb:class name="CbcAmountType"/>
+        </jaxb:bindings>
+        <jaxb:bindings node="*[@name='DateType']">
+            <jaxb:class name="CbcDateType"/>
+        </jaxb:bindings>
+        <jaxb:bindings node="*[@name='MeasureType']">
+            <jaxb:class name="CbcMeasureType"/>
+        </jaxb:bindings>
+        <jaxb:bindings node="*[@name='ValueType']">
+            <jaxb:class name="CbcValueType"/>
+        </jaxb:bindings>
+        <jaxb:bindings node="*[@name='PercentType']">
+            <jaxb:class name="CbcPercentType"/>
+        </jaxb:bindings>
+        <jaxb:bindings node="*[@name='RateType']">
+            <jaxb:class name="CbcRateType"/>
+        </jaxb:bindings>
+        <jaxb:bindings node="*[@name='QuantityType']">
+            <jaxb:class name="CbcQuantityType"/>
+        </jaxb:bindings>
+        <jaxb:bindings node="*[@name='TextType']">
+            <jaxb:class name="CbcTextType"/>
+        </jaxb:bindings>
+        <jaxb:bindings node="*[@name='NameType']">
+            <jaxb:class name="CbcNameType"/>
+        </jaxb:bindings>
+        <jaxb:bindings node="*[@name='CanonicalizationMethodType']">
+            <jaxb:class name="CbcCanonicalizationMethodType"/>
+        </jaxb:bindings>
+        <jaxb:bindings node="*[@name='SignatureMethodType']">
+            <jaxb:class name="CbcSignatureMethodType"/>
+        </jaxb:bindings>
+        <jaxb:bindings node="*[@name='ReferenceType']">
+            <jaxb:class name="CbcReferenceType"/>
+        </jaxb:bindings>
+
+        <jaxb:bindings node="*[@name='CanonicalizationMethod' and @type='CanonicalizationMethodType']">
+            <jaxb:factoryMethod name="CbcCanonicalizationMethod"/>
+        </jaxb:bindings>
+        
+        <jaxb:bindings node="*[@name='SignatureMethod' and @type='SignatureMethodType']">
+            <jaxb:factoryMethod name="CbcSignatureMethod"/>
+        </jaxb:bindings>
+        
+        <jaxb:bindings node="*[@name='Reference' and @type='ReferenceType']">
+            <jaxb:factoryMethod name="CbcReference"/>
+        </jaxb:bindings>
+
+    </jaxb:bindings>
+
+    <jaxb:bindings schemaLocation="common/UBL-CommonAggregateComponents-2.1.xsd">
+        <jaxb:bindings node="*[@name='ConditionType']">
+            <jaxb:class name="CacConditionType"/>
+        </jaxb:bindings>
+        <jaxb:bindings node="*[@name='DutyType']">
+            <jaxb:class name="CacDutyType"/>
+        </jaxb:bindings>
+        <jaxb:bindings node="*[@name='LocationType']">
+            <jaxb:class name="CacLocationType"/>
+        </jaxb:bindings>
+        <jaxb:bindings node="*[@name='SignatureType']">
+            <jaxb:class name="CacSignatureType"/>
+        </jaxb:bindings>
+        <jaxb:bindings node="*[@name='Condition' and @type='ConditionType']">
+            <jaxb:factoryMethod name="CacCondition"/>
+        </jaxb:bindings>
+        <jaxb:bindings node="*[@name='Duty' and @type='DutyType']">
+            <jaxb:factoryMethod name="CacDuty"/>
+        </jaxb:bindings>
+        <jaxb:bindings node="*[@name='Location' and @type='LocationType']">
+            <jaxb:factoryMethod name="CacLocation"/>
+        </jaxb:bindings>
+        <jaxb:bindings node="*[@name='Signature' and @type='SignatureType']">
+            <jaxb:factoryMethod name="CacSignature"/>
+        </jaxb:bindings>
+    </jaxb:bindings>
+
+</jaxb:bindings>
