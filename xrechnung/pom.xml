@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>de.ltux</groupId>
+    <artifactId>xrechnung</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.release>21</maven.compiler.release>
+        <exec.mainClass>de.ltux.e.demo.EDemo</exec.mainClass>
+    </properties>
+    
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.cxf</groupId>
+                <artifactId>cxf-xjc-plugin</artifactId>
+                <version>4.0.2</version>
+                <executions>
+                    <execution>
+                        <id>generate-sources</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>xsdtojava</goal>
+                        </goals>
+                        <configuration>
+                            <sourceRoot>${basedir}/target/generated-sources/xjc</sourceRoot>
+                            <xsdOptions>
+                                <xsdOption>
+                                    <xsd>${basedir}/src/main/resources/xrechnung/ubl/maindoc/UBL-Invoice-2.1.xsd</xsd>
+                                    <bindingFile>${basedir}/src/main/resources/xrechnung/ubl/xrechnung.xjb</bindingFile>
+                                    <packagename>xrechnung.ubl</packagename>
+                                </xsdOption>
+                            </xsdOptions>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+        </plugins>
+    </build>
+    
+    <dependencies>
+        <dependency>
+            <groupId>jakarta.platform</groupId>
+            <artifactId>jakarta.jakartaee-api</artifactId>
+            <version>10.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>5.9.3</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <version>3.24.2</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.glassfish.jaxb</groupId>
+            <artifactId>jaxb-runtime</artifactId>
+            <version>4.0.5</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.glassfish</groupId>
+            <artifactId>jakarta.el</artifactId>
+            <version>4.0.2</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+</project>
