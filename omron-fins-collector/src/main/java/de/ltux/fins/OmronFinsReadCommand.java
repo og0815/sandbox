@@ -1,4 +1,4 @@
-package de.ltux;
+package de.ltux.fins;
 
 /**
  * Representing a Command, that is correctly formated.
@@ -78,9 +78,4 @@ public class OmronFinsReadCommand {
             (byte) ((numberOfItems & 0x000000FF)),};
     }
 
-    public static void main(String[] args) {
-        OmronFinsReadCommand c = new OmronFinsReadCommand(1, 0, 256);
-        System.out.println(c);
-        System.out.println(HexUtils.toString(" ", c.toRaw()));
-    }
 }

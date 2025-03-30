@@ -1,4 +1,4 @@
-package de.ltux;
+package de.ltux.fins;
 
 /**
  *

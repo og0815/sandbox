@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package de.ltux;
+package de.ltux.fins;
 
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
@@ -14,7 +14,7 @@ import java.net.SocketTimeoutException;
  *
  * @author oliver.guenther
  */
-public class OmronFinsCollector {
+public class CollectNettelburgDirect {
 
     public static void main(String[] args) throws Exception {
 
