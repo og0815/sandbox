@@ -22,7 +22,7 @@ public class OmronFinsReadCommand {
     };
 
     private final byte memoryAreaCode = (byte) 0x82;
-
+    
     private final int beginningAddress; // 0 - 65535
 
     private final int beginningAddressBits; // 0 - 255
@@ -45,6 +45,15 @@ public class OmronFinsReadCommand {
         this.beginningAddressBits = beginningAddressBits;
         this.numberOfItems = numberOfItems;
     }
+    
+    public OmronFinsReadCommand(int beginningAddress, int beginningAddressBits, int numberOfItems, byte destinationNode) {
+        // TODO: Validate Input
+        this.beginningAddress = beginningAddress;
+        this.beginningAddressBits = beginningAddressBits;
+        this.numberOfItems = numberOfItems;
+        HEADER[4] = destinationNode;
+    }
+    
 
     public int getNumberOfItems() {
         return numberOfItems;
@@ -78,4 +87,9 @@ public class OmronFinsReadCommand {
             (byte) ((numberOfItems & 0x000000FF)),};
     }
 
+    public static void main(String[] args) {
+        OmronFinsReadCommand c = new OmronFinsReadCommand(1, 0, 100, (byte)0x29);
+        System.out.println(c);
+    }
+    
 }

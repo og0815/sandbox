@@ -75,6 +75,8 @@ public class Main {
                 .findAny()
                 .orElse(false);
         
+        
+        
 
         System.out.println("Collecting with Parameters:");
         System.out.println(" Ip:" + ip);
@@ -84,10 +86,10 @@ public class Main {
         System.out.println(" Raw:" + raw);
         System.out.println("");
         
-        int length = 5000;
+        int length = 700;
         
         try (DatagramSocket clientSocket = new DatagramSocket()) {
-            OmronFinsReadCommand command = new OmronFinsReadCommand(1, 0, length);
+            OmronFinsReadCommand command = new OmronFinsReadCommand(1, 0, length,(byte)0x29);
 
             DatagramPacket sendPacket = new DatagramPacket(command.toRaw(), command.toRaw().length, InetAddress.getByName(ip), port);
             clientSocket.send(sendPacket);
