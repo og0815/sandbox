@@ -64,3 +64,4 @@ hs_err_pid*
 /jdk17-playground/target/
 /javafx-slideshow/target/
 /xrechnung/target/
+/excel-importer/target/

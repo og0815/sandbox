@@ -152,10 +152,10 @@ public class ImportService {
                             double d = cell.getNumericCellValue();
                             if ("PK_IDObject".equals(field) || "zip".equals(field) || field.startsWith("capacity") || "driveTimeToCentralStation".equals(field)) {
                                 L.info("Found Type long for Field:{} with Value:{}", field, d);
-                                rowValues.put(field, (long) d);
+                                rowValues.put(field, "" + d);
                             } else {
                                 L.info("Found Type double for Field:{} with Value:{}", field, d);
-                                rowValues.put(field, d);
+                                rowValues.put(field, "" + d);
                             }
                             break;
                         case BLANK:
@@ -226,16 +226,16 @@ public class ImportService {
                         existing.setStreet((String) rowValues.get("street"));
                     }
                     if (rowValues.containsKey("zip")) {
-                        existing.setZip(Integer.parseInt(rowValues.get("zip").toString()));
+                        existing.setZip(Integer.valueOf(rowValues.get("zip").toString()));
                     }
                     if (rowValues.containsKey("city")) {
                         existing.setCity((String) rowValues.get("city"));
                     }
                     if (rowValues.containsKey("latitude")) {
-                        existing.setLatitude((Double) rowValues.get("latitude"));
+                        existing.setLatitude(Double.valueOf(rowValues.get("latitude").toString()));
                     }
                     if (rowValues.containsKey("longitude")) {
-                        existing.setLongitude((Double) rowValues.get("longitude"));
+                        existing.setLongitude(Double.valueOf(rowValues.get("longitude").toString()));
                     }
                     if (rowValues.containsKey("line")) {
                         existing.setLine((String) rowValues.get("line"));
@@ -244,16 +244,16 @@ public class ImportService {
                         existing.setLineSection((String) rowValues.get("lineSection"));
                     }
                     if (rowValues.containsKey("driveTimeToCentralStation")) {
-                        existing.setDriveTimeToCentralStation(((Long) rowValues.get("driveTimeToCentralStation")).intValue());
+                        existing.setDriveTimeToCentralStation(Double.valueOf(rowValues.get("driveTimeToCentralStation").toString()).intValue());
                     }
                     if (rowValues.containsKey("capacityMax")) {
-                        existing.setCapacityMax(((Long) rowValues.get("capacityMax")).intValue());
+                        existing.setCapacityMax(Double.valueOf(rowValues.get("capacityMax").toString()).intValue());
                     }
                     if (rowValues.containsKey("capacityHandicapped")) {
-                        existing.setCapacityHandicapped(((Long) rowValues.get("capacityHandicapped")).intValue());
+                        existing.setCapacityHandicapped(Double.valueOf(rowValues.get("capacityHandicapped").toString()).intValue());
                     }
                     if (rowValues.containsKey("capacityRent")) {
-                        existing.setCapacityRent(((Long) rowValues.get("capacityRent")).intValue());
+                        existing.setCapacityRent(Double.valueOf(rowValues.get("capacityRent").toString()).intValue());
                     }
 
                     // entity is already managed after retrieval; changes will be flushed automatically
