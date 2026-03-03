@@ -60,3 +60,7 @@ hs_err_pid*
 /newjdks/javafx/target/
 /javafx11-tryout/nbproject/
 /javafx-swing-doubleclick-bug/target/
+/can-model/target/
+/jdk17-playground/target/
+/javafx-slideshow/target/
+/xrechnung/target/

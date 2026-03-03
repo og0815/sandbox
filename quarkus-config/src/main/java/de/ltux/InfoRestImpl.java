@@ -19,4 +19,13 @@ public class InfoRestImpl {
         System.out.println("Called");
         return "olli.info=" + olliInfo.get();
     }
+
+    @Path("update")
+    @GET
+    @Produces(MediaType.TEXT_PLAIN)
+    public String update() {   
+        System.setProperty("olli.info", "Systemolli");
+        return "update done";
+    }
+
 }

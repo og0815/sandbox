@@ -25,7 +25,7 @@ public class Main {
      * @throws ClassNotFoundException
      */
     public static void main(String[] args) throws FileNotFoundException, IOException, ClassNotFoundException {
-        var p = new Person("Max", "Musterman", 22);
+        var p = new Person("Max", "Musterman", 22,true);
         System.out.println("Before: " + p);
 
         var out = new ObjectOutputStream(new FileOutputStream("serial.data"));

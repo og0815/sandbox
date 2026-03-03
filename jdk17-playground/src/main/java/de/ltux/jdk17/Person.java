@@ -7,7 +7,7 @@ import java.io.Serializable;
  *
  * @author oliver.guenther
  */
-public record Person(String firstname, String lastname, int age) implements Serializable {
+public record Person(String firstname, String lastname, int age, boolean male) implements Serializable {
 
     /**
      * Javadoc für den Costructor
@@ -15,8 +15,9 @@ public record Person(String firstname, String lastname, int age) implements Seri
      * @param firstname blas
      * @param lastname blus
      * @param age fds
+     * @param male blub
      */
-    public Person   {
+    public Person    {
 
     }
 
