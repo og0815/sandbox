@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="https://jakarta.ee/xml/ns/persistence" version="3.0">
+  <persistence-unit name="defaultPU" transaction-type="JTA">
+    <!-- Use WildFly in-memory datasource (H2 example DS) -->
+    <jta-data-source>java:jboss/datasources/ExampleDS</jta-data-source>
+    <class>com.example.entity.Property</class>
+    <properties>
+      <!-- Let the provider create the schema on startup -->
+      <property name="jakarta.persistence.schema-generation.database.action" value="drop-and-create"/>
+      <property name="jakarta.persistence.schema-generation.scripts.action" value="none"/>
+    </properties>
+  </persistence-unit>
+</persistence>

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Properties Overview</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <style>
+            table { border-collapse: collapse; width: 100%; }
+            th, td { border: 1px solid #ddd; padding: 8px; }
+        </style>
+    </h:head>
+    <h:body>
+        <div>
+            <h1>Properties Database Overview</h1>
+            
+            <p>
+                <h:link value="Back to Home" outcome="index" />
+            </p>
+
+            <p>
+                Total Records: <strong>#{propertyBean.properties.size()}</strong>
+            </p>
+
+            <h:form>
+                <p:dataTable var="prop" value="#{propertyBean.properties}" 
+                           paginator="true" rows="10"
+                           paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                           currentPageReportTemplate="{startRecord} to {endRecord} of {totalRecords}"
+                           style="width: 100%">
+                    
+                    <p:column headerText="ID" style="width: 60px;">
+                        <h:outputText value="#{prop.id}" />
+                    </p:column>
+                    
+                    <p:column headerText="PK_IDObject">
+                        <h:outputText value="#{prop.PK_IDObject}" />
+                    </p:column>
+                    
+                    <p:column headerText="Appellation">
+                        <h:outputText value="#{prop.appelation}" />
+                    </p:column>
+                    
+                    <p:column headerText="Object Group">
+                        <h:outputText value="#{prop.objectGroup}" />
+                    </p:column>
+                    
+                    <p:column headerText="Street">
+                        <h:outputText value="#{prop.street}" />
+                    </p:column>
+                    
+                    <p:column headerText="ZIP" style="width: 80px;">
+                        <h:outputText value="#{prop.zip}" />
+                    </p:column>
+                    
+                    <p:column headerText="City">
+                        <h:outputText value="#{prop.city}" />
+                    </p:column>
+                    
+                    <p:column headerText="Latitude" style="width: 100px;">
+                        <h:outputText value="#{prop.latitude}">
+                            <f:convertNumber pattern="0.00"/>
+                        </h:outputText>
+                    </p:column>
+                    
+                    <p:column headerText="Longitude" style="width: 100px;">
+                        <h:outputText value="#{prop.longitude}">
+                            <f:convertNumber pattern="0.00"/>
+                        </h:outputText>
+                    </p:column>
+                    
+                    <p:column headerText="Line">
+                        <h:outputText value="#{prop.line}" />
+                    </p:column>
+                    
+                    <p:column headerText="Line Section">
+                        <h:outputText value="#{prop.lineSection}" />
+                    </p:column>
+                    
+                    <p:column headerText="Drive Time (min)" style="width: 120px;">
+                        <h:outputText value="#{prop.driveTimeToCentralStation}" />
+                    </p:column>
+                    
+                    <p:column headerText="Capacity Max" style="width: 110px;">
+                        <h:outputText value="#{prop.capacityMax}" />
+                    </p:column>
+                    
+                    <p:column headerText="Capacity Disabled" style="width: 130px;">
+                        <h:outputText value="#{prop.capacityHandicapped}" />
+                    </p:column>
+                    
+                    <p:column headerText="Capacity Rent" style="width: 115px;">
+                        <h:outputText value="#{prop.capacityRent}" />
+                    </p:column>
+                    
+                </p:dataTable>
+            </h:form>
+        </div>
+    </h:body>
+</html>
