@@ -1,0 +1,37 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "WildFly: Start (debug 5005)",
+      "type": "shell",
+      "command": "C:\\Java\\wildfly-34.0.1.Final\\bin\\standalone.bat --debug 5005",
+      "isBackground": true,
+      "presentation": { "reveal": "always", "panel": "dedicated" },
+      "problemMatcher": []
+    },
+    {
+      "label": "WildFly: Stop",
+      "type": "shell",
+      "command": "C:\\Java\\wildfly-34.0.1.Final\\bin\\jboss-cli.bat --connect --command=\":shutdown\"",
+      "problemMatcher": []
+    },
+    {
+      "label": "Maven: Package",
+      "type": "shell",
+      "command": "mvn -U clean package -DskipTests",
+      "problemMatcher": []
+    },
+    {
+      "label": "Deploy: WAR to WildFly (CLI)",
+      "type": "shell",
+      "command": "C:\\Java\\wildfly-34.0.1.Final\\bin\\jboss-cli.bat --connect --command=\"deploy ${workspaceFolder}\\\\target\\\\excel-importer.war --force\"",
+      "problemMatcher": []
+    },
+    {
+      "label": "Build & Deploy",
+      "dependsOn": ["Maven: Package", "Deploy: WAR to WildFly (CLI)"],
+      "dependsOrder": "sequence",
+      "problemMatcher": []
+    }
+  ]
+}
